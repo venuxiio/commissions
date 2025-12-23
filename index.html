@@ -18,13 +18,27 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="nav-menu">
+        <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+            <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 3C2 3 8 2.5 15 3C22 3.5 30 3 30 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M2 14C2 14 7 13.5 16 14C25 14.5 30 14 30 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M2 25C2 25 9 24.5 16 25C23 25.5 30 25 30 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <nav class="nav-menu" id="nav-menu">
+            <button class="drawer-close" id="drawer-close-btn" aria-label="Close menu">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 3C3 3 8 8 14 14C20 20 25 25 25 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M25 3C25 3 20 8 14 14C8 20 3 25 3 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </button>
             <a href="#home" class="nav-btn active">Home</a>
             <a href="#gallery" class="nav-btn">Gallery</a>
             <a href="#commissions" class="nav-btn">Commissions</a>
             <a href="#about" class="nav-btn">About</a>
             <a href="#contact" class="nav-btn">Contact</a>
         </nav>
+        <div class="menu-overlay" id="menu-overlay"></div>
 
         <!-- Home Section -->
         <section id="home" class="content-section">
@@ -218,11 +232,38 @@
             }
         });
 
-        // Navigation
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const drawerClose = document.getElementById('drawer-close-btn');
+
+        function closeMenu() {
+            navMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+            menuOverlay.classList.remove('open');
+        }
+
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+            menuOverlay.classList.toggle('open');
+        });
+
+        // Close menu when close button is clicked
+        drawerClose.addEventListener('click', closeMenu);
+
+        // Close menu when overlay is clicked
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // Close menu when a nav link is clicked
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+                navMenu.classList.remove('open');
+                hamburger.classList.remove('open');
+                menuOverlay.classList.remove('open');
             });
         });
     </script>
