@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:xiuqueue.carrd.co)",
+      "WebFetch(domain:xiushoppe.carrd.co)",
+      "Bash(curl:*)",
+      "Bash(git config:*)"
+    ]
+  }
+}
