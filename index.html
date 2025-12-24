@@ -49,6 +49,15 @@
             </div>
         </section>
 
+        <!-- About Section -->
+        <section id="about" class="content-section">
+            <h2>About Me</h2>
+            <div class="card-container">
+                <p>Hi! I'm Mai, a digital artist and web designer. I've been creating art for over 5 years and love bringing ideas to life through illustrations and custom web designs.</p>
+                <p>When I'm not working on commissions, you can find me exploring new art styles, playing video games, or working on personal projects.</p>
+            </div>
+        </section>
+
         <!-- Gallery Section -->
         <section id="gallery" class="content-section">
             <h2>Gallery</h2>
@@ -155,15 +164,6 @@
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="content-section">
-            <h2>About Me</h2>
-            <div class="card-container">
-                <p>Hi! I'm Mai, a digital artist and web designer. I've been creating art for over 5 years and love bringing ideas to life through illustrations and custom web designs.</p>
-                <p>When I'm not working on commissions, you can find me exploring new art styles, playing video games, or working on personal projects.</p>
-            </div>
-        </section>
-
         <!-- Contact Section -->
         <section id="contact" class="content-section">
             <h2>Get in Touch</h2>
@@ -192,6 +192,49 @@
     </div>
 
     <script>
+        // Hash-based page navigation
+        function showPage() {
+            let hash = window.location.hash.slice(1) || 'home';
+            const validPages = ['home', 'about', 'gallery', 'commissions', 'contact'];
+
+            // Validate hash
+            if (!validPages.includes(hash)) {
+                hash = 'home';
+                window.location.hash = '#home';
+            }
+
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show target section
+            const targetSection = document.getElementById(hash);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Update nav active states
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('href') === `#${hash}`) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Close mobile menu if open
+            document.getElementById('nav-menu').classList.remove('open');
+            document.getElementById('hamburger-btn').classList.remove('open');
+            document.getElementById('menu-overlay').classList.remove('open');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Event listeners for hash navigation
+        window.addEventListener('hashchange', showPage);
+        window.addEventListener('load', showPage);
+
         // Modal functionality
         function openModal(element) {
             const modal = document.getElementById('modal');
@@ -256,16 +299,7 @@
         // Close menu when overlay is clicked
         menuOverlay.addEventListener('click', closeMenu);
 
-        // Close menu when a nav link is clicked
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                navMenu.classList.remove('open');
-                hamburger.classList.remove('open');
-                menuOverlay.classList.remove('open');
-            });
-        });
+        // Close menu when a nav link is clicked (already handled by showPage function)
     </script>
 </body>
 </html>

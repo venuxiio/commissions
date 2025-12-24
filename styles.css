@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: 'Tsukimi Rounded', sans-serif;
     background-color: #8F7160;
     background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px);
     min-height: 100vh;
@@ -147,6 +147,7 @@ body {
     text-decoration: none;
     border: 2px solid #85673C;
     border-radius: 20px;
+    font-family: 'Special Elite', cursive;
     font-weight: 500;
     font-size: 0.95em;
     cursor: pointer;
@@ -167,6 +168,12 @@ body {
 /* Sections */
 .content-section {
     margin-bottom: 40px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.content-section.active {
+    display: block;
 }
 
 .content-section h2 {
