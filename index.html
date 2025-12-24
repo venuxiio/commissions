@@ -2,307 +2,288 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#8F7160">
-    <meta name="description" content="Venuxiio's Shop - Custom art and design commissions">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to my page!</title>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Venuxiio's Shop</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Tsukimi+Rounded:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'FBWallW';
+            src: url('assets/fonts/FBWallW.woff2') format('woff2'),
+                 url('assets/fonts/FBWallW.woff') format('woff'),
+                 url('assets/fonts/FBWallW.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e8e4d0;
+            font-family: 'Comic Sans MS', 'Trebuchet MS', cursive, sans-serif;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Banner Section */
+        .banner {
+            background: linear-gradient(135deg, #c4b896 0%, #9b9572 100%);
+            background-image: url('assets/images/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 40px 30px;
+            text-align: center;
+            border: 3px dashed #333;
+            position: relative;
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(196, 184, 150, 0.6);
+            pointer-events: none;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .banner h1 {
+            font-family: 'FBWallW', cursive;
+            font-size: 48px;
+            font-weight: bold;
+            color: #f5f1e8;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 30px;
+        }
+
+        .banner h1 .word {
+            display: inline-block;
+            transform-origin: center;
+        }
+
+        .banner h1 .word-1 {
+            transform: rotate(-8.2deg);
+        }
+
+        .banner h1 .word-2 {
+            transform: rotate(4.1deg);
+        }
+
+        .banner h1 .word-3 {
+            transform: rotate(-1.6deg);
+        }
+
+        .banner h1 .word-4 {
+            transform: rotate(2.9deg);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: nowrap;
+        }
+
+        .nav-button {
+            background-color: #f5f1e8;
+            border: 2px solid #333;
+            padding: 12px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-family: 'Comic Sans MS', cursive;
+            cursor: pointer;
+            transition: transform 0.1s ease-out, box-shadow 0.2s;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 50px 40px;
+            background-color: #f0ede4;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .about-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            border: 2px solid #ddd;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .about-left {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-image {
+            width: 300px;
+            height: 300px;
+            background-color: #a8a08c;
+            border-radius: 15px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-right {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .about-right h2 {
+            font-size: 36px;
+            margin-bottom: 25px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .about-right p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            font-family: 'Comic Sans MS', 'Trebuchet MS', cursive, sans-serif;
+        }
+
+        /* Bottom character positioning */
+        .bottom-character {
+            position: fixed;
+            top: 150px;
+            right: 20px;
+            width: 150px;
+            height: auto;
+            z-index: 10;
+        }
+
+        .bottom-character img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.1s ease-out;
+        }
+
+        .bottom-character:hover img {
+            transform: scaleY(0.90) scaleX(1.10);
+        }
+
+        .bottom-character:active img {
+            transform: scaleY(0.88) scaleX(1.12);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .banner h1 {
+                font-size: 32px;
+            }
+
+            .nav-buttons {
+                gap: 15px;
+            }
+
+            .nav-button {
+                padding: 10px 25px;
+                font-size: 16px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+
+            .about-section {
+                flex-direction: column;
+                padding: 25px;
+            }
+
+            .about-image {
+                width: 250px;
+                height: 250px;
+            }
+
+            .bottom-character {
+                position: fixed;
+                top: 120px;
+                right: 10px;
+                width: 100px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        <!-- Header -->
-        <div class="header-section">
-            <h1 class="title">Venuxiio's Shop</h1>
-            <p class="subtitle">A collection of custom art & designs</p>
+    <div class="container">
+        <!-- Banner Section -->
+        <div class="banner">
+            <div class="banner-content">
+                <h1>
+                    <span class="word word-1">Welcome</span>
+                    <span class="word word-2">to</span>
+                    <span class="word word-3">my</span>
+                    <span class="word word-4">page!</span>
+                </h1>
+                <div class="nav-buttons">
+                    <button class="nav-button">Home</button>
+                    <button class="nav-button">Commissions</button>
+                    <button class="nav-button">Gallery</button>
+                </div>
+            </div>
         </div>
 
-        <!-- Navigation -->
-        <button class="hamburger" id="hamburger-btn" aria-label="Menu">
-            <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 3C2 3 8 2.5 15 3C22 3.5 30 3 30 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M2 14C2 14 7 13.5 16 14C25 14.5 30 14 30 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M2 25C2 25 9 24.5 16 25C23 25.5 30 25 30 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-        </button>
-        <nav class="nav-menu" id="nav-menu">
-            <button class="drawer-close" id="drawer-close-btn" aria-label="Close menu">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 3C3 3 8 8 14 14C20 20 25 25 25 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M25 3C25 3 20 8 14 14C8 20 3 25 3 25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                </svg>
-            </button>
-            <a href="#home" class="nav-btn active">Home</a>
-            <a href="#gallery" class="nav-btn">Gallery</a>
-            <a href="#commissions" class="nav-btn">Commissions</a>
-            <a href="#about" class="nav-btn">About</a>
-            <a href="#contact" class="nav-btn">Contact</a>
-        </nav>
-        <div class="menu-overlay" id="menu-overlay"></div>
-
-        <!-- Home Section -->
-        <section id="home" class="content-section">
-            <div class="card-container">
-                <h2>Welcome!</h2>
-                <p>Welcome to my personal shoppe! Here you'll find examples of my work and information about commissioning custom pieces.</p>
-                <p>I specialize in character art, illustrations, and custom website design. All pieces are made with care and attention to detail.</p>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="content-section">
-            <h2>About Me</h2>
-            <div class="card-container">
-                <p>Hi! I'm Mai, a digital artist and web designer. I've been creating art for over 5 years and love bringing ideas to life through illustrations and custom web designs.</p>
-                <p>When I'm not working on commissions, you can find me exploring new art styles, playing video games, or working on personal projects.</p>
-            </div>
-        </section>
-
-        <!-- Gallery Section -->
-        <section id="gallery" class="content-section">
-            <h2>Gallery</h2>
-
-            <h3 class="gallery-title">Icon Work</h3>
-            <div class="gallery-grid">
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image02.jpg" alt="Icon commission example">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image03.jpg" alt="Icon commission sample">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-            </div>
-
-            <h3 class="gallery-title">Bust Commissions</h3>
-            <div class="gallery-grid">
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image09.jpg" alt="Bust commission example">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image12.jpg" alt="Bust commission work">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-            </div>
-
-            <h3 class="gallery-title">Halfbody Commissions</h3>
-            <div class="gallery-grid">
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image11.jpg" alt="Halfbody illustration">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image10.jpg" alt="Halfbody commission">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-            </div>
-
-            <h3 class="gallery-title">Fullbody Commissions</h3>
-            <div class="gallery-grid">
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image07.jpg" alt="Fullbody commission">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-                <div class="gallery-item" onclick="openModal(this)">
-                    <img src="assets/images/image08.jpg" alt="Fullbody artwork">
-                    <div class="gallery-overlay">Click to view</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Commissions Section -->
-        <section id="commissions" class="content-section">
-            <h2>Commission Info</h2>
-
-            <div class="card-container">
-                <h3>Current Status</h3>
-                <p class="status-badge">✓ Open for Commissions</p>
-                <p>I'm currently accepting new commission requests! Typical turnaround times are:</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h4>Character Sheet</h4>
-                    <p class="price">Starting at $50</p>
-                    <p class="time">Turnaround: 1-2 weeks</p>
-                    <p>Full character design with multiple angles and expressions.</p>
-                </div>
-                <div class="pricing-card">
-                    <h4>Illustration</h4>
-                    <p class="price">Starting at $75</p>
-                    <p class="time">Turnaround: 1-2 weeks</p>
-                    <p>Full-color illustration with background.</p>
-                </div>
-                <div class="pricing-card">
-                    <h4>Web Design</h4>
-                    <p class="price">Starting at $100</p>
-                    <p class="time">Turnaround: 5-10 days</p>
-                    <p>Custom carrd or landing page design.</p>
-                </div>
-            </div>
-
-            <div class="card-container">
-                <h3>Queue Status</h3>
-                <div class="queue-list">
-                    <div class="queue-item">
-                        <span class="queue-position">1.</span>
-                        <span class="queue-name">Client A</span>
-                        <span class="queue-status finished">Finished</span>
-                    </div>
-                    <div class="queue-item">
-                        <span class="queue-position">2.</span>
-                        <span class="queue-name">Client B</span>
-                        <span class="queue-status in-progress">In Progress</span>
-                    </div>
-                    <div class="queue-item">
-                        <span class="queue-position">3.</span>
-                        <span class="queue-name">Client C</span>
-                        <span class="queue-status to-start">To Start</span>
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="about-section">
+                <div class="about-left">
+                    <div class="about-image">
+                        <img src="assets/images/Illustration9.png" alt="About me character">
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="content-section">
-            <h2>Get in Touch</h2>
-            <div class="card-container">
-                <p>Interested in commissioning me? Feel free to reach out!</p>
-                <div class="contact-links">
-                    <a href="mailto:your.email@example.com" class="contact-btn">📧 Email</a>
-                    <a href="https://twitter.com" class="contact-btn">🐦 Twitter</a>
-                    <a href="https://discord.com" class="contact-btn">💬 Discord</a>
+                <div class="about-right">
+                    <h2>About me</h2>
+                    <p>Hello! You can also call me Ven, I'm a student in a 3d animation school and I like to draw stuff. I also like to play videogames and chill.</p>
                 </div>
             </div>
-        </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© 2025 Venuxiio's Shop.</p>
-        </footer>
-    </div>
-
-    <!-- Modal -->
-    <div id="modal" class="modal">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <div class="modal-content">
-            <img id="modal-image" src="" alt="">
+            <!-- Bottom right character -->
+            <div class="bottom-character">
+                <img src="assets/images/Illustration8.png" alt="Character decoration">
+            </div>
         </div>
     </div>
-
-    <script>
-        // Hash-based page navigation
-        function showPage() {
-            let hash = window.location.hash.slice(1) || 'home';
-            const validPages = ['home', 'about', 'gallery', 'commissions', 'contact'];
-
-            // Validate hash
-            if (!validPages.includes(hash)) {
-                hash = 'home';
-                window.location.hash = '#home';
-            }
-
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // Show target section
-            const targetSection = document.getElementById(hash);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
-
-            // Update nav active states
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('href') === `#${hash}`) {
-                    btn.classList.add('active');
-                }
-            });
-
-            // Close mobile menu if open
-            document.getElementById('nav-menu').classList.remove('open');
-            document.getElementById('hamburger-btn').classList.remove('open');
-            document.getElementById('menu-overlay').classList.remove('open');
-
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        // Event listeners for hash navigation
-        window.addEventListener('hashchange', showPage);
-        window.addEventListener('load', showPage);
-
-        // Modal functionality
-        function openModal(element) {
-            const modal = document.getElementById('modal');
-            const imgElement = element.querySelector('img');
-            const modalImg = document.getElementById('modal-image');
-
-            if (imgElement) {
-                // For real images
-                modalImg.src = imgElement.src;
-                modalImg.alt = imgElement.alt;
-                modalImg.style.fontSize = 'auto';
-            } else {
-                // Fallback for placeholders
-                const placeholder = element.querySelector('.gallery-placeholder');
-                if (placeholder) {
-                    modalImg.textContent = placeholder.textContent;
-                    modalImg.style.fontSize = '120px';
-                }
-            }
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        // Hamburger menu toggle
-        const hamburger = document.getElementById('hamburger-btn');
-        const navMenu = document.getElementById('nav-menu');
-        const menuOverlay = document.getElementById('menu-overlay');
-        const drawerClose = document.getElementById('drawer-close-btn');
-
-        function closeMenu() {
-            navMenu.classList.remove('open');
-            hamburger.classList.remove('open');
-            menuOverlay.classList.remove('open');
-        }
-
-        hamburger.addEventListener('click', function() {
-            navMenu.classList.toggle('open');
-            hamburger.classList.toggle('open');
-            menuOverlay.classList.toggle('open');
-        });
-
-        // Close menu when close button is clicked
-        drawerClose.addEventListener('click', closeMenu);
-
-        // Close menu when overlay is clicked
-        menuOverlay.addEventListener('click', closeMenu);
-
-        // Close menu when a nav link is clicked (already handled by showPage function)
-    </script>
 </body>
 </html>

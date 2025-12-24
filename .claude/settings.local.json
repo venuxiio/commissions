@@ -4,7 +4,15 @@
       "WebFetch(domain:xiuqueue.carrd.co)",
       "WebFetch(domain:xiushoppe.carrd.co)",
       "Bash(curl:*)",
-      "Bash(git config:*)"
+      "Bash(git config:*)",
+      "Bash(where pdffonts:*)",
+      "Bash(where:*)",
+      "Bash(powershell -Command \"$content = [System.IO.File]::ReadAllText\\(''C:\\\\Users\\\\Jade Richez\\\\Documents\\\\commissions\\\\Welcome to my page.pdf'', [System.Text.Encoding]::GetEncoding\\(''ISO-8859-1''\\)\\); $content | Select-String -Pattern ''/BaseFont\\\\s*/[A-Za-z0-9+\\\\-]+'' -AllMatches | ForEach-Object { $_Matches.Value }\")",
+      "WebFetch(domain:www.onlinewebfonts.com)",
+      "Bash(tar:*)",
+      "Bash(powershell:*)",
+      "Bash(ren:*)",
+      "Bash(dir:*)"
     ]
   }
 }
