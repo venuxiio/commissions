@@ -26,34 +26,34 @@
             background-image: url('assets/images/pattern.png');
             background-repeat: repeat;
             background-attachment: fixed;
-            background-size: 400px;
+            background-size: 25rem;
             font-family: 'Schoolbell', cursive;
             color: #333;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 20px;
+            padding: 1.25rem;
         }
 
         .container {
-            width: 560px;
+            width: 100%;
+            max-width: 560px;
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            margin-top: 20px;
+            margin-top: 1.25rem;
             border: solid #000;
-            border-width: 32px 8px 32px 8px;
+            border-width: 2rem 0.5rem 2rem 0.5rem;
         }
 
         /* Banner Section */
         .banner {
-            background: linear-gradient(135deg, #c4b896 0%, #9b9572 100%);
             background-image: url('assets/images/banner.jpg');
             background-size: cover;
             background-position: center;
-            padding: 8px 0px;
+            padding: 0.5rem 0;
             text-align: center;
             position: relative;
         }
@@ -72,30 +72,30 @@
         .banner-content {
             position: relative;
             z-index: 1;
-            border-bottom: 3px dashed #333;
-            border-top: 3px dashed #333;
-            padding-top: 16px;
-            padding-bottom: 16px;
+            border-bottom: 0.1875rem dashed #333;
+            border-top: 0.1875rem dashed #333;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
         }
 
         .banner h1 {
             font-family: 'FBWallW', cursive;
-            font-size: 48px;
+            font-size: 3rem;
             font-weight: bold;
             color: #f5f1e8;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
+            margin-bottom: 1.875rem;
+            letter-spacing: 0.125rem;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: nowrap;
-            gap: 30px;
+            gap: 1.875rem;
         }
 
         .banner h1 .word {
             display: inline-block;
             transform-origin: center;
-            border: 2px solid #7e755f;
+            border: 0.125rem solid #7e755f;
         }
 
         .banner h1 .word-1 {
@@ -106,27 +106,19 @@
             transform: rotate(4.1deg);
         }
 
-        .banner h1 .word-3 {
-            transform: rotate(-1.6deg);
-        }
-
-        .banner h1 .word-4 {
-            transform: rotate(2.9deg);
-        }
-
         .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 1.875rem;
             flex-wrap: nowrap;
         }
 
         .nav-button {
             background-color: #f5f1e8;
-            border: 2px solid #333;
-            padding: 12px 40px;
-            border-radius: 25px;
-            font-size: 18px;
+            border: 0.125rem solid #333;
+            padding: 0.75rem 2.5rem;
+            border-radius: 1.5625rem;
+            font-size: 1.125rem;
             font-family: 'Schoolbell', cursive;
             cursor: pointer;
             transition: transform 0.1s ease-out, box-shadow 0.2s;
@@ -135,28 +127,24 @@
         }
 
         .nav-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-0.125rem);
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
         }
 
         /* Main Content */
         .main-content {
-            padding: 16px;
+            padding: 1rem;
             background-color: #f0ede4;
             position: relative;
-            min-height: 500px;
+            min-height: 31.25rem;
         }
 
         .about-section {
-            /* background-color: white;
-            border-radius: 20px;
-            padding: 40px;
-            border: 2px solid #ddd; */
             display: flex;
-            gap: 40px;
+            gap: 2.5rem;
             align-items: flex-start;
             position: relative;
-            padding-top: 16px;
+            padding-top: 1rem;
         }
 
         .about-left {
@@ -166,10 +154,10 @@
         }
 
         .about-image {
-            width: 200px;
-            height: 200px;
+            width: 12.5rem;
+            height: 12.5rem;
             background-color: #a8a08c;
-            border-radius: 100px;
+            border-radius: 6.25rem;
             overflow: hidden;
             flex-shrink: 0;
         }
@@ -182,19 +170,19 @@
 
         .about-right {
             flex: 1;
-            min-width: 250px;
+            min-width: 15.625rem;
         }
 
         .about-right h2 {
-            font-size: 36px;
-            margin-bottom: 16px;
+            font-size: 2.25rem;
+            margin-bottom: 1rem;
             color: #333;
             font-weight: 600;
             transform: rotate(-2deg);
         }
 
         .about-right p {
-            font-size: 16px;
+            font-size: 1rem;
             line-height: 1.8;
             color: #333;
             font-family: 'Schoolbell', cursive;
@@ -204,9 +192,9 @@
         /* Bottom character positioning */
         .bottom-character {
             position: fixed;
-            bottom: 10px;
-            right: 20px;
-            width: 150px;
+            bottom: 0.625rem;
+            right: 1.25rem;
+            width: 9.375rem;
             height: auto;
             z-index: 10;
         }
@@ -243,8 +231,23 @@
         }
 
         .about-arrow img {
-            width: 120px;
+            width: 7.5rem;
             height: auto;
+        }
+
+        /* Small screen adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+
+            .container {
+                border: none;
+                border-width: 0;
+                margin-top: 0;
+                border-radius: 0;
+            }
         }
 
     </style>
@@ -257,7 +260,6 @@
                 <h1>
                     <span class="word word-1">Venuxiio's</span>
                     <span class="word word-2">Shop</span>
-                    <span class="word word-3"></span>
                 </h1>
                 <div class="nav-buttons">
                     <button class="nav-button">HOME</button>
@@ -281,7 +283,7 @@
 
                 <div class="about-right">
                     <h2>About me</h2>
-                    <p>Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and sleeping</p>
+                    <p>Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and chilling</p>
                 </div>
 
             </div>
