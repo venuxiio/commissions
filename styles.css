@@ -656,6 +656,10 @@ footer {
 }
 
 @media (max-width: 736px) {
+    body {
+        padding: 0;
+    }
+
     .two-column {
         grid-template-columns: 1fr;
         gap: 1rem;
