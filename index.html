@@ -258,8 +258,16 @@
         }
 
         function updateActiveNav() {
-            // Get current hash, default to 'home' if no hash
-            const hash = window.location.hash.slice(1) || 'home';
+            // Get current hash, no default
+            const hash = window.location.hash.slice(1);
+            const banner = document.querySelector('.banner');
+
+            // If there's a hash, collapse the banner
+            if (hash) {
+                banner.classList.add('collapsed');
+            } else {
+                banner.classList.remove('collapsed');
+            }
 
             // Remove active class from all nav elements
             document.querySelectorAll('nav').forEach(nav => {
@@ -267,9 +275,11 @@
             });
 
             // Add active class to matching nav
-            const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
-            if (activeNav) {
-                activeNav.classList.add('active');
+            if (hash) {
+                const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
+                if (activeNav) {
+                    activeNav.classList.add('active');
+                }
             }
 
             // Hide all sections
@@ -277,10 +287,12 @@
                 section.classList.remove('active-section');
             });
 
-            // Show only the matching section
-            const activeSection = document.querySelector(`section#${hash}`);
-            if (activeSection) {
-                activeSection.classList.add('active-section');
+            // Show only the matching section if hash exists
+            if (hash) {
+                const activeSection = document.querySelector(`section#${hash}`);
+                if (activeSection) {
+                    activeSection.classList.add('active-section');
+                }
             }
 
             // Also show/hide footer based on section
@@ -291,7 +303,6 @@
                 footer.style.display = 'none';
             }
         }
-
 
         // Queue section expand/collapse functionality
         function setupQueueSection() {
