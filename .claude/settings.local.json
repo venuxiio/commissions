@@ -12,7 +12,8 @@
       "Bash(tar:*)",
       "Bash(powershell:*)",
       "Bash(ren:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "WebFetch(domain:venuxiio.carrd.co)"
     ]
   }
 }

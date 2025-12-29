@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to my page!</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url('assets/images/pattern.png');
+            background-repeat: repeat;
+            background-attachment: fixed;
+            background-size: 25rem;
+            font-family: 'Schoolbell', cursive;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0.25rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 560px;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: solid #000;
+            border-width: 2rem 0.5rem 2rem 0.5rem;
+        }
+
+        /* Banner Section */
+        .banner {
+            background-image: url('assets/images/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 0.5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(196, 184, 150, 0.6);
+            pointer-events: none;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            border-bottom: 0.1875rem dashed #333;
+            border-top: 0.1875rem dashed #333;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .venuxiio-banner {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            left: 60%;
+            transform: translateX(-50%);
+            top: 2rem;
+            width: fit-content;
+        }
+
+        .venuxiio-banner img {
+            width: 80%;
+            height: auto;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: nowrap;
+        }
+
+        .nav-button {
+            background-color: #f5f1e8;
+            border: 0.125rem solid #333;
+            padding: 0.75rem 0.75rem;
+            border-radius: 1.5625rem;
+            font-size: 1.125rem;
+            font-family: 'Schoolbell', cursive;
+            cursor: pointer;
+            transition: transform 0.1s ease-out, box-shadow 0.2s;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-0.125rem);
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 1rem;
+            background-color: #f0ede4;
+            position: relative;
+            min-height: 31.25rem;
+        }
+
+        .about-circle-wrapper {
+            position: absolute;
+            width: 13rem;
+            height: 13rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            left: 1rem;
+            top: 1rem;
+
+        }
+
+        .about-circle-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .about-image {
+            position: relative;
+            width: 11rem;
+            height: 11rem;
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-box-wrapper {
+            position: absolute;
+            width: 80%;
+            max-width: 30rem;
+            min-height: 12rem;
+            display: flex;
+            align-items: center;
+            /* justify-content: center; */
+            left: 2rem;
+            top: 14rem;
+        }
+
+        .about-box-svg {
+            position: absolute;
+            /* width: 100%; */
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .about-text {
+            position: relative;
+            z-index: 2;
+            padding: 0rem;
+            text-align: center;
+        }
+
+        .about-text p {
+            max-width: 12rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+            font-family: 'Schoolbell', cursive;
+        }
+
+        /* Bottom character positioning */
+        .bottom-character {
+            position: fixed;
+            bottom: 0.625rem;
+            right: 1.25rem;
+            width: 9rem;
+            height: auto;
+            z-index: 10;
+        }
+
+        @keyframes squish1 {
+            0%, 100% { transform: scaleY(1) scaleX(1); }
+            50% { transform: scaleY(0.96) scaleX(1.04); }
+        }
+
+        @keyframes squish2 {
+            0%, 100% { transform: scaleY(1) scaleX(1); }
+            50% { transform: scaleY(0.97) scaleX(1.03); }
+        }
+
+        @keyframes squish3 {
+            0%, 100% { transform: scaleY(1) scaleX(1); }
+            50% { transform: scaleY(0.95) scaleX(1.05); }
+        }
+
+        .bottom-character img {
+            width: 100%;
+            height: auto;
+            transform-origin: bottom center;
+            animation: squish1 2.7s ease-in-out infinite, squish2 3.2s ease-in-out infinite 0.5s, squish3 2.3s ease-in-out infinite 1s;
+        }
+
+        .about-arrow {
+            position: absolute;
+            top: 13.5rem;
+            left: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1rem;
+            height: auto;
+        }
+
+        .about-arrow img {
+            width: 100%;
+            height: auto;
+        }
+
+        .about-arrow svg,
+        .about-arrow img[src$=".svg"] {
+            fill: transparent;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem 0;
+            position: absolute;
+            z-index: 5;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 2rem;
+            width: 100%;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            transition: transform 0.2s;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Small screen adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: 0;
+                margin: 0;
+                background-image: none;
+                background-color: #f0ede4;
+            }
+
+            .container {
+                border: none;
+                border-width: 0;
+                margin-top: 0;
+                border-radius: 0;
+            }
+
+            .bottom-character {
+            bottom: 0.625rem;
+            right: 0.75rem;
+            width: 5rem;
+           }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner Section -->
+        <div class="banner">
+            <div class="banner-content">
+                <div class="nav-buttons">
+                    <button class="nav-button">HOME</button>
+                    <button class="nav-button">COMMISSIONS</button>
+                    <button class="nav-button">GALLERY</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="venuxiio-banner">
+                <img src="assets/svg/venuxiio.svg" alt="Venuxiio">
+            </div>
+
+            <div class="about-arrow">
+                <img src="assets/svg/arrow.svg" alt="Arrow">
+            </div>
+
+            <div class="about-circle-wrapper">
+                <img src="assets/svg/AboutMeBoxImage.svg" alt="Circle frame" class="about-circle-svg">
+                <div class="about-image">
+                    <img src="assets/images/Illustration9.png" alt="About me character">
+                </div>
+            </div>
+
+            <div class="about-box-wrapper">
+                <img src="assets/svg/aboutMeBox.svg" alt="About box background" class="about-box-svg">
+                <div class="about-text">
+                    <p>Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and chilling.</p>
+                </div>
+            </div>
+
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                <a href="#" class="social-icon" title="Instagram">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="6" r="1.5"/></svg>
+                </a>
+                <a href="#" class="social-icon" title="RedNote">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                </a>
+                <a href="#" class="social-icon" title="TikTok">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74a2.89 2.89 0 0 1 2.31-4.64a2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                </a>
+                <a href="#" class="social-icon" title="ToyHouse">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                </a>
+            </div>
+
+            <!-- Bottom right character -->
+            <div class="bottom-character">
+                <img src="assets/images/Illustration8.png" alt="Character decoration">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

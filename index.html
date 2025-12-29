@@ -1,304 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to my page!</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
-    <style>
-        @font-face {
-            font-family: 'FBWallW';
-            src: url('assets/fonts/FBWallW.woff2') format('woff2'),
-                 url('assets/fonts/FBWallW.woff') format('woff'),
-                 url('assets/fonts/FBWallW.ttf') format('truetype');
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-image: url('assets/images/pattern.png');
-            background-repeat: repeat;
-            background-attachment: fixed;
-            background-size: 25rem;
-            font-family: 'Schoolbell', cursive;
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 1.25rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 560px;
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            margin-top: 1.25rem;
-            border: solid #000;
-            border-width: 2rem 0.5rem 2rem 0.5rem;
-        }
-
-        /* Banner Section */
-        .banner {
-            background-image: url('assets/images/banner.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 0.5rem 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(196, 184, 150, 0.6);
-            pointer-events: none;
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 1;
-            border-bottom: 0.1875rem dashed #333;
-            border-top: 0.1875rem dashed #333;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-
-        .banner h1 {
-            font-family: 'FBWallW', cursive;
-            font-size: 3rem;
-            font-weight: bold;
-            color: #f5f1e8;
-            margin-bottom: 1.875rem;
-            letter-spacing: 0.125rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: nowrap;
-            gap: 1.875rem;
-        }
-
-        .banner h1 .word {
-            display: inline-block;
-            transform-origin: center;
-            border: 0.125rem solid #7e755f;
-        }
-
-        .banner h1 .word-1 {
-            transform: rotate(-8.2deg);
-        }
-
-        .banner h1 .word-2 {
-            transform: rotate(4.1deg);
-        }
-
-        .nav-buttons {
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: nowrap;
-        }
-
-        .nav-button {
-            background-color: #f5f1e8;
-            border: 0.125rem solid #333;
-            padding: 0.75rem 0.75rem;
-            border-radius: 1.5625rem;
-            font-size: 1.125rem;
-            font-family: 'Schoolbell', cursive;
-            cursor: pointer;
-            transition: transform 0.1s ease-out, box-shadow 0.2s;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .nav-button:hover {
-            transform: translateY(-0.125rem);
-            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 1rem;
-            background-color: #f0ede4;
-            position: relative;
-            min-height: 31.25rem;
-        }
-
-        .about-section {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-            position: relative;
-            padding-top: 1rem;
-        }
-
-        .about-left {
-            flex: 0 0 auto;
-            display: flex;
-            justify-content: center;
-        }
-
-        .about-image {
-            width: 12.5rem;
-            height: 12.5rem;
-            background-color: #a8a08c;
-            border-radius: 6.25rem;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .about-right {
-            flex: 1;
-        }
-
-        .about-right h2 {
-            font-size: 2.25rem;
-            margin-bottom: 1rem;
-            color: #333;
-            font-weight: 600;
-            transform: rotate(-2deg);
-        }
-
-        .about-right p {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: #333;
-            font-family: 'Schoolbell', cursive;
-             transform: rotate(-2deg);
-        }
-
-        /* Bottom character positioning */
-        .bottom-character {
-            position: fixed;
-            bottom: 0.625rem;
-            right: 1.25rem;
-            width: 9rem;
-            height: auto;
-            z-index: 10;
-        }
-
-        @keyframes squish1 {
-            0%, 100% { transform: scaleY(1) scaleX(1); }
-            50% { transform: scaleY(0.96) scaleX(1.04); }
-        }
-
-        @keyframes squish2 {
-            0%, 100% { transform: scaleY(1) scaleX(1); }
-            50% { transform: scaleY(0.97) scaleX(1.03); }
-        }
-
-        @keyframes squish3 {
-            0%, 100% { transform: scaleY(1) scaleX(1); }
-            50% { transform: scaleY(0.95) scaleX(1.05); }
-        }
-
-        .bottom-character img {
-            width: 100%;
-            height: auto;
-            transform-origin: bottom center;
-            animation: squish1 2.7s ease-in-out infinite, squish2 3.2s ease-in-out infinite 0.5s, squish3 2.3s ease-in-out infinite 1s;
-        }
-
-        .about-arrow {
-            position: absolute;
-            top: 0;
-            left: 25%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .about-arrow img {
-            width: 7.5rem;
-            height: auto;
-        }
-
-        /* Small screen adjustments */
-        @media (max-width: 600px) {
-            body {
-                padding: 0;
-                margin: 0;
-                background-image: none;
-                background-color: #f0ede4;
-            }
-
-            .container {
-                border: none;
-                border-width: 0;
-                margin-top: 0;
-                border-radius: 0;
-            }
-
-            .bottom-character {
-            bottom: 0.625rem;
-            right: 0.75rem;
-            width: 5rem;
-           }
-        }
-
-    </style>
+    <title>Venuxiio - Commission Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
-        <!-- Banner Section -->
         <div class="banner">
-            <div class="banner-content">
-                <h1>
-                    <span class="word word-1">Venuxiio's</span>
-                    <span class="word word-2">Shop</span>
-                </h1>
-                <div class="nav-buttons">
-                    <button class="nav-button">HOME</button>
-                    <button class="nav-button">COMMISSIONS</button>
-                    <button class="nav-button">GALLERY</button>
-                </div>
-            </div>
+            <nav data-target="home">
+                <a href="#home">Home</a>
+            </nav>
+            <nav data-target="terms">
+                <a href="#terms">Terms</a>
+            </nav>
+            <nav data-target="prices">
+                <a href="#prices">Prices</a>
+            </nav>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="about-section">
-                <div class="about-arrow">
-                    <img src="assets/images/leftArrow.png" alt="Arrow">
-                </div>
-                <div class="about-left">
-                    <div class="about-image">
-                        <img src="assets/images/Illustration9.png" alt="About me character">
-                    </div>
-                </div>
-
-                <div class="about-right">
-                    <h2>About me</h2>
-                    <p>Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and chilling</p>
-                </div>
-
+        <section id="home">
+            <div class="profile" id="home">
+                <img src="https://via.placeholder.com/240" alt="Profile Picture" class="profile-image">
+                <h1>Venuxiio</h1>
+                <p>Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and chilling.</p>
+                <p>Welcome to my commission page! Here you can find commission info, T.O.S., and F.A.Q.</p>
             </div>
 
-            <!-- Bottom right character -->
-            <div class="bottom-character">
-                <img src="assets/images/Illustration8.png" alt="Character decoration">
+            <div class="status-indicators">
+                <span class="status open">COMMS: open</span>
+                <span class="status closed">ART TRADES: closed</span>
+                <span class="status closed">REQUESTS: closed</span>
             </div>
-        </div>
+
+            <h2>Commission Queue</h2>
+            <div class="queue">
+                <div class="queue-item">
+                    <span class="queue-number">Commission #1</span>
+                    <span class="queue-status in-progress">In Progress</span>
+                </div>
+                <div class="queue-item">
+                    <span class="queue-number">Commission #2</span>
+                    <span class="queue-status">To Start</span>
+                </div>
+                <div class="queue-item">
+                    <span class="queue-number">Commission #3</span>
+                    <span class="queue-status">To Start</span>
+                </div>
+                <div class="queue-item">
+                    <span class="queue-number">Commission #4</span>
+                    <span class="queue-status">To Start</span>
+                </div>
+                <div class="queue-item">
+                    <span class="queue-number">Commission #5</span>
+                    <span class="queue-status finished">Finished</span>
+                </div>
+            </div>
+
+            <div class="note">
+                Website is still in progress so prices may change!!!
+            </div>
+        </section>
+
+        <section id="prices">
+            <h2>Commission Prices</h2>
+
+            <div class="pricing-table">
+                <div class="pricing-row">
+                    <span class="pricing-type">Icon</span>
+                    <span>
+                        <span class="pricing-cost">€25</span>
+                        <span class="pricing-extra">(+€20 per extra character)</span>
+                    </span>
+                </div>
+                <div class="pricing-row">
+                    <span class="pricing-type">Bust</span>
+                    <span>
+                        <span class="pricing-cost">€30</span>
+                        <span class="pricing-extra">(+€20 per extra character)</span>
+                    </span>
+                </div>
+                <div class="pricing-row">
+                    <span class="pricing-type">Halfbody</span>
+                    <span>
+                        <span class="pricing-cost">€50</span>
+                        <span class="pricing-extra">(+€40 per extra character)</span>
+                    </span>
+                </div>
+                <div class="pricing-row">
+                    <span class="pricing-type">Fullbody</span>
+                    <span>
+                        <span class="pricing-cost">€60</span>
+                        <span class="pricing-extra">(+€50 per extra character)</span>
+                    </span>
+                </div>
+                <div class="pricing-row">
+                    <span class="pricing-type">Chibi</span>
+                    <span>
+                        <span class="pricing-cost">€15</span>
+                        <span class="pricing-extra">(+€15 per extra character)</span>
+                    </span>
+                </div>
+                <div class="pricing-row">
+                    <span class="pricing-type">Custom</span>
+                    <span class="pricing-cost">€80+</span>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 1.5rem; font-size: 1.1em;">Additional Charges</h3>
+            <ul class="terms-list">
+                <li>Simple background: +10%</li>
+                <li>Armor/weapons/robotic parts: €5-10</li>
+            </ul>
+
+            <h2>What I Draw</h2>
+            <div class="two-column">
+                <div class="list-section">
+                    <h3>Will Draw</h3>
+                    <ul>
+                        <li>OCs</li>
+                        <li>Furries</li>
+                        <li>Humans</li>
+                        <li>Ask</li>
+                    </ul>
+                </div>
+                <div class="list-section">
+                    <h3>Won't Draw</h3>
+                    <ul>
+                        <li>Extreme gore</li>
+                        <li>NSFW</li>
+                        <li>Complex backgrounds</li>
+                        <li>Horse</li>
+                        <li>Complex horns</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="terms">
+            <h2>Terms of Service</h2>
+            <ul class="terms-list">
+                <li>Art style is "sketchy" - this is intentional</li>
+                <li>All art delivered digitally</li>
+                <li>I reserve the right to refuse any commission</li>
+                <li>Payment required before work begins</li>
+                <li>No AI training rights - do not use my art for AI</li>
+                <li>Typical completion time: 1–2 weeks</li>
+                <li>Commissions reopen every 2–3 months</li>
+            </ul>
+        </section>
+
+
+        <footer>
+            
+            <p style="color: #999999;">Follow me on social media</p>
+            <div class="social-links">
+                <a href="#">Rednote</a>
+                <a href="#">Instagram</a>
+                <a href="#">Toyhouse</a>
+                <a href="#">TikTok</a>
+            </div>
+        </footer>
     </div>
+
+    <script>
+        function updateActiveNav() {
+            // Get current hash, default to 'home' if no hash
+            const hash = window.location.hash.slice(1) || 'home';
+
+            // Remove active class from all nav elements
+            document.querySelectorAll('nav').forEach(nav => {
+                nav.classList.remove('active');
+            });
+
+            // Add active class to matching nav
+            const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+
+            // Show only the matching section
+            const activeSection = document.querySelector(`section#${hash}`);
+            if (activeSection) {
+                activeSection.classList.add('active-section');
+            }
+
+            // Also show/hide footer based on section
+            const footer = document.querySelector('footer');
+            if (hash === 'home') {
+                footer.style.display = 'block';
+            } else {
+                footer.style.display = 'none';
+            }
+        }
+
+        // Update on page load
+        updateActiveNav();
+
+        // Update when hash changes
+        window.addEventListener('hashchange', updateActiveNav);
+    </script>
 </body>
+
 </html>
