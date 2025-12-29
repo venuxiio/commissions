@@ -48,46 +48,9 @@
                     <span class="queue-expand-icon">▼</span>
                 </div>
 
-                <div class="queue-kpis">
-                    <div class="kpi-box">
-                        <span class="kpi-label">Waiting List</span>
-                        <span class="kpi-value" id="kpi-waiting-list">4</span>
-                    </div>
-                    <div class="kpi-box">
-                        <span class="kpi-label">In Progress</span>
-                        <span class="kpi-value" id="kpi-in-progress">1</span>
-                    </div>
-                    <div class="kpi-box">
-                        <span class="kpi-label">Finished</span>
-                        <span class="kpi-value" id="kpi-finished">1</span>
-                    </div>
-                </div>
 
-                <div class="queue">
-                    <div class="queue-item">
-                        <span class="queue-number">Commission #1</span>
-                        <span class="queue-status">Waiting List</span>
-                    </div>
-                    <div class="queue-item">
-                        <span class="queue-number">Commission #2</span>
-                        <span class="queue-status">Waiting List</span>
-                    </div>
-                    <div class="queue-item">
-                        <span class="queue-number">Commission #3</span>
-                        <span class="queue-status">Waiting List</span>
-                    </div>
-                    <div class="queue-item">
-                        <span class="queue-number">Commission #4</span>
-                        <span class="queue-status">Waiting List</span>
-                    </div>
-                    <div class="queue-item">
-                        <span class="queue-number">Commission #5</span>
-                        <span class="queue-status in-progress">In Progress</span>
-                    </div>
-                    <div class="queue-item">
-                        <span class="queue-number">Commission #6</span>
-                        <span class="queue-status finished">Finished</span>
-                    </div>
+                <div class="queue-board" id="queue-board">
+                    <!-- Dynamically populated from commissions.json -->
                 </div>
             </div>
 
@@ -198,6 +161,100 @@
     </div>
 
     <script>
+        // Fetch commission data from JSON file
+        async function loadCommissions() {
+            try {
+                const response = await fetch('commissions.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load commissions.json');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error loading commissions:', error);
+                return null;
+            }
+        }
+
+        // Render the queue board from JSON data
+        function renderQueueBoard(commissionData) {
+            const queueBoard = document.getElementById('queue-board');
+            if (!queueBoard || !commissionData || !commissionData.commissions) {
+                console.error('Invalid commission data');
+                return;
+            }
+
+            const allCommissions = commissionData.commissions;
+            const columns = [
+                { key: 'waiting-list', title: 'Waiting List' },
+                { key: 'in-progress', title: 'In Progress' },
+                { key: 'finished', title: 'Finished' }
+            ];
+
+            // Clear existing content
+            queueBoard.innerHTML = '';
+
+            // Create columns
+            columns.forEach(column => {
+                // Filter commissions by status
+                const commissions = allCommissions.filter(c => c.status === column.key);
+                const columnDiv = document.createElement('div');
+                columnDiv.className = 'queue-column';
+
+                // Column header
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'column-header';
+                const titleH3 = document.createElement('h3');
+                titleH3.textContent = column.title;
+                const countSpan = document.createElement('span');
+                countSpan.className = 'column-count';
+                countSpan.textContent = commissions.length;
+
+                headerDiv.appendChild(titleH3);
+                headerDiv.appendChild(countSpan);
+
+                // Column cards container
+                const cardsDiv = document.createElement('div');
+                cardsDiv.className = 'column-cards';
+
+                // Add commission cards
+                commissions.forEach(commission => {
+                    const cardDiv = document.createElement('div');
+                    cardDiv.className = 'commission-card';
+
+                    const cardHeader = document.createElement('div');
+                    cardHeader.className = 'card-header';
+
+                    const cardNumber = document.createElement('span');
+                    cardNumber.className = 'card-number';
+                    cardNumber.textContent = `#${commission.id}`;
+
+                    cardHeader.appendChild(cardNumber);
+
+                    const cardContent = document.createElement('div');
+                    cardContent.className = 'card-content';
+
+                    const cardTitle = document.createElement('p');
+                    cardTitle.className = 'card-title';
+                    cardTitle.textContent = commission.title;
+
+                    const cardDescription = document.createElement('p');
+                    cardDescription.className = 'card-detail';
+                    cardDescription.textContent = commission.description;
+
+                    cardContent.appendChild(cardTitle);
+                    cardContent.appendChild(cardDescription);
+
+                    cardDiv.appendChild(cardHeader);
+                    cardDiv.appendChild(cardContent);
+                    cardsDiv.appendChild(cardDiv);
+                });
+
+                columnDiv.appendChild(headerDiv);
+                columnDiv.appendChild(cardsDiv);
+                queueBoard.appendChild(columnDiv);
+            });
+        }
+
         function updateActiveNav() {
             // Get current hash, default to 'home' if no hash
             const hash = window.location.hash.slice(1) || 'home';
@@ -233,37 +290,12 @@
             }
         }
 
-        // Calculate and update KPIs
-        function updateKPIs() {
-            const queueItems = document.querySelectorAll('.queue-item');
-            let waitingList = 0, inProgress = 0, finished = 0;
-
-            queueItems.forEach(item => {
-                const status = item.querySelector('.queue-status');
-                const statusText = status.textContent.trim();
-
-                if (status.classList.contains('in-progress')) {
-                    inProgress++;
-                } else if (status.classList.contains('finished')) {
-                    finished++;
-                } else if (statusText === 'Waiting List') {
-                    waitingList++;
-                }
-            });
-
-            document.getElementById('kpi-waiting-list').textContent = waitingList;
-            document.getElementById('kpi-in-progress').textContent = inProgress;
-            document.getElementById('kpi-finished').textContent = finished;
-        }
-
 
         // Queue section expand/collapse functionality
         function setupQueueSection() {
             const queueSection = document.querySelector('.queue-section');
             const sectionHeader = document.querySelector('.queue-section-header');
             const sectionIcon = document.querySelector('.queue-expand-icon');
-            const queue = document.querySelector('.queue');
-            const kpis = document.querySelector('.queue-kpis');
 
             sectionHeader.addEventListener('click', () => {
                 queueSection.classList.toggle('collapsed');
@@ -275,8 +307,14 @@
 
         // Update on page load
         updateActiveNav();
-        updateKPIs();
         setupQueueSection();
+
+        // Load and render commissions from JSON
+        loadCommissions().then(data => {
+            if (data) {
+                renderQueueBoard(data);
+            }
+        });
 
         // Update when hash changes
         window.addEventListener('hashchange', updateActiveNav);

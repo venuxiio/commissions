@@ -392,131 +392,167 @@ h2 {
     margin-bottom: 0;
 }
 
-.queue-kpis {
-    display: flex;
-    gap: 1rem;
-    margin: 1.5rem 0;
-    flex-wrap: wrap;
-    justify-content: space-around;
+.queue-section.collapsed .queue-board {
+    display: none;
 }
 
-.kpi-box {
+/* Trello-Style Board Layout */
+.queue-board {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    justify-content: space-between;
+}
+
+.queue-column {
+    flex: 1;
+    min-width: 0;
+    background: var(--color-bg-light);
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-primary-light);
+}
+
+.column-header h3 {
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.2rem;
+    color: var(--color-black);
+    margin: 0;
+}
+
+.column-count {
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+/* Column-Specific Header Colors */
+.queue-column:nth-child(1) .column-header h3 {
+    color: var(--color-primary);
+}
+
+.queue-column:nth-child(1) .column-count {
+    background: var(--color-primary);
+}
+
+.queue-column:nth-child(2) .column-header h3 {
+    color: #FCD34D;
+}
+
+.queue-column:nth-child(2) .column-count {
+    background: #FCD34D;
+    color: #92400E;
+}
+
+.queue-column:nth-child(3) .column-header h3 {
+    color: #34D399;
+}
+
+.queue-column:nth-child(3) .column-count {
+    background: #34D399;
+    color: #065F46;
+}
+
+/* Card Container */
+.column-cards {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    background: linear-gradient(135deg, var(--color-bg-light-purple) 0%, var(--color-bg-light-purple-darker) 100%);
-    border-radius: 0.75rem;
-    border: 3px solid var(--color-primary);
-    flex: 1;
-    min-width: 100px;
-    box-shadow: var(--shadow-primary);
+    gap: 0.75rem;
+    min-height: 100px;
 }
 
-.kpi-label {
-    font-size: 0.85rem;
-    color: var(--color-text-gray);
-    font-weight: 500;
+/* Artistic Commission Cards */
+.commission-card {
+    background: var(--color-white);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-left: 4px solid var(--color-primary);
+}
+
+.commission-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 0.5rem;
 }
 
-.kpi-value {
-    font-size: 2rem;
-    font-weight: bold;
+.card-number {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
     color: var(--color-primary);
-    font-family: 'Fredoka', sans-serif;
 }
 
-.queue-section.collapsed .queue,
-.queue-section.collapsed .queue-kpis {
-    display: none;
+.card-icon {
+    font-size: 1.2rem;
 }
 
-.queue {
-    margin: 1.5rem 0;
-}
-
-.queue-item {
+.card-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    margin: 0.5rem 0;
-    background: var(--color-bg-light);
-    border-radius: 1rem;
-    border-left: 4px solid var(--color-primary);
-    box-shadow: var(--shadow-primary);
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
-.queue-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-}
-
-.queue-number {
-    font-weight: bold;
-    color: var(--color-primary);
+.card-title {
     font-family: 'Fredoka', sans-serif;
-}
-
-.queue-status {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.9rem;
-    border-radius: 0.5rem;
-    background: var(--color-primary-pale);
-    color: var(--color-primary-dark);
-    font-weight: 500;
-    font-family: 'Fredoka', sans-serif;
-}
-
-.queue-status.in-progress {
-    background: var(--color-queue-in-progress);
-    color: var(--color-queue-in-progress-text);
-}
-
-.queue-status.finished {
-    background: var(--color-queue-finished);
-    color: var(--color-queue-finished-text);
-}
-
-.expand-icon {
-    font-size: 0.8rem;
-    transition: transform 0.3s ease;
-    margin-left: 1rem;
-}
-
-.queue-details {
-    display: none;
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    padding-left: 1rem;
-    border-top: 2px dotted var(--color-primary-light);
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.queue-item.expanded .queue-details {
-    display: block;
-}
-
-.queue-details p {
-    margin: 0.5rem 0;
-    color: var(--color-text-gray);
+    font-weight: 600;
     font-size: 0.9rem;
-    font-family: 'Fredoka', sans-serif;
+    color: var(--color-black);
+    margin: 0;
+}
+
+.card-detail {
+    font-size: 0.8rem;
+    color: var(--color-text-gray);
+    margin: 0;
+}
+
+/* Card Color Variations by Column */
+.queue-column:nth-child(1) .commission-card {
+    border-left-color: var(--color-primary);
+}
+
+.queue-column:nth-child(1) .card-number {
+    color: var(--color-primary);
+}
+
+.queue-column:nth-child(2) .commission-card {
+    border-left-color: #FCD34D;
+}
+
+.queue-column:nth-child(2) .card-number {
+    color: #D97706;
+}
+
+.queue-column:nth-child(3) .commission-card {
+    border-left-color: #34D399;
+}
+
+.queue-column:nth-child(3) .card-number {
+    color: #059669;
 }
 
 .contact-button {
@@ -607,6 +643,16 @@ footer {
 .container {
     box-shadow: var(--shadow-large);
     background: var(--color-white);
+}
+
+@media (max-width: 768px) {
+    .queue-board {
+        flex-direction: column;
+    }
+
+    .queue-column {
+        width: 100%;
+    }
 }
 
 @media (max-width: 736px) {
