@@ -14,13 +14,13 @@
     <div class="container">
         <div class="banner">
             <nav data-target="home">
-                <a href="#home">Home</a>
+                <span>Home</span>
             </nav>
             <nav data-target="terms">
-                <a href="#terms">Terms</a>
+                <span>Terms</span>
             </nav>
             <nav data-target="prices">
-                <a href="#prices">Prices</a>
+                <span>Prices</span>
             </nav>
         </div>
 
@@ -44,10 +44,10 @@
 
 
 
-            <div class="queue-section">
+            <div class="queue-section collapsed">
                 <div class="queue-section-header">
                     <h2>Commission Queue</h2>
-                    <span class="queue-expand-icon">▼</span>
+                    <span class="queue-expand-icon" style="transform: rotate(-90deg);">▼</span>
                 </div>
 
 
@@ -139,14 +139,17 @@
         <section id="terms">
             <h2>Terms of Service</h2>
             <ul class="terms-list">
-                <li>Art style is "sketchy" - this is intentional</li>
-                <li>All art delivered digitally</li>
-                <li>I reserve the right to refuse any commission</li>
-                <li>Payment required before work begins</li>
-                <li>No AI training rights - do not use my art for AI</li>
-                <li>Typical completion time: 1–2 weeks</li>
-                <li>Commissions reopen every 2–3 months</li>
+                <li>My art style is naturally sketchy, so please don't expect a fully clean or polished finish.</li>
+                <li>Product will be delivered digitally.</li>
+                <li>I reserve the right to refuse any commission request for any reason.</li>
+                <li>Work on your commission will begin after I send you the initial sketch and receive confirmation.</li>
+                <li>I do not accept commissions with deadlines. Completion usually takes 1–2 weeks after the sketch is started.</li>
+                <li>During holidays, progress may be slower, so please be patient.</li>
+                <li>Full payment is required before I begin working on your commission, depending on my current queue.</li>
+                <li>Once your commission is finished, I will ask for your email or Toyhouse account to send the high-quality version.</li>
+                <li>The customer does not have the right to use the commissioned artwork in any AI-related technology, including but not limited to training datasets, machine learning models, or any future AI-based technologies.</li>
             </ul>
+            <p style="margin-top: 1rem;">If you have any questions, feel free to ask! :D</p>
         </section>
 
 
@@ -262,6 +265,9 @@
             const hash = window.location.hash.slice(1);
             const banner = document.querySelector('.banner');
 
+            // Scroll to top when changing nav
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
             // If there's a hash, collapse the banner
             if (hash) {
                 banner.classList.add('collapsed');
@@ -318,9 +324,30 @@
             });
         }
 
+        // Handle nav clicks to allow unselecting and navigation
+        function setupNavToggle() {
+            document.querySelectorAll('nav').forEach(nav => {
+                nav.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetHash = nav.getAttribute('data-target');
+                    const currentHash = window.location.hash.slice(1);
+
+                    // If clicking the same nav, clear the hash
+                    if (currentHash === targetHash) {
+                        history.pushState('', document.title, window.location.pathname);
+                        updateActiveNav();
+                    } else {
+                        // Navigate to the target section
+                        window.location.hash = targetHash;
+                    }
+                });
+            });
+        }
+
         // Update on page load
         updateActiveNav();
         setupQueueSection();
+        setupNavToggle();
 
         // Load and render commissions from JSON
         loadCommissions().then(data => {

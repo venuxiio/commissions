@@ -87,6 +87,7 @@ body {
     background-image: url('assets/images/banner.jpg');
     background-size: cover;
     background-position: center -150px;
+    background-repeat: no-repeat;
     border-radius: 0 0 0 0;
     display: flex;
     align-items: center;
@@ -115,6 +116,8 @@ nav {
     position: relative;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
 }
 
 nav::after {
@@ -129,11 +132,10 @@ nav::after {
     pointer-events: none;
 }
 
-nav a {
+nav span {
     color: var(--color-black);
-    text-decoration: none;
     font-weight: 600;
-    font-family: 'Fredoka', sans-serif;
+    font-family: 'Fredoka', sans-serif !important;
 }
 
 nav:hover {
@@ -152,9 +154,9 @@ nav.active::after {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-nav.active a {
+nav.active span {
     color: var(--color-white);
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .profile {
@@ -256,10 +258,9 @@ nav.active a {
 
 section {
     padding: 1.5rem 2rem;
-    border-top: 1px solid var(--color-border-light);
     display: none;
     background: var(--color-white);
-    margin-top: 120px;
+    margin-top: 100px;
 }
 
 section:first-of-type {
@@ -681,8 +682,7 @@ footer {
         flex-direction: column;
     }
 
-    nav a {
-        display: block;
+    nav {
         margin: 0.5rem 0;
     }
 }
