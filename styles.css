@@ -84,7 +84,7 @@ body {
     width: 100%;
     max-width: 40rem;
     height: 100vh;
-    background-image: url('assets/images/banner.jpg');
+    background-image: url('assets/images/background.png');
     background-size: cover;
     background-position: center -150px;
     background-repeat: no-repeat;
