@@ -235,11 +235,25 @@ nav.active span {
     margin: 0;
 }
 
+.home-welcome a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.home-welcome a:hover {
+    color: var(--color-primary);
+}
+
 .status-indicators {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     gap: 0.35rem;
+    align-self: center;
+    padding-top: 1rem;
 }
 
 .status {
@@ -328,6 +342,20 @@ h2 {
     color: var(--color-black);
 }
 
+.prices-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.ref-prices-img {
+    height: 300px;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 .two-column {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -364,19 +392,17 @@ h2 {
 
 .pricing-row {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     padding: 0.75rem 1rem;
     border-bottom: 1px dotted var(--color-primary-pale);
     border-radius: 0.5rem;
     transition: background 0.3s ease;
 }
 
-.pricing-row:hover {
-    background: var(--color-bg-light);
-}
-
-.pricing-row:last-child {
-    border-bottom: none;
+.pricing-row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .pricing-type {
@@ -388,9 +414,50 @@ h2 {
     font-weight: 600;
 }
 
+.pricing-extra-right {
+    text-align: right;
+}
+
+.pricing-extra-left {
+    text-align: left;
+}
+
+.pricing-row:hover {
+    background: var(--color-bg-light);
+}
+
+.pricing-row:last-child {
+    border-bottom: none;
+}
+
 .pricing-extra {
-    font-size: 0.85em;
+    font-size: 0.7em;
     color: var(--color-text-gray-muted);
+}
+
+.faq-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.faq-item {
+    padding: 0.5rem 0;
+}
+
+.faq-item h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-black);
+    font-size: 1rem;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+}
+
+.faq-item p {
+    margin: 0;
+    color: var(--color-text-gray);
+    line-height: 1.6;
 }
 
 .note {
@@ -880,6 +947,17 @@ footer {
     .animated-arrow {
         top: 10rem !important;
         left: 2rem !important;
+    }
+
+    .prices-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ref-prices-img {
+        height: 350px;
+        width: 100%;
+        max-width: 100%;
     }
 
     .home-info-section {

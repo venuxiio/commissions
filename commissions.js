@@ -2,7 +2,7 @@ const commissionData = {
   "statuses": [
     {
       "name": "COMMS",
-      "startDate": "2025-01-01"
+      "startDate": "2036-01-01"
     },
     {
       "name": "ART TRADES",
@@ -17,38 +17,44 @@ const commissionData = {
     {
       "id": 1,
       "status": "waiting-list",
-      "title": "Character Design",
-      "description": "OC Design Commission"
+      "title": "Art trade",
+      "description": "Hu hu"
     },
     {
       "id": 2,
       "status": "waiting-list",
-      "title": "Fullbody Art",
-      "description": "Furry Commission"
+      "title": "Bust",
+      "description": ""
     },
     {
       "id": 3,
-      "status": "waiting-list",
-      "title": "Bust Portrait",
-      "description": "Character Portrait"
+      "status": "in-progress",
+      "title": "Halfbody",
+      "description": "Jayel"
     },
     {
       "id": 4,
-      "status": "waiting-list",
-      "title": "Icon Art",
-      "description": "Profile Icon"
+      "status": "in-progress",
+      "title": "Bust",
+      "description": "cat"
     },
     {
       "id": 5,
       "status": "finished",
-      "title": "Halfbody Illustration",
-      "description": "In Development"
+      "title": "Ych",
+      "description": ""
     },
     {
       "id": 6,
-      "status": "finished",
-      "title": "Commission #6",
-      "description": "Completed"
+      "status": "in-progress",
+      "title": "Complete sheet",
+      "description": "lynx"
+    },
+    {
+      "id": 7,
+      "status": "waiting-list",
+      "title": "Custom",
+      "description": ""
     }
   ]
 };
