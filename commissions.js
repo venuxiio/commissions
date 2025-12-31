@@ -1,4 +1,4 @@
-{
+const commissionData = {
   "commissions": [
     {
       "id": 1,
@@ -37,4 +37,4 @@
       "description": "Completed"
     }
   ]
-}
+};

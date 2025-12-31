@@ -185,6 +185,53 @@ nav.active span {
     margin-bottom: 1rem;
 }
 
+/* Home Section Styles */
+.home-intro {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+}
+
+.home-profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.profile-description {
+    padding: 1rem 1.5rem;
+    color: var(--color-text-gray);
+    text-align: center;
+    line-height: 1.6;
+    max-width: 16rem;
+}
+
+.home-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+    justify-content: center;
+}
+
+.home-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+    color: var(--color-primary-dark);
+    font-family: 'Schoolbell', cursive;
+}
+
+.home-welcome {
+    color: var(--color-text-gray);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
 .status-indicators {
     display: flex;
     flex-direction: column;
@@ -796,13 +843,38 @@ footer {
         gap: 1rem;
     }
 
+    .home-intro {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .home-profile-section {
+        width: 100%;
+        align-items: center;
+    }
+
+    .home-info-section {
+        text-align: center;
+        align-items: center;
+    }
+
+    .home-title {
+        font-size: 2em;
+    }
+
     .profile-image {
         width: 12rem;
         height: 12rem;
     }
 
+    .profile-description {
+        max-width: 100%;
+    }
+
     .status-indicators {
         flex-direction: column;
+        align-items: center;
     }
 
     nav {
@@ -826,4 +898,41 @@ footer {
         width: 2.5rem;
         height: 2.5rem;
     }
+
+    /* Hide bottom character on mobile */
+    .bottom-character {
+        display: none !important;
+    }
+}
+
+/* Bottom character positioning - Desktop only */
+.bottom-character {
+    position: fixed;
+    bottom: 0.625rem;
+    right: 1.25rem;
+    width: 9rem;
+    height: auto;
+    z-index: 10;
+}
+
+@keyframes squish1 {
+    0%, 100% { transform: scaleY(1) scaleX(1); }
+    50% { transform: scaleY(0.96) scaleX(1.04); }
+}
+
+@keyframes squish2 {
+    0%, 100% { transform: scaleY(1) scaleX(1); }
+    50% { transform: scaleY(0.97) scaleX(1.03); }
+}
+
+@keyframes squish3 {
+    0%, 100% { transform: scaleY(1) scaleX(1); }
+    50% { transform: scaleY(0.95) scaleX(1.05); }
+}
+
+.bottom-character img {
+    width: 100%;
+    height: auto;
+    transform-origin: bottom center;
+    animation: squish1 2.7s ease-in-out infinite, squish2 3.2s ease-in-out infinite 0.5s, squish3 2.3s ease-in-out infinite 1s;
 }
