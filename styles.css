@@ -346,7 +346,7 @@ h2 {
     display: flex;
     gap: 2rem;
     align-items: flex-start;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .ref-prices-img {
@@ -357,10 +357,11 @@ h2 {
 }
 
 .two-column {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 2rem;
     margin-bottom: 1rem;
+    justify-content: center;
+    padding-top: 2rem;
 }
 
 .list-section h3 {
