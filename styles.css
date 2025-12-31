@@ -199,6 +199,7 @@ nav.active span {
     flex-direction: column;
     align-items: center;
     flex: 0 0 auto;
+    position: relative;
 }
 
 .profile-description {
@@ -821,6 +822,30 @@ footer {
     background: var(--color-white);
 }
 
+/* Animated Arrow Styling */
+.animated-arrow {
+    width: 2rem;
+    height: auto;
+    position: absolute;
+    top: 13rem;
+    left: 0rem;
+}
+
+.arrow-path {
+    stroke: #000000 !important;
+    stroke-width: 1.5 !important;
+    fill: none !important;
+}
+
+@keyframes draw-arrow {
+    0% {
+        stroke-dashoffset: 1000 !important;
+    }
+    100% {
+        stroke-dashoffset: 0 !important;
+    }
+}
+
 @media (max-width: 768px) {
     .queue-board {
         flex-direction: column;
@@ -850,6 +875,11 @@ footer {
     .home-profile-section {
         width: 100%;
         align-items: center;
+    }
+
+    .animated-arrow {
+        top: 10rem !important;
+        left: 2rem !important;
     }
 
     .home-info-section {

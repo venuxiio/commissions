@@ -30,9 +30,45 @@
                 <div class="home-profile-section">
                     <img src="assets/images/profile.png" alt="Profile Picture" class="profile-image">
                     <p class="profile-description">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and chilling.</p>
+                   
+                    <svg
+                    class="animated-arrow"
+   width="25.484392mm"
+   height="47.411819mm"
+   viewBox="0 0 25.484392 47.411819"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-159.89931,-108.91639)">
+    <path
+       class="arrow-path" style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
+       d="m 184.88369,155.82822 c -7.84552,-3.40874 -15.69104,-6.81749 -19.85728,-10.60498 -4.16624,-3.78749 -4.6532,-7.95373 -4.62615,-10.90256 0.0271,-2.94883 0.56813,-4.68026 2.38072,-7.16918 1.81258,-2.48893 4.89668,-5.73534 7.68319,-8.00784 2.78651,-2.2725 5.27543,-3.57106 6.70927,-4.27445 1.43383,-0.70339 1.81258,-0.81161 1.9208,-0.81161 0.10821,0 -0.0541,0.10821 -0.13527,0.13527 -0.0812,0.0271 -0.0812,-0.0271 -0.32464,-0.18938 -0.24348,-0.16232 -0.73045,-0.43286 -1.1092,-0.83866 -0.37875,-0.4058 -0.64928,-0.94687 0.21643,-1.62321 0.86571,-0.67633 2.86768,-1.48794 4.30151,-1.86669 1.43384,-0.37875 2.29955,-0.32464 2.54303,0.0541 0.24348,0.37875 -0.13527,1.08214 -0.86572,2.43481 -0.73044,1.35268 -1.81258,3.35464 -2.89472,5.3566"
+       id="path114" />
+  </g>
+</svg>
                 </div>
                 <div class="home-info-section">
                     <h1 class="home-title">Venuxiio</h1>
+                    <script>
+                        // Animate arrow path with exact length
+                        const arrowPath = document.querySelector('.arrow-path');
+                        if (arrowPath) {
+                            const pathLength = arrowPath.getTotalLength();
+                            arrowPath.style.strokeDasharray = pathLength;
+                            arrowPath.style.strokeDashoffset = pathLength;
+
+                            // Trigger animation
+                            setTimeout(() => {
+                                arrowPath.style.transition = 'stroke-dashoffset 2.5s ease-in-out';
+                                arrowPath.style.strokeDashoffset = '0';
+                            }, 100);
+                        }
+                    </script>
                     <p class="home-welcome">Welcome to my commission page! Here you can find commission info, T.O.S., and F.A.Q.</p>
                     <div class="status-indicators" id="status-indicators"></div>
                 </div>
