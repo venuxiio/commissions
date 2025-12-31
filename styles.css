@@ -207,6 +207,8 @@ nav.active span {
     text-align: center;
     line-height: 1.6;
     max-width: 16rem;
+    font-family: 'Schoolbell', cursive;
+    font-size: 1.2rem;
 }
 
 .home-info-section {
@@ -241,28 +243,30 @@ nav.active span {
 
 .status {
     padding: 0.3rem 0;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 1.1rem;
     font-family: 'Fredoka', sans-serif;
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     transition: all 0.3s ease;
     background: transparent;
     color: var(--color-black);
 }
 
-.status::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: inline-block;
+.status-symbol {
+    font-size: 1.3rem;
+    font-weight: bold;
     flex-shrink: 0;
+    animation: pulse-symbol 2s ease-in-out infinite;
 }
 
-@keyframes pulse-dot {
+.status.closed .status-symbol {
+    animation: none;
+}
+
+@keyframes pulse-symbol {
     0%, 100% {
         opacity: 1;
         transform: scale(1);
@@ -272,7 +276,6 @@ nav.active span {
         transform: scale(1.2);
     }
 }
-
 @keyframes blob-morph {
     0% {
         border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
@@ -291,17 +294,12 @@ nav.active span {
     }
 }
 
-
-
-.status.open::before {
-    background: #10B981;
-    box-shadow: 0 0 16px rgba(16, 185, 129, 0.9), 0 0 4px rgba(16, 185, 129, 1);
-    animation: pulse-dot 2s ease-in-out infinite;
+.status.open .status-symbol {
+    color: #10B981;
 }
 
-.status.closed::before {
-    background: #EC4899;
-    box-shadow: 0 0 10px rgba(236, 72, 153, 0.7), 0 0 3px rgba(236, 72, 153, 1);
+.status.closed .status-symbol {
+    color: #EC4899;
 }
 
 section {

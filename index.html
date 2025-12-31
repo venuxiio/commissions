@@ -34,11 +34,7 @@
                 <div class="home-info-section">
                     <h1 class="home-title">Venuxiio</h1>
                     <p class="home-welcome">Welcome to my commission page! Here you can find commission info, T.O.S., and F.A.Q.</p>
-                    <div class="status-indicators">
-                        <span class="status open">COMMS</span>
-                        <span class="status closed">ART TRADES</span>
-                        <span class="status closed">REQUESTS</span>
-                    </div>
+                    <div class="status-indicators" id="status-indicators"></div>
                 </div>
             </div>
 
@@ -195,6 +191,37 @@
     </div>
 
     <script>
+        // Render status indicators based on start dates
+        function renderStatusIndicators(data) {
+            const statusContainer = document.getElementById('status-indicators');
+            if (!statusContainer || !data || !data.statuses) {
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            data.statuses.forEach(status => {
+                const startDate = new Date(status.startDate);
+                startDate.setHours(0, 0, 0, 0);
+                const isOpen = today >= startDate;
+
+                const statusDiv = document.createElement('div');
+                statusDiv.className = `status ${isOpen ? 'open' : 'closed'}`;
+
+                const symbolSpan = document.createElement('span');
+                symbolSpan.className = 'status-symbol';
+                symbolSpan.textContent = isOpen ? '✓' : '✗';
+
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = status.name;
+
+                statusDiv.appendChild(symbolSpan);
+                statusDiv.appendChild(nameSpan);
+                statusContainer.appendChild(statusDiv);
+            });
+        }
+
         // Render the queue board from commission data
         function renderQueueBoard(data) {
             const queueBoard = document.getElementById('queue-board');
@@ -360,7 +387,8 @@
         setupQueueSection();
         setupNavToggle();
 
-        // Render commissions from commission data
+        // Render status indicators and commissions from commission data
+        renderStatusIndicators(commissionData);
         renderQueueBoard(commissionData);
 
         // Update when hash changes
