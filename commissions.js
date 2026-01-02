@@ -34,7 +34,7 @@ const commissionData = {
     },
     {
       "id": 4,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Bust",
       "description": "cat"
     },
