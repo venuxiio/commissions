@@ -28,7 +28,7 @@ const commissionData = {
     },
     {
       "id": 3,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Halfbody",
       "description": "Jayel"
     },
