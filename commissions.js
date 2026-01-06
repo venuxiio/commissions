@@ -22,7 +22,7 @@ const commissionData = {
     },
     {
       "id": 2,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Bust",
       "description": ""
     },
