@@ -704,6 +704,26 @@ h2 {
     background: var(--color-primary-dark);
 }
 
+.commission-form-button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Fredoka', sans-serif;
+    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+}
+
+.commission-form-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, #7C3AED 100%);
+}
+
 footer {
     padding: 2.5rem 2rem 1.5rem;
     border-radius: 1rem 1rem 0 0;
