@@ -639,10 +639,44 @@
             });
         }
 
+        // Control commission form button availability
+        function updateCommissionFormButton() {
+            const commissionButton = document.querySelector('.commission-form-button');
+            if (!commissionButton || !commissionData.statuses) {
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // Find the COMMS status
+            const commsStatus = commissionData.statuses.find(status => status.name === 'COMMS');
+            if (!commsStatus) {
+                return;
+            }
+
+            const startDate = new Date(commsStatus.startDate);
+            startDate.setHours(0, 0, 0, 0);
+            const isOpen = today >= startDate;
+
+            if (isOpen) {
+                commissionButton.disabled = false;
+                commissionButton.style.opacity = '1';
+                commissionButton.style.cursor = 'pointer';
+                commissionButton.onclick = null;
+            } else {
+                commissionButton.disabled = true;
+                commissionButton.style.opacity = '0.5';
+                commissionButton.style.cursor = 'not-allowed';
+                commissionButton.onclick = (e) => e.preventDefault();
+            }
+        }
+
         // Update on page load
         updateActiveNav();
         setupQueueSection();
         setupNavToggle();
+        updateCommissionFormButton();
 
         // Render status indicators and commissions from commission data
         renderStatusIndicators(commissionData);
