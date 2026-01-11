@@ -2,6 +2,32 @@
 <html lang="en">
 
 <head>
+    <!-- Google Analytics - Loads only after consent -->
+    <script id="ga-script">
+      // Function to load Google Analytics
+      function loadGoogleAnalytics() {
+        // Create and append the gtag.js script
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HY4341SKTQ';
+        document.head.appendChild(script);
+
+        // Initialize Google Analytics
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HY4341SKTQ', {
+          'anonymize_ip': true,
+          'cookie_flags': 'SameSite=None;Secure'
+        });
+      }
+
+      // Check if user has already given consent
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        loadGoogleAnalytics();
+      }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Pragma" content="no-cache">
@@ -446,6 +472,20 @@
                 <p class="footer-note">Commissions crafted with passion and creativity</p>
             </div>
         </footer>
+
+        <!-- Cookie Consent Banner -->
+        <div id="cookie-consent-banner" class="cookie-consent-banner">
+            <div class="cookie-consent-content">
+                <div class="cookie-consent-text">
+                    <h3>🍪 Hey there!</h3>
+                    <p>I use cookies to see how many people visit my site and which pages are most popular. It helps me improve your experience! No weird tracking, I promise :)</p>
+                </div>
+                <div class="cookie-consent-buttons">
+                    <button id="cookie-accept" class="cookie-btn cookie-btn-accept">Sounds good!</button>
+                    <button id="cookie-decline" class="cookie-btn cookie-btn-decline">No thanks</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -661,14 +701,19 @@
             const isOpen = today >= startDate;
 
             if (isOpen) {
-                commissionButton.disabled = false;
+                commissionButton.textContent = 'Request a Commission';
                 commissionButton.style.opacity = '1';
                 commissionButton.style.cursor = 'pointer';
+                commissionButton.style.pointerEvents = 'auto';
                 commissionButton.onclick = null;
             } else {
-                commissionButton.disabled = true;
+                // Format the date as "Month Day, Year" (e.g., "January 12, 2026")
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = startDate.toLocaleDateString('en-US', options);
+                commissionButton.innerHTML = `Commissions open on <span style="white-space: nowrap;">${formattedDate}</span>`;
                 commissionButton.style.opacity = '0.5';
                 commissionButton.style.cursor = 'not-allowed';
+                commissionButton.style.pointerEvents = 'none';
                 commissionButton.onclick = (e) => e.preventDefault();
             }
         }
@@ -730,6 +775,43 @@
         }
 
         setupImageModal();
+
+        // Cookie Consent Banner Logic
+        function initCookieConsent() {
+            const banner = document.getElementById('cookie-consent-banner');
+            const acceptBtn = document.getElementById('cookie-accept');
+            const declineBtn = document.getElementById('cookie-decline');
+
+            // Check if user has already made a choice
+            const consent = localStorage.getItem('cookieConsent');
+
+            // Show banner if no consent choice has been made
+            if (!consent) {
+                setTimeout(() => {
+                    banner.classList.add('show');
+                }, 500);
+            }
+
+            // Handle Accept button
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'accepted');
+                banner.classList.remove('show');
+
+                // Load Google Analytics
+                if (typeof loadGoogleAnalytics === 'function') {
+                    loadGoogleAnalytics();
+                }
+            });
+
+            // Handle Decline button
+            declineBtn.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'declined');
+                banner.classList.remove('show');
+            });
+        }
+
+        // Initialize cookie consent on page load
+        initCookieConsent();
     </script>
 
     <!-- Bottom right character - Desktop only -->
