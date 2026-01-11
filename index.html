@@ -605,6 +605,15 @@
             const hash = window.location.hash.slice(1);
             const banner = document.querySelector('.banner');
 
+            // Track navigation in Google Analytics
+            if (hash && typeof gtag === 'function') {
+                gtag('event', 'navigation_click', {
+                    'event_category': 'Navigation',
+                    'event_label': hash,
+                    'value': 1
+                });
+            }
+
             // Scroll to top when changing nav
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
