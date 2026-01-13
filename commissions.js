@@ -23,8 +23,8 @@ const commissionData = {
     {
       "id": 2,
       "status": "in-progress",
-      "title": "Bust",
-      "description": ""
+      "title": "Custom",
+      "description": "Raccoon"
     },
     {
       "id": 3,
@@ -34,9 +34,9 @@ const commissionData = {
     },
     {
       "id": 4,
-      "status": "finished",
-      "title": "Bust",
-      "description": "cat"
+      "status": "waiting-list",
+      "title": "Fullbody",
+      "description": "Marlon"
     },
     {
       "id": 5,
@@ -52,9 +52,9 @@ const commissionData = {
     },
     {
       "id": 7,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Custom",
-      "description": ""
+      "description": "husky"
     }
   ]
 };
