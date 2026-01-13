@@ -5,13 +5,15 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HY4341SKTQ"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', 'G-HY4341SKTQ', {
-        'anonymize_ip': true
-      });
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-HY4341SKTQ', {
+            send_page_view: false // We'll handle page views manually
+            // ,'debug_mode': true
+            // ,'transport_type': 'xhr'
+        });
     </script>
 
     <meta charset="UTF-8">
@@ -77,11 +79,13 @@
                         }
                     </script>
                     <p class="home-welcome">Welcome to my personal space! Here you'll find info about commissions,
-                        <a href="#terms">T.O.S</a>., the <a href="#faq">F.A.Q</a>, my gallery (examples), and more, feel free to
+                        <a href="#terms">T.O.S</a>., the <a href="#faq">F.A.Q</a>, my gallery (examples), and more, feel
+                        free to
                         take a look :D
                     </p>
                     <div class="status-indicators" id="status-indicators"></div>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header" target="_blank" class="commission-form-button">Request a Commission</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
+                        target="_blank" class="commission-form-button">Request a Commission</a>
                 </div>
             </div>
 
@@ -106,10 +110,12 @@
 
         <section id="prices">
             <h2>Commission Prices</h2>
-            <p style="margin-top: 1rem;"class="home-welcome">Before checking my prices please check my <a href="#terms">T.O.S</a> first!</p>
-            <p style="margin-top: 1rem;"class="home-welcome">Anyone who has commissioned me before receives a 10% discount.</p>
-            <p style="margin-top: 1rem;"class="home-welcome">Choosing no shading AT ALL applies a 15% discount.</p>
-        
+            <p style="margin-top: 1rem;" class="home-welcome">Before checking my prices please check my <a
+                    href="#terms">T.O.S</a> first!</p>
+            <p style="margin-top: 1rem;" class="home-welcome">Anyone who has commissioned me before receives a 10%
+                discount.</p>
+            <p style="margin-top: 1rem;" class="home-welcome">Choosing no shading AT ALL applies a 15% discount.</p>
+
 
             <div class="prices-content">
                 <div class="pricing-table">
@@ -193,8 +199,12 @@
                         </div>
                     </div>
                     <div style="padding-top: 1.5rem;">
-                        <img src="assets/images/chibiex.png" alt="Render comparison - 1 is more detailed than 2" class="chibi-comparison-img">
-                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-gray); text-align: center;">Option 2 costs 40% less than Option 1 since it's less sketchy and better rendered, plus another 15% off for no shading, meaning Option 1 is €42 and Option 2 is €25,5.</p>
+                        <img src="assets/images/chibiex.png" alt="Render comparison - 1 is more detailed than 2"
+                            class="chibi-comparison-img">
+                        <p
+                            style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-gray); text-align: center;">
+                            Option 2 costs 40% less than Option 1 since it's less sketchy and better rendered, plus
+                            another 15% off for no shading, meaning Option 1 is €42 and Option 2 is €25,5.</p>
                     </div>
                 </div>
                 <img src="assets/images/refprices.png" alt="Reference Prices" class="ref-prices-img">
@@ -224,7 +234,8 @@
 
         <section id="examples">
             <h2>Commission Examples</h2>
-            <p style="margin-top: 1rem;" class="home-welcome">Here are some examples of different commission types I offer! Click on any image to view it in full.</p>
+            <p style="margin-top: 1rem;" class="home-welcome">Here are some examples of different commission types I
+                offer! Click on any image to view it in full.</p>
 
             <div class="examples-gallery">
                 <!-- Bust Examples -->
@@ -241,9 +252,11 @@
                                 <img src="assets/images/examples/bust/bust2.png" alt="Bust example 2">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.png" data-title="Bust">
+                        <div class="example-card" data-image="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.png"
+                            data-title="Bust">
                             <div class="example-image">
-                                <img src="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.png" alt="Bust example 3">
+                                <img src="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.png"
+                                    alt="Bust example 3">
                             </div>
                         </div>
                     </div>
@@ -253,17 +266,20 @@
                 <div class="example-type-group">
                     <h3 class="example-type-title">Halfbody</h3>
                     <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody.png" data-title="Halfbody">
+                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody.png"
+                            data-title="Halfbody">
                             <div class="example-image">
                                 <img src="assets/images/examples/halfbody/halfbody.png" alt="Halfbody example 1">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody2.png" data-title="Halfbody">
+                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody2.png"
+                            data-title="Halfbody">
                             <div class="example-image">
                                 <img src="assets/images/examples/halfbody/halfbody2.png" alt="Halfbody example 2">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/halfbody/239.png" data-title="Halfbody">
+                        <div class="example-card" data-image="assets/images/examples/halfbody/239.png"
+                            data-title="Halfbody">
                             <div class="example-image">
                                 <img src="assets/images/examples/halfbody/239.png" alt="Halfbody example 3">
                             </div>
@@ -275,17 +291,20 @@
                 <div class="example-type-group">
                     <h3 class="example-type-title">Knee up</h3>
                     <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup.png" data-title="Knee up">
+                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup.png"
+                            data-title="Knee up">
                             <div class="example-image">
                                 <img src="assets/images/examples/kneeup/kneeup.png" alt="Knee up example 1">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup2.png" data-title="Knee up">
+                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup2.png"
+                            data-title="Knee up">
                             <div class="example-image">
                                 <img src="assets/images/examples/kneeup/kneeup2.png" alt="Knee up example 2">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup3.png" data-title="Knee up">
+                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup3.png"
+                            data-title="Knee up">
                             <div class="example-image">
                                 <img src="assets/images/examples/kneeup/kneeup3.png" alt="Knee up example 3">
                             </div>
@@ -297,19 +316,24 @@
                 <div class="example-type-group">
                     <h3 class="example-type-title">Fullbody</h3>
                     <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody.png" data-title="Fullbody">
+                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody.png"
+                            data-title="Fullbody">
                             <div class="example-image">
                                 <img src="assets/images/examples/fullbody/fullbody.png" alt="Fullbody example 1">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody1.png" data-title="Fullbody">
+                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody1.png"
+                            data-title="Fullbody">
                             <div class="example-image">
                                 <img src="assets/images/examples/fullbody/fullbody1.png" alt="Fullbody example 2">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.png" data-title="Fullbody">
+                        <div class="example-card"
+                            data-image="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.png"
+                            data-title="Fullbody">
                             <div class="example-image">
-                                <img src="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.png" alt="Fullbody example 3">
+                                <img src="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.png"
+                                    alt="Fullbody example 3">
                             </div>
                         </div>
                     </div>
@@ -319,19 +343,23 @@
                 <div class="example-type-group">
                     <h3 class="example-type-title">Chibi</h3>
                     <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/chibi/chibi.png" data-title="Chibi">
+                        <div class="example-card" data-image="assets/images/examples/chibi/chibi.png"
+                            data-title="Chibi">
                             <div class="example-image">
                                 <img src="assets/images/examples/chibi/chibi.png" alt="Chibi example 1">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/chibi/chibi1.png" data-title="Chibi">
+                        <div class="example-card" data-image="assets/images/examples/chibi/chibi1.png"
+                            data-title="Chibi">
                             <div class="example-image">
                                 <img src="assets/images/examples/chibi/chibi1.png" alt="Chibi example 2">
                             </div>
                         </div>
-                        <div class="example-card" data-image="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.png" data-title="Chibi">
+                        <div class="example-card"
+                            data-image="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.png" data-title="Chibi">
                             <div class="example-image">
-                                <img src="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.png" alt="Chibi example 3">
+                                <img src="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.png"
+                                    alt="Chibi example 3">
                             </div>
                         </div>
                     </div>
@@ -341,7 +369,8 @@
                 <div class="example-type-group">
                     <h3 class="example-type-title">Custom</h3>
                     <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/custom/custom.png" data-title="Custom">
+                        <div class="example-card" data-image="assets/images/examples/custom/custom.png"
+                            data-title="Custom">
                             <div class="example-image">
                                 <img src="assets/images/examples/custom/custom.png" alt="Custom example">
                             </div>
@@ -365,8 +394,10 @@
             <ul class="terms-list">
                 <li class="home-welcome"> Please check the <a href="#faq">F.A.Q</a> before asking me a question</li>
                 <li>I have the right to post personnal art between commissions.</li>
-                <li><u>Full payment</u> is required before I begin your commission. Payments are accepted via PayPal only, in EUR. The client is responsible for covering any currency conversion fees.</li>
-                <li>My art style is naturally sketchy, so please don't expect a fully clean or polished finish unless you choose add the +40% option for better render/ less sketchy. </li>
+                <li><u>Full payment</u> is required before I begin your commission. Payments are accepted via PayPal
+                    only, in EUR. The client is responsible for covering any currency conversion fees.</li>
+                <li>My art style is naturally sketchy, so please don't expect a fully clean or polished finish unless
+                    you choose add the +40% option for better render/ less sketchy. </li>
                 <li>Product will be delivered digitally.</li>
                 <li>I reserve the right to refuse any commission request for any reason.</li>
                 <li>Work on your commission will begin after I send you the initial sketch and receive confirmation.
@@ -456,7 +487,7 @@
             <div class="footer-bottom">
                 <p>&copy; 2025 Venuxiio. All rights reserved.</p>
                 <p class="footer-note">Commissions crafted with passion and creativity</p>
-                <p class="footer-note" style="font-size: 0.75rem; margin-top: 0.5rem;">Last updated: January 11, 2026 at 12:24</p>
+                <p class="footer-note" style="font-size: 0.75rem; margin-top: 0.5rem;">Last updated: January 11, 2026 at 18:44</p>
             </div>
         </footer>
 
@@ -580,14 +611,12 @@
             const banner = document.querySelector('.banner');
 
             // Track navigation in Google Analytics
-            if (hash && typeof gtag === 'function') {
-                console.log('Tracking navigation:', hash);
-                gtag('event', 'navigation_click', {
-                    'event_category': 'Navigation',
-                    'event_label': hash,
-                    'value': 1
-                });
-            }
+            console.log('Tracking navigation:', hash || 'Welcome');
+            gtag('event', 'page_view', {
+                page_path: window.location.hash,
+                page_title: hash || 'Welcome',
+                page_location: window.location.href
+            });
 
             // Scroll to top when changing nav
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -732,6 +761,11 @@
                     modalTitle.textContent = title;
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
+                    gtag('event', 'image_view', {
+                        image_id: imageSrc,
+                        image_name: title
+                    });
+
                 });
             });
 
