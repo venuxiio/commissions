@@ -26,12 +26,18 @@ const commissionData = {
       "title": "Custom",
       "description": "Raccoon"
     },
-    // {
-    //   "id": 3,
-    //   "status": "finished",
-    //   "title": "Halfbody",
-    //   "description": "Jayel"
-    // },
+        {
+      "id": 8,
+      "status": "waiting-list",
+      "title": "Custom",
+      "description": "Raccoon"
+    },
+    {
+      "id": 3,
+      "status": "waiting-list",
+      "title": "Halfbody",
+      "description": "Blighted_07"
+    },
     {
       "id": 4,
       "status": "waiting-list",
