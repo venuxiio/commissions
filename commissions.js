@@ -40,16 +40,16 @@ const commissionData = {
     },
     {
       "id": 4,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Fullbody",
       "description": "Marlon"
     },
-    // {
-    //   "id": 5,
-    //   "status": "finished",
-    //   "title": "Ych",
-    //   "description": ""
-    // },
+    {
+      "id": 5,
+      "status": "in-progress",
+      "title": "Custom",
+      "description": "miz.inu"
+    },
     {
       "id": 6,
       "status": "finished",
@@ -61,6 +61,22 @@ const commissionData = {
       "status": "finished",
       "title": "Custom",
       "description": "husky"
+    },
+    {
+      "id": 8,
+      "status": "in-waiting-list",
+      "title": "Fullbody",
+      "description": "LeoIsMexican"
+    },
+    {
+      "id": 9,
+      "status": "finished",
+      "title": "Fullbody",
+      "description": "LeoIsMexican"
     }
   ]
+    
+    
+
+    
 };
