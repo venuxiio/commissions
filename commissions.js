@@ -52,13 +52,13 @@ const commissionData = {
     // },
     {
       "id": 6,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Complete sheet",
       "description": "lynx"
     },
     {
       "id": 7,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Custom",
       "description": "husky"
     }
