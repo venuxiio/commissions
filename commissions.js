@@ -70,7 +70,7 @@ const commissionData = {
     },
     {
       "id": 9,
-      "status": "finished",
+      "status": "in-waiting-list",
       "title": "Fullbody",
       "description": "LeoIsMexican"
     }
