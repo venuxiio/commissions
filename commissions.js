@@ -2,7 +2,7 @@ const commissionData = {
   "statuses": [
     {
       "name": "COMMS",
-      "startDate": "2026-03-12"
+      "startDate": "2026-05-12"
     },
     {
       "name": "ART TRADES",
