@@ -64,13 +64,7 @@ const commissionData = {
     },
     {
       "id": 8,
-      "status": "in-waiting-list",
-      "title": "Fullbody",
-      "description": "LeoIsMexican"
-    },
-    {
-      "id": 9,
-      "status": "in-waiting-list",
+      "status": "finished",
       "title": "Fullbody",
       "description": "LeoIsMexican"
     }
