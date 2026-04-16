@@ -17,24 +17,24 @@ const commissionData = {
     {
       "id": 1,
       "status": "waiting-list",
-      "title": "Art trade",
-      "description": "Hu hu"
+      "title": "Sketch bust+greyscale",
+      "description": "Duneeau"
     },
     {
       "id": 2,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Custom",
-      "description": "Raccoon"
+      "description": "Jememez.png"
     },
         {
       "id": 8,
       "status": "waiting-list",
       "title": "Custom",
-      "description": "Raccoon"
+      "description": "Alee.era"
     },
     {
       "id": 3,
-      "status": "in-progress",
+      "status": "waiting-list",
       "title": "Halfbody",
       "description": "Blighted_07"
     },
@@ -42,7 +42,7 @@ const commissionData = {
       "id": 4,
       "status": "in-progress",
       "title": "Fullbody",
-      "description": "Marlon"
+      "description": "Marlom"
     },
     {
       "id": 5,
@@ -53,20 +53,38 @@ const commissionData = {
     {
       "id": 6,
       "status": "finished",
-      "title": "Complete sheet",
-      "description": "lynx"
+      "title": "Sketch bust",
+      "description": "Risa"
     },
     {
       "id": 7,
-      "status": "finished",
-      "title": "Custom",
-      "description": "husky"
+      "status": "waiting-list",
+      "title": "Sketch halfbody",
+      "description": "Melfishiee"
     },
     {
       "id": 8,
       "status": "finished",
-      "title": "Fullbody",
-      "description": "LeoIsMexican"
+      "title": "Sketch fullbody",
+      "description": "Crabby_cove"
+    }
+    {
+      "id": 9,
+      "status": "in-progress",
+      "title": "Two halfbodies",
+      "description": "Landspeeda"
+    }
+    {
+      "id": 10,
+      "status": "waiting-list",
+      "title": "Sketch 2 busts + 1 halfbody",
+      "description": "Rakkyroden"
+    }
+    {
+      "id": 11,
+      "status": "waiting-list",
+      "title": "Sketch halfbody",
+      "description": "iiangelrodriguez"
     }
   ]
     
