@@ -1,10 +1,5 @@
 const commissionData = {
-  "limits": [
-    { "category": "fullbody", "max": 2, "label": "Fullbody" },
-    { "category": "custom", "max": 1, "label": "Custom" },
-    { "category": "refsheet", "max": 1, "label": "Reference Sheet" },
-    { "category": "regular", "max": 5, "label": "Regular (Bust/Halfbody/Knee up/Chibi)" }
-  ],
+  "maxSlots": 10,
   "statuses": [
     {
       "name": "COMMS",
