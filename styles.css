@@ -425,6 +425,16 @@ h2 {
     font-weight: 600;
 }
 
+.slot-counter {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-text-gray-muted);
+}
+
+.slot-counter.full {
+    color: #f44336;
+}
+
 .pricing-extra-right {
     text-align: right;
 }

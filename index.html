@@ -119,91 +119,91 @@
 
             <div class="prices-content">
                 <div class="pricing-table">
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="regular">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Bust</span>
-                            <span class="pricing-cost">€30</span>
+                            <span class="pricing-cost">€30 <span class="slot-counter"></span></span>
                         </div>
                         <div class="pricing-row-extra pricing-extra pricing-extra-right">
                             +€25 per extra character
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="regular">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Halfbody</span>
-                            <span class="pricing-cost">€40</span>
+                            <span class="pricing-cost">€40 <span class="slot-counter"></span></span>
                         </div>
                         <div class="pricing-row-extra pricing-extra pricing-extra-right">+€30 per extra character
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="regular">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Knee up</span>
-                            <span class="pricing-cost">€60</span>
+                            <span class="pricing-cost">€60 <span class="slot-counter"></span></span>
                         </div>
                         <div class="pricing-row-extra pricing-extra pricing-extra-right">+€50 per extra character
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="fullbody">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Fullbody</span>
-                            <span class="pricing-cost">€70</span>
+                            <span class="pricing-cost">€70 <span class="slot-counter"></span></span>
                         </div>
                         <div class="pricing-row-extra pricing-extra pricing-extra-right">+€60 per extra character</div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="regular">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Chibi</span>
-                            <span class="pricing-cost">€30</span>
+                            <span class="pricing-cost">€30 <span class="slot-counter"></span></span>
                         </div>
                         <div class="pricing-row-extra pricing-extra pricing-extra-right">+€25 per extra character</div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="custom">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Custom</span>
-                            <span class="pricing-cost">€80+</span>
+                            <span class="pricing-cost">€80+ <span class="slot-counter"></span></span>
                         </div>
                         <div class="pricing-row-extra pricing-extra pricing-extra-left">Fullbody by default. The final price will vary based
                             on character complexity and will include a moodboard plus an assigned animal
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="refsheet">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Reference sheet</span>
-                            <span class="pricing-cost">€200+</span>
+                            <span class="pricing-cost">€200+ <span class="slot-counter"></span></span>
                         </div>
                         <div class="pricing-row-extra pricing-extra pricing-extra-left">Check image in example
                         </div>
                     </div>
                     <div style="padding-top:2rem;"><h3 style="font-family:'Fredoka',sans-serif;color:var(--color-primary);">Sketch Prices</h3></div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="sketch">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Sketch Bust</span>
-                            <span class="pricing-cost">€15</span>
+                            <span class="pricing-cost">€15 <span class="slot-counter">Unlimited</span></span>
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="sketch">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Sketch Halfbody</span>
-                            <span class="pricing-cost">€24</span>
+                            <span class="pricing-cost">€24 <span class="slot-counter">Unlimited</span></span>
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="sketch">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Sketch Knee up</span>
-                            <span class="pricing-cost">€30</span>
+                            <span class="pricing-cost">€30 <span class="slot-counter">Unlimited</span></span>
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="sketch">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Sketch Fullbody</span>
-                            <span class="pricing-cost">€40</span>
+                            <span class="pricing-cost">€40 <span class="slot-counter">Unlimited</span></span>
                         </div>
                     </div>
-                    <div class="pricing-row">
+                    <div class="pricing-row" data-category="sketch">
                         <div class="pricing-row-header">
                             <span class="pricing-type">Sketch Chibi</span>
-                            <span class="pricing-cost">€15</span>
+                            <span class="pricing-cost">€15 <span class="slot-counter">Unlimited</span></span>
                         </div>
                     </div>
                     <div style="padding-top:2rem;">Options with additional charges</div>
@@ -778,6 +778,44 @@
             }
         }
 
+        // Render slot counters on pricing rows
+        function renderSlotCounters(data) {
+            if (!data || !data.commissions || !data.limits) return;
+
+            // Count active commissions by category
+            const counts = { fullbody: 0, custom: 0, refsheet: 0, regular: 0 };
+
+            data.commissions.forEach(c => {
+                if (c.status === 'finished') return;
+                const title = c.title.toLowerCase();
+
+                if (title.includes('sketch')) return; // unlimited, skip
+                if (title.includes('fullbody')) counts.fullbody++;
+                else if (title.includes('custom')) counts.custom++;
+                else if (title.includes('reference')) counts.refsheet++;
+                else counts.regular++;
+            });
+
+            // Build a lookup from limits
+            const limitMap = {};
+            data.limits.forEach(l => { limitMap[l.category] = l.max; });
+
+            // Update each pricing row's slot counter
+            document.querySelectorAll('.pricing-row[data-category]').forEach(row => {
+                if (row.dataset.category === 'sketch') return; // already shows "Unlimited"
+                const category = row.dataset.category;
+                const counter = row.querySelector('.slot-counter');
+                if (!counter || !limitMap[category]) return;
+
+                const max = limitMap[category];
+                const used = counts[category] || 0;
+                const remaining = Math.max(0, max - used);
+
+                counter.textContent = `${remaining}/${max} available`;
+                if (remaining === 0) counter.classList.add('full');
+            });
+        }
+
         // Update on page load
         updateActiveNav();
         setupQueueSection();
@@ -787,6 +825,7 @@
         // Render status indicators and commissions from commission data
         renderStatusIndicators(commissionData);
         renderQueueBoard(commissionData);
+        renderSlotCounters(commissionData);
 
         // Update when hash changes
         window.addEventListener('hashchange', updateActiveNav);
