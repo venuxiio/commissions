@@ -18,74 +18,94 @@ const commissionData = {
       "id": 1,
       "status": "waiting-list",
       "title": "Sketch bust+greyscale",
-      "description": "Duneeau"
+      "description": "Duneeau",
+      "paid": false
     },
     {
       "id": 2,
       "status": "finished",
       "title": "Custom",
-      "description": "Jememez.png"
-    },
-        {
-      "id": 8,
-      "status": "waiting-list",
-      "title": "Custom",
-      "description": "Alee.era"
+      "description": "Jememez.png",
+      "paid": true
     },
     {
       "id": 3,
       "status": "waiting-list",
       "title": "Halfbody",
-      "description": "Blighted_07"
+      "description": "Blighted_07",
+      "paid": false
     },
     {
       "id": 4,
       "status": "in-progress",
       "title": "Fullbody",
-      "description": "Marlom"
+      "description": "Marlom",
+      "paid": true
     },
     {
       "id": 5,
-      "status": "in-progress",
-      "title": "Custom",
-      "description": "miz.inu"
+      "status": "waiting-list",
+      "title": "?",
+      "description": "jesus.rocha",
+      "paid": false
     },
     {
       "id": 6,
       "status": "finished",
       "title": "Sketch bust",
-      "description": "Risa"
+      "description": "Risa",
+      "paid": true
     },
     {
       "id": 7,
       "status": "waiting-list",
       "title": "Sketch halfbody",
-      "description": "Melfishiee"
+      "description": "Melfishiee",
+      "paid": true
     },
     {
       "id": 8,
       "status": "finished",
       "title": "Sketch fullbody",
-      "description": "Crabby_cove"
-    }
+      "description": "Crabby_cove",
+      "paid": true
+    },
     {
       "id": 9,
       "status": "in-progress",
       "title": "Two halfbodies",
-      "description": "Landspeeda"
-    }
+      "description": "Landspeeda",
+      "paid": true
+    },
     {
       "id": 10,
       "status": "waiting-list",
       "title": "Sketch 2 busts + 1 halfbody",
-      "description": "Rakkyroden"
-    }
+      "description": "Rakkyroden",
+      "paid": true
+    },
     {
       "id": 11,
       "status": "waiting-list",
       "title": "Sketch halfbody",
-      "description": "iiangelrodriguez"
-    }
+      "description": "iiangelrodriguez",
+      "paid": true
+    },
+    {
+      "id": 12,
+      "status": "waiting-list",
+      "title": "Custom",
+      "description": "Alee.era",
+      "paid": false
+    },
+    {
+      "id": 13,
+      "status": "waiting-list",
+      "title": "Sketch fullbody",
+      "description": "H.z.a3_",
+      "paid": true
+    },
+    
   ]
     
     

@@ -589,7 +589,12 @@
                     cardNumber.className = 'card-number';
                     cardNumber.textContent = `#${commission.id}`;
 
+                    const paidDot = document.createElement('span');
+                    paidDot.className = `paid-dot ${commission.paid ? 'paid' : 'unpaid'}`;
+                    paidDot.title = commission.paid ? 'Paid' : 'Unpaid';
+
                     cardHeader.appendChild(cardNumber);
+                    cardHeader.appendChild(paidDot);
 
                     const cardContent = document.createElement('div');
                     cardContent.className = 'card-content';

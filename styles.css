@@ -627,8 +627,8 @@ h2 {
 
 .card-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
     margin-bottom: 0.5rem;
 }
 
@@ -637,6 +637,22 @@ h2 {
     font-weight: 700;
     font-size: 1rem;
     color: var(--color-primary);
+}
+
+.paid-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.paid-dot.paid {
+    background-color: #4caf50;
+}
+
+.paid-dot.unpaid {
+    background-color: #f44336;
 }
 
 .card-icon {
