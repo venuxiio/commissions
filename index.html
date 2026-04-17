@@ -84,7 +84,6 @@
                         take a look :D
                     </p>
                     <div class="status-indicators" id="status-indicators"></div>
-                    <p id="slot-counter" class="home-welcome" style="margin-top:0.5rem; margin-bottom:0.25rem;"></p>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
                         target="_blank" class="commission-form-button">Request a Commission</a>
                 </div>
@@ -113,8 +112,8 @@
             <h2>Commission Prices</h2>
             <p style="margin-top: 1rem;" class="home-welcome">Before checking my prices please check my <a
                     href="#terms">T.O.S</a> first!</p>
-            <!-- <p style="margin-top: 1rem;" class="home-welcome">Anyone who has commissioned me before receives a 10%
-                discount.</p> -->
+            <p style="margin-top: 1rem;" class="home-welcome">Anyone who has commissioned me before receives a 10%
+                discount.</p>
             <p style="margin-top: 1rem;" class="home-welcome">Choosing no shading AT ALL applies a 15% discount.</p>
 
 
@@ -529,7 +528,7 @@
 
             <div class="footer-bottom">
                 <p>&copy; 2025 Venuxiio. All rights reserved.</p>
-                <p class="footer-note">Commissions crafted with passion and creativity</p>
+                
                 <p class="footer-note" style="font-size: 0.75rem; margin-top: 0.5rem;">Last updated: January 11, 2026 at 18:44</p>
             </div>
         </footer>
@@ -744,7 +743,6 @@
         // Control commission form button availability
         function updateCommissionFormButton() {
             const commissionButton = document.querySelector('.commission-form-button');
-            const slotCounter = document.getElementById('slot-counter');
             if (!commissionButton || !commissionData.statuses) {
                 return;
             }
@@ -762,28 +760,12 @@
             startDate.setHours(0, 0, 0, 0);
             const isOpen = today >= startDate;
 
-            // Count active (non-finished) commissions
-            const maxSlots = commissionData.maxSlots || 10;
-            const activeCount = commissionData.commissions.filter(c => c.status !== 'finished').length;
-            const isFull = activeCount >= maxSlots;
-
-            // Update slot counter
-            if (slotCounter) {
-                slotCounter.textContent = `${activeCount}/${maxSlots} slots filled`;
-            }
-
-            if (isOpen && !isFull) {
+            if (isOpen) {
                 commissionButton.textContent = 'Request a Commission';
                 commissionButton.style.opacity = '1';
                 commissionButton.style.cursor = 'pointer';
                 commissionButton.style.pointerEvents = 'auto';
                 commissionButton.onclick = null;
-            } else if (isOpen && isFull) {
-                commissionButton.textContent = 'Queue is full';
-                commissionButton.style.opacity = '0.5';
-                commissionButton.style.cursor = 'not-allowed';
-                commissionButton.style.pointerEvents = 'none';
-                commissionButton.onclick = (e) => e.preventDefault();
             } else {
                 // Format the date as "Month Day, Year" (e.g., "January 12, 2026")
                 const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -796,44 +778,6 @@
             }
         }
 
-        // Render slot counters on pricing rows
-        function renderSlotCounters(data) {
-            if (!data || !data.commissions || !data.limits) return;
-
-            // Count active commissions by category
-            const counts = { fullbody: 0, custom: 0, refsheet: 0, regular: 0 };
-
-            data.commissions.forEach(c => {
-                if (c.status === 'finished') return;
-                const title = c.title.toLowerCase();
-
-                if (title.includes('sketch')) return; // unlimited, skip
-                if (title.includes('fullbody')) counts.fullbody++;
-                else if (title.includes('custom')) counts.custom++;
-                else if (title.includes('reference')) counts.refsheet++;
-                else counts.regular++;
-            });
-
-            // Build a lookup from limits
-            const limitMap = {};
-            data.limits.forEach(l => { limitMap[l.category] = l.max; });
-
-            // Update each pricing row's slot counter
-            document.querySelectorAll('.pricing-row[data-category]').forEach(row => {
-                if (row.dataset.category === 'sketch') return; // already shows "Unlimited"
-                const category = row.dataset.category;
-                const counter = row.querySelector('.slot-counter');
-                if (!counter || !limitMap[category]) return;
-
-                const max = limitMap[category];
-                const used = counts[category] || 0;
-                const remaining = Math.max(0, max - used);
-
-                counter.textContent = `${remaining}/${max} available`;
-                if (remaining === 0) counter.classList.add('full');
-            });
-        }
-
         // Update on page load
         updateActiveNav();
         setupQueueSection();
@@ -843,7 +787,6 @@
         // Render status indicators and commissions from commission data
         renderStatusIndicators(commissionData);
         renderQueueBoard(commissionData);
-        renderSlotCounters(commissionData);
 
         // Update when hash changes
         window.addEventListener('hashchange', updateActiveNav);
