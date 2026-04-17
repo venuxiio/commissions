@@ -44,13 +44,6 @@ const commissionData = {
       "paid": true
     },
     {
-      "id": 5,
-      "status": "waiting-list",
-      "title": "?",
-      "description": "jesus.rocha",
-      "paid": false
-    },
-    {
       "id": 6,
       "status": "finished",
       "title": "Sketch bust",
