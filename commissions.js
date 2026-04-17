@@ -87,7 +87,7 @@ const commissionData = {
     },
     {
       "id": 11,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Sketch 2 halfbodies",
       "description": "iiangelrodriguez",
       "paid": true
@@ -101,7 +101,7 @@ const commissionData = {
     },
     {
       "id": 13,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Sketch fullbody",
       "description": "H.z.a3_",
       "paid": true
