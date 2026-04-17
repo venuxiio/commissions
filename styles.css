@@ -730,6 +730,13 @@ h2 {
     background: var(--color-primary-dark);
 }
 
+.queue-slot-counter {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.9rem;
+    color: var(--color-text-gray);
+    margin-top: 0.75rem;
+}
+
 .commission-form-button {
     display: inline-block;
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);

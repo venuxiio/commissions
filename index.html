@@ -84,6 +84,7 @@
                         take a look :D
                     </p>
                     <div class="status-indicators" id="status-indicators"></div>
+                    <div id="queue-slot-counter" class="queue-slot-counter"></div>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
                         target="_blank" class="commission-form-button">Request a Commission</a>
                 </div>
@@ -743,8 +744,19 @@
         // Control commission form button availability
         function updateCommissionFormButton() {
             const commissionButton = document.querySelector('.commission-form-button');
+            const slotCounter = document.getElementById('queue-slot-counter');
             if (!commissionButton || !commissionData.statuses) {
                 return;
+            }
+
+            // Count active (non-finished) commissions
+            const activeCount = commissionData.commissions.filter(c => c.status !== 'finished').length;
+            const maxSlots = commissionData.maxSlots;
+            const isFull = activeCount >= maxSlots;
+
+            // Update slot counter
+            if (slotCounter) {
+                slotCounter.textContent = `${activeCount}/${maxSlots}`;
             }
 
             const today = new Date();
@@ -760,14 +772,19 @@
             startDate.setHours(0, 0, 0, 0);
             const isOpen = today >= startDate;
 
-            if (isOpen) {
+            if (isOpen && isFull) {
+                commissionButton.textContent = 'Queue is full';
+                commissionButton.style.opacity = '0.5';
+                commissionButton.style.cursor = 'not-allowed';
+                commissionButton.style.pointerEvents = 'none';
+                commissionButton.onclick = (e) => e.preventDefault();
+            } else if (isOpen) {
                 commissionButton.textContent = 'Request a Commission';
                 commissionButton.style.opacity = '1';
                 commissionButton.style.cursor = 'pointer';
                 commissionButton.style.pointerEvents = 'auto';
                 commissionButton.onclick = null;
             } else {
-                // Format the date as "Month Day, Year" (e.g., "January 12, 2026")
                 const options = { year: 'numeric', month: 'long', day: 'numeric' };
                 const formattedDate = startDate.toLocaleDateString('en-US', options);
                 commissionButton.innerHTML = `Commissions open on <span style="white-space: nowrap;">${formattedDate}</span>`;
