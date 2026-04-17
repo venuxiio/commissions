@@ -32,8 +32,8 @@ const commissionData = {
     {
       "id": 3,
       "status": "waiting-list",
-      "title": "Halfbody",
-      "description": "Blighted_07",
+      "title": "Sketch fullbody",
+      "description": "Ashttro",
       "paid": false
     },
     {
