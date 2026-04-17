@@ -74,7 +74,7 @@ const commissionData = {
     {
       "id": 9,
       "status": "in-progress",
-      "title": "Two halfbodies",
+      "title": "2 halfbodies",
       "description": "Landspeeda",
       "paid": true
     },
@@ -88,7 +88,7 @@ const commissionData = {
     {
       "id": 11,
       "status": "waiting-list",
-      "title": "Sketch halfbody",
+      "title": "Sketch 2 halfbodies",
       "description": "iiangelrodriguez",
       "paid": true
     },
