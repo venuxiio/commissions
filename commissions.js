@@ -80,7 +80,7 @@ const commissionData = {
     },
     {
       "id": 11,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Sketch 2 halfbodies",
       "description": "iiangelrodriguez",
       "paid": true
