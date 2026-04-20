@@ -36,13 +36,7 @@ const commissionData = {
       "description": "Ashttro",
       "paid": true
     },
-    {
-      "id": 4,
-      "status": "in-progress",
-      "title": "Fullbody",
-      "description": "Marlom",
-      "paid": true
-    },
+  
     {
       "id": 6,
       "status": "finished",
