@@ -67,7 +67,7 @@ const commissionData = {
     },
     {
       "id": 10,
-      "status": "waiting-list",
+      "status": "finished",
       "title": "Sketch 2 busts + 1 halfbody",
       "description": "Rakkyroden",
       "paid": true
