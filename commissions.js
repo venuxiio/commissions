@@ -116,7 +116,7 @@ const commissionData = {
     {
       "id": 15,
       "status": "waiting-list",
-      "title": "Halfbody+background",
+      "title": "Halfbody + background",
       "description": "Jesusrocha",
       "paid": false
     },
