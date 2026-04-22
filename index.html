@@ -748,7 +748,7 @@
             }
 
             // Count active (non-finished) commissions
-            const activeCount = commissionData.commissions.filter(c => c.status !== 'finished').length;
+            const activeCount = commissionData.commissions.filter(c => c.status === 'waiting-list').length;
             const maxSlots = commissionData.maxSlots;
             const isFull = activeCount >= maxSlots;
 
