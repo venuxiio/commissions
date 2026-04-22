@@ -587,7 +587,10 @@
             // Create columns
             columns.forEach(column => {
                 // Filter commissions by status
-                const commissions = allCommissions.filter(c => c.status === column.key);
+                let commissions = allCommissions.filter(c => c.status === column.key);
+                if (column.key === 'waiting-list') {
+                    commissions.sort((a, b) => (a.paid === b.paid ? 0 : a.paid ? -1 : 1));
+                }
                 const columnDiv = document.createElement('div');
                 columnDiv.className = 'queue-column';
 
