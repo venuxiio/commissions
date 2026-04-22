@@ -17,7 +17,7 @@ const commissionData = {
   "commissions": [
     {
       "id": 1,
-      "status": "finished",
+      "status": "waiting-list",
       "title": "Sketch bust+greyscale",
       "description": "Duneeau",
       "paid": false
@@ -115,7 +115,7 @@ const commissionData = {
     },
     {
       "id": 15,
-      "status": "finished",
+      "status": "waiting-list",
       "title": "Halfbody+background",
       "description": "Jesusrocha",
       "paid": false
