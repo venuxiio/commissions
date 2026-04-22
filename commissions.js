@@ -17,17 +17,17 @@ const commissionData = {
   "commissions": [
     {
       "id": 1,
-      "status": "waiting-list",
+      "status": "finished",
       "title": "Sketch bust+greyscale",
       "description": "Duneeau",
       "paid": false
     },
     {
       "id": 2,
-      "status": "finished",
-      "title": "Custom",
-      "description": "Jememez.png",
-      "paid": true
+      "status": "waiting-list",
+      "title": "2 Knee ups",
+      "description": "da.veed05",
+      "paid": false
     },
     {
       "id": 3,
@@ -36,7 +36,20 @@ const commissionData = {
       "description": "Ashttro",
       "paid": true
     },
-  
+    {
+      "id": 4,
+      "status": "in-progress",
+      "title": "Two fullbodies",
+      "description": "H.z.a3_",
+      "paid": true
+    },
+    {
+      "id": 5,
+      "status": "waiting-list",
+      "title": "Two fullbodies",
+      "description": "Sif_3905",
+      "paid": false
+    },
     {
       "id": 6,
       "status": "finished",
@@ -69,7 +82,7 @@ const commissionData = {
       "id": 10,
       "status": "finished",
       "title": "Sketch 2 busts + 1 halfbody",
-      "description": "rakkyroden",
+      "description": "Rakkyroden",
       "paid": true
     },
     {
@@ -93,8 +106,22 @@ const commissionData = {
       "description": "H.z.a3_",
       "paid": true
     },
-    
+    {
+      "id": 14,
+      "status": "waiting-list",
+      "title": "Sketch bust",
+      "description": "thealvinxu",
+      "paid": true
+    },
+    {
+      "id": 14,
+      "status": "finished",
+      "title": "Halfbody+background",
+      "description": "Jesusrocha",
+      "paid": false
+    },
   ]
+
     
     
 
