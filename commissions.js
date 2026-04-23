@@ -46,9 +46,9 @@ const commissionData = {
     {
       "id": 5,
       "status": "waiting-list",
-      "title": "Two fullbodies",
+      "title": "Halfbody",
       "description": "Sif_3905",
-      "paid": false
+      "paid": true
     },
     {
       "id": 6,
@@ -118,6 +118,20 @@ const commissionData = {
       "status": "waiting-list",
       "title": "Halfbody + background",
       "description": "Jesusrocha",
+      "paid": false
+    },
+    {
+      "id": 16,
+      "status": "waiting-list",
+      "title": "Fullbody",
+      "description": "theo_frv1",
+      "paid": false
+    },
+    {
+      "id": 17,
+      "status": "waiting-list",
+      "title": "2 halfbodies",
+      "description": "nexystuff",
       "paid": false
     },
   ]
