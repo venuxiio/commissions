@@ -31,14 +31,14 @@ const commissionData = {
     },
     {
       "id": 3,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Sketch fullbody",
       "description": "Ashttro",
       "paid": true
     },
     {
       "id": 4,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Two fullbodies",
       "description": "H.z.a3_",
       "paid": true
@@ -59,7 +59,7 @@ const commissionData = {
     },
     {
       "id": 7,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Sketch halfbody",
       "description": "Melfishiee",
       "paid": true
