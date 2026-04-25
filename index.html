@@ -84,7 +84,6 @@
                         take a look :D
                     </p>
                     <div class="status-indicators" id="status-indicators"></div>
-                    <div id="queue-slot-counter" class="queue-slot-counter"></div>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
                         target="_blank" class="commission-form-button">Request a Commission</a>
                     <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
@@ -758,10 +757,7 @@
             const maxSlots = commissionData.maxSlots;
             const isFull = activeCount >= maxSlots;
 
-            // Update slot counter
-            if (slotCounter) {
-                slotCounter.textContent = `${activeCount} / ${maxSlots} slots taken`;
-            }
+            const slotText = `${activeCount} / ${maxSlots} slots taken`;
 
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -777,14 +773,14 @@
             const isOpen = today >= startDate;
 
             if (isOpen && isFull) {
-                commissionButton.textContent = 'Queue is full';
+                commissionButton.innerHTML = `Queue is full<br><span style="font-size:0.8em;opacity:0.8">${slotText}</span>`;
                 commissionButton.style.opacity = '0.5';
                 commissionButton.style.cursor = 'not-allowed';
                 commissionButton.style.pointerEvents = 'none';
                 commissionButton.onclick = (e) => e.preventDefault();
                 if (pingListButton) pingListButton.classList.add('visible');
             } else if (isOpen) {
-                commissionButton.textContent = 'Request a Commission';
+                commissionButton.innerHTML = `Request a Commission<br><span style="font-size:0.8em;opacity:0.8">${slotText}</span>`;
                 commissionButton.style.opacity = '1';
                 commissionButton.style.cursor = 'pointer';
                 commissionButton.style.pointerEvents = 'auto';
