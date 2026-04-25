@@ -60,7 +60,7 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-image: url('assets/images/pattern.png');
+    background-image: url('assets/images/pattern.webp');
     background-repeat: repeat;
     background-attachment: fixed;
     background-size: 25rem;
@@ -84,7 +84,7 @@ body {
     width: 100%;
     max-width: 40rem;
     height: 100vh;
-    background-image: url('assets/images/background2.png');
+    background-image: url('assets/images/background2.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
