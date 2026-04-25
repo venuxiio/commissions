@@ -783,18 +783,6 @@ h2 {
     display: inline-block;
 }
 
-.ping-list-counter {
-    display: none;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 0.8rem;
-    color: var(--color-text-gray-muted);
-    margin-top: 0.25rem;
-}
-
-.ping-list-counter.visible {
-    display: block;
-}
-
 footer {
     padding: 2.5rem 2rem 1.5rem;
     border-radius: 1rem 1rem 0 0;
