@@ -59,7 +59,7 @@ const commissionData = {
     },
     {
       "id": 7,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Sketch halfbody",
       "description": "Melfishiee",
       "paid": true
