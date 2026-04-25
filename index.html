@@ -87,6 +87,9 @@
                     <div id="queue-slot-counter" class="queue-slot-counter"></div>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
                         target="_blank" class="commission-form-button">Request a Commission</a>
+                    <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
+                        class="ping-list-button">Join the Ping List</a>
+                    <span class="ping-list-counter" id="ping-list-counter"></span>
                 </div>
             </div>
 
@@ -745,6 +748,7 @@
         // Control commission form button availability
         function updateCommissionFormButton() {
             const commissionButton = document.querySelector('.commission-form-button');
+            const pingListButton = document.querySelector('.ping-list-button');
             const slotCounter = document.getElementById('queue-slot-counter');
             if (!commissionButton || !commissionData.statuses) {
                 return;
@@ -779,12 +783,14 @@
                 commissionButton.style.cursor = 'not-allowed';
                 commissionButton.style.pointerEvents = 'none';
                 commissionButton.onclick = (e) => e.preventDefault();
+                if (pingListButton) pingListButton.classList.add('visible');
             } else if (isOpen) {
                 commissionButton.textContent = 'Request a Commission';
                 commissionButton.style.opacity = '1';
                 commissionButton.style.cursor = 'pointer';
                 commissionButton.style.pointerEvents = 'auto';
                 commissionButton.onclick = null;
+                if (pingListButton) pingListButton.classList.remove('visible');
             } else {
                 const options = { year: 'numeric', month: 'long', day: 'numeric' };
                 const formattedDate = startDate.toLocaleDateString('en-US', options);
@@ -793,6 +799,7 @@
                 commissionButton.style.cursor = 'not-allowed';
                 commissionButton.style.pointerEvents = 'none';
                 commissionButton.onclick = (e) => e.preventDefault();
+                if (pingListButton) pingListButton.classList.add('visible');
             }
         }
 
@@ -801,6 +808,33 @@
         setupQueueSection();
         setupNavToggle();
         updateCommissionFormButton();
+
+        // Fetch and display ping list count
+        function updatePingListCount() {
+            const pingListButton = document.querySelector('.ping-list-button');
+            const pingListCounter = document.getElementById('ping-list-counter');
+            if (!pingListButton || !pingListCounter) return;
+
+            const csvUrl = 'https://docs.google.com/spreadsheets/d/18iP-LAX37ew6r6WjqLBY9HeW47DoEH6XAy5cqZGxy54/export?format=csv';
+
+            fetch(csvUrl)
+                .then(res => res.text())
+                .then(csv => {
+                    const rows = csv.trim().split('\n');
+                    // Subtract 1 for header row, min 0
+                    const count = Math.max(0, rows.length - 1);
+                    const max = 20;
+                    pingListButton.textContent = `Join the Ping List (${count}/${max})`;
+                    pingListCounter.textContent = `${count} person${count !== 1 ? 's' : ''} on the list`;
+                    if (pingListButton.classList.contains('visible')) {
+                        pingListCounter.classList.add('visible');
+                    }
+                })
+                .catch(() => {
+                    pingListButton.textContent = 'Join the Ping List';
+                });
+        }
+        updatePingListCount();
 
         // Render status indicators and commissions from commission data
         renderStatusIndicators(commissionData);

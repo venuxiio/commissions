@@ -758,6 +758,43 @@ h2 {
     background: linear-gradient(135deg, var(--color-primary-dark) 0%, #7C3AED 100%);
 }
 
+.ping-list-button {
+    display: none;
+    background: transparent;
+    color: var(--color-primary-dark);
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 0.75rem;
+    transition: all 0.3s ease;
+    font-family: 'Fredoka', sans-serif;
+    border: 2px solid var(--color-primary);
+    text-align: center;
+}
+
+.ping-list-button:hover {
+    background: var(--color-primary-pale);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+}
+
+.ping-list-button.visible {
+    display: inline-block;
+}
+
+.ping-list-counter {
+    display: none;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.8rem;
+    color: var(--color-text-gray-muted);
+    margin-top: 0.25rem;
+}
+
+.ping-list-counter.visible {
+    display: block;
+}
+
 footer {
     padding: 2.5rem 2rem 1.5rem;
     border-radius: 1rem 1rem 0 0;
