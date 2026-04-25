@@ -45,7 +45,7 @@ const commissionData = {
     },
     {
       "id": 5,
-      "status": "waiting-list",
+      "status": "finished",
       "title": "Halfbody",
       "description": "Sif_3905",
       "paid": true
