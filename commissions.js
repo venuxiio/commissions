@@ -108,7 +108,7 @@ const commissionData = {
     },
     {
       "id": 14,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Sketch bust",
       "description": "thealvinxu",
       "paid": true
