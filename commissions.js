@@ -71,13 +71,13 @@ const commissionData = {
       "description": "Crabby_cove",
       "paid": true
     },
-    {
-      "id": 9,
-      "status": "in-progress",
-      "title": "2 halfbodies",
-      "description": "Landspeeda",
-      "paid": true
-    },
+    //{
+      //"id": 9,
+      //"status": "in-progress",
+      //"title": "2 halfbodies",
+      //"description": "Landspeeda",
+      //"paid": true
+    //},
     {
       "id": 10,
       "status": "finished",
