@@ -17,10 +17,10 @@ const commissionData = {
   "commissions": [
     {
       "id": 1,
-      "status": "waiting-list",
-      "title": "Sketch bust+greyscale",
+      "status": "in-progress",
+      "title": "Sketch bust",
       "description": "Duneeau",
-      "paid": false
+      "paid": true
     },
     {
       "id": 2,
@@ -31,7 +31,7 @@ const commissionData = {
     },
     {
       "id": 3,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Sketch fullbody",
       "description": "Ashttro",
       "paid": true
