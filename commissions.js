@@ -27,7 +27,7 @@ const commissionData = {
       "status": "waiting-list",
       "title": "2 Knee ups",
       "description": "da.veed05",
-      "paid": false
+      "paid": true
     },
     {
       "id": 3,
