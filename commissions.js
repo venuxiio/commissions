@@ -94,7 +94,7 @@ const commissionData = {
     },
     {
       "id": 12,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Custom",
       "description": "Alee.era",
       "paid": false
@@ -108,7 +108,7 @@ const commissionData = {
     },
     {
       "id": 14,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Sketch bust",
       "description": "thealvinxu",
       "paid": true
