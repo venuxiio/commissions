@@ -17,7 +17,7 @@ const commissionData = {
   "commissions": [
     {
       "id": 1,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Sketch bust",
       "description": "Duneeau",
       "paid": true
