@@ -129,10 +129,10 @@ const commissionData = {
     },
     {
       "id": 17,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "2 halfbodies",
       "description": "nexystuff",
-      "paid": false
+      "paid": true
     },
   ]
 
