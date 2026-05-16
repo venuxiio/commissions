@@ -80,17 +80,17 @@ const commissionData = {
     //},
     {
       "id": 10,
-      "status": "finished",
-      "title": "Sketch 2 busts + 1 halfbody",
-      "description": "Rakkyroden",
-      "paid": true
+      "status": "waiting-list",
+      "title": "halfbody unshaded",
+      "description": "lexlul09",
+      "paid": false
     },
     {
       "id": 11,
-      "status": "finished",
-      "title": "Sketch 2 halfbodies",
-      "description": "iiangelrodriguez",
-      "paid": true
+      "status": "waiting-list",
+      "title": "Fullbody",
+      "description": "Seong_strz",
+      "paid": false
     },
     {
       "id": 12,
@@ -108,7 +108,7 @@ const commissionData = {
     },
     {
       "id": 14,
-      "status": "finished",
+      "status": "waiting-list",
       "title": "Sketch bust",
       "description": "thealvinxu",
       "paid": true
