@@ -109,9 +109,9 @@ const commissionData = {
     {
       "id": 14,
       "status": "waiting-list",
-      "title": "Sketch bust",
-      "description": "thealvinxu",
-      "paid": true
+      "title": "Custom",
+      "description": "cyborne_exe",
+      "paid": false
     },
     {
       "id": 15,
