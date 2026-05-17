@@ -1,5 +1,5 @@
 const commissionData = {
-  "maxSlots": 10,
+  "maxSlots": 8,
   "statuses": [
     {
       "name": "COMMS",
@@ -59,17 +59,17 @@ const commissionData = {
     },
     {
       "id": 7,
-      "status": "finished",
-      "title": "Sketch halfbody",
-      "description": "Melfishiee",
-      "paid": true
+      "status": "waiting-list",
+      "title": "Halfbody",
+      "description": "da_glooba",
+      "paid": false
     },
     {
       "id": 8,
-      "status": "finished",
-      "title": "Sketch fullbody",
-      "description": "Crabby_cove",
-      "paid": true
+      "status": "waiting-list",
+      "title": "two knees up",
+      "description": "thealvinxu",
+      "paid": false
     },
     //{
       //"id": 9,
