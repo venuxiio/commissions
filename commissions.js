@@ -17,9 +17,9 @@ const commissionData = {
   "commissions": [
     {
       "id": 1,
-      "status": "finished",
-      "title": "Sketch bust",
-      "description": "Duneeau",
+      "status": "in-progress",
+      "title": "fullbody + bg",
+      "description": "eddytails",
       "paid": true
     },
     {
@@ -97,7 +97,7 @@ const commissionData = {
       "status": "in-progress",
       "title": "Custom",
       "description": "Alee.era",
-      "paid": false
+      "paid": true
     },
     {
       "id": 13,
