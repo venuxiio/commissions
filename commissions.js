@@ -55,7 +55,7 @@ const commissionData = {
       "status": "waiting-list",
       "title": "Sketch bust",
       "description": "simp4lava",
-      "paid": true
+      "paid": false
     },
     {
       "id": 7,
