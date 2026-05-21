@@ -52,9 +52,9 @@ const commissionData = {
     },
     {
       "id": 6,
-      "status": "finished",
+      "status": "waiting-list",
       "title": "Sketch bust",
-      "description": "Risa",
+      "description": "simp4lava",
       "paid": true
     },
     {
@@ -129,7 +129,7 @@ const commissionData = {
     },
     {
       "id": 17,
-      "status": "in-progress",
+      "status": "finished",
       "title": "2 halfbodies",
       "description": "nexystuff",
       "paid": true
