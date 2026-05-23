@@ -115,15 +115,15 @@ const commissionData = {
     },
     {
       "id": 15,
-      "status": "waiting-list",
+      "status": "in-progress",
       "title": "Halfbody + background",
       "description": "Jesusrocha",
       "paid": false
     },
     {
       "id": 16,
-      "status": "waiting-list",
-      "title": "Fullbody",
+      "status": "in-progress",
+      "title": "Fullbody+background",
       "description": "theo_frv1",
       "paid": false
     },
