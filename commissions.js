@@ -118,14 +118,14 @@ const commissionData = {
       "status": "in-progress",
       "title": "Halfbody + background",
       "description": "Jesusrocha",
-      "paid": false
+      "paid": true
     },
     {
       "id": 16,
       "status": "in-progress",
       "title": "Fullbody+background",
       "description": "theo_frv1",
-      "paid": false
+      "paid": true
     },
     {
       "id": 17,
