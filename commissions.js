@@ -17,7 +17,7 @@ const commissionData = {
   "commissions": [
     {
       "id": 1,
-      "status": "in-progress",
+      "status": "finished",
       "title": "fullbody + bg",
       "description": "eddytails",
       "paid": true
@@ -101,7 +101,7 @@ const commissionData = {
     },
     {
       "id": 13,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Sketch fullbody",
       "description": "H.z.a3_",
       "paid": true
