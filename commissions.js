@@ -94,7 +94,7 @@ const commissionData = {
     },
     {
       "id": 12,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Custom",
       "description": "Alee.era",
       "paid": true
