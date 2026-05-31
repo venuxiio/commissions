@@ -94,9 +94,9 @@ const commissionData = {
     },
     {
       "id": 12,
-      "status": "finished",
-      "title": "Custom",
-      "description": "Alee.era",
+      "status": "waiting-list",
+      "title": "Knee up",
+      "description": "Albino_Trash_Panda",
       "paid": true
     },
     {
