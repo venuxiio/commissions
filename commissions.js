@@ -71,13 +71,13 @@ const commissionData = {
       "description": "thealvinxu",
       "paid": false
     },
-    //{
-      //"id": 9,
-      //"status": "in-progress",
-      //"title": "2 halfbodies",
-      //"description": "Landspeeda",
-      //"paid": true
-    //},
+    {
+      "id": 9,
+      "status": "in-progress",
+      "title": "2 halfbodies",
+      "description": "Landspeeda",
+      "paid": true
+    },
     {
       "id": 10,
       "status": "waiting-list",
@@ -94,7 +94,7 @@ const commissionData = {
     },
     {
       "id": 12,
-      "status": "waiting-list",
+      "status": "finished",
       "title": "Knee up",
       "description": "Albino_Trash_Panda",
       "paid": true
@@ -115,7 +115,7 @@ const commissionData = {
     },
     {
       "id": 15,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Halfbody + background",
       "description": "Jesusrocha",
       "paid": true
