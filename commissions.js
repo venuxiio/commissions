@@ -122,7 +122,7 @@ const commissionData = {
     },
     {
       "id": 16,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Fullbody+background",
       "description": "theo_frv1",
       "paid": true
