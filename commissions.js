@@ -52,7 +52,7 @@ const commissionData = {
     },
     {
       "id": 6,
-      "status": "in-progress",
+      "status": "finished",
       "title": "Halfbody",
       "description": "simp4lava",
       "paid": true
@@ -73,7 +73,7 @@ const commissionData = {
     },
     {
       "id": 9,
-      "status": "in-progress",
+      "status": "finished",
       "title": "2 halfbodies",
       "description": "Landspeeda",
       "paid": true
