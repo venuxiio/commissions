@@ -39,9 +39,6 @@
             <nav data-target="services">
                 <span>Services</span>
             </nav>
-            <nav data-target="terms">
-                <span>Terms</span>
-            </nav>
         </div>
 
         <section id="home">
@@ -81,7 +78,8 @@
                         }
                     </script>
                     <p class="home-welcome">Welcome to my personal space! Here you'll find info about commissions,
-                        <a href="#terms">T.O.S</a>., the <a href="#faq">F.A.Q</a>, my gallery (examples), and more, feel
+                        <a href="#terms" class="tos-link">T.O.S</a>., the <a href="#faq">F.A.Q</a>, my gallery
+                        (examples), and more, feel
                         free to
                         take a look :D
                     </p>
@@ -105,7 +103,7 @@
         <section id="services">
             <h2>Commission Services</h2>
             <p style="margin-top: 1rem;" class="home-welcome">Before commissioning please check my <a
-                    href="#terms">T.O.S</a> first!</p>
+                    href="#terms" class="tos-link">T.O.S</a> first!</p>
 
             <div class="services-grid" id="services-grid">
                 <!-- Rendered from Supabase / seed data -->
@@ -249,7 +247,7 @@
 
                 <label class="tos-agree">
                     <input type="checkbox" id="rf-tos" required>
-                    <span>I've read the <a href="#terms" target="_blank">Terms of Service</a> and agree to them. I
+                    <span>I've read the <a href="#terms" class="tos-link">Terms of Service</a> and agree to them. I
                         understand submitting doesn't guarantee acceptance. <span class="req-star">*</span></span>
                 </label>
 
@@ -435,31 +433,35 @@
             </div>
         </div>
 
-        <section id="terms">
-            <h2>Terms of Service</h2>
-            <ul class="terms-list">
-                <li class="home-welcome"> Please check the <a href="#faq">F.A.Q</a> before asking me a question</li>
-                <li>I have the right to post personnal art between commissions.</li>
-                <li><u>Full payment</u> is required before I begin your commission. Payments are accepted via PayPal
-                    only, in EUR. The client is responsible for covering any currency conversion fees.</li>
-                <li>My art style is naturally sketchy, so please don't expect a fully clean or polished finish</li>
-                <li>Product will be delivered digitally.</li>
-                <li>I reserve the right to refuse any commission request for any reason.</li>
-                <li>Work on your commission will begin after I send you the initial sketch and receive confirmation.
-                </li>
-                <li>I do not accept commissions with deadlines. Completion usually takes 1-4 weeks after the sketch is
-                    started.</li>
-                <li>During holidays, progress may be slower, so please be patient.</li>
-                <li>Full payment is required before I begin working on your commission, depending on my current queue.
-                </li>
-                <li>Once your commission is finished, I will ask for your email or Toyhouse account to send the
-                    high-quality version.</li>
-                <li>The customer does not have the right to use the commissioned artwork in any AI-related technology,
-                    including but not limited to training datasets, machine learning models, or any future AI-based
-                    technologies.</li>
-            </ul>
-            <p style="margin-top: 1rem;">If you have any questions, feel free to ask! :D</p>
-        </section>
+        <!-- Terms Modal -->
+        <div id="terms-modal" class="terms-modal">
+            <div class="terms-modal-content">
+                <button class="modal-close" id="terms-modal-close" aria-label="Close">&times;</button>
+                <h2>Terms of Service</h2>
+                <ul class="terms-list">
+                    <li class="home-welcome"> Please check the <a href="#faq">F.A.Q</a> before asking me a question</li>
+                    <li>I have the right to post personnal art between commissions.</li>
+                    <li><u>Full payment</u> is required before I begin your commission. Payments are accepted via PayPal
+                        only, in EUR. The client is responsible for covering any currency conversion fees.</li>
+                    <li>My art style is naturally sketchy, so please don't expect a fully clean or polished finish</li>
+                    <li>Product will be delivered digitally.</li>
+                    <li>I reserve the right to refuse any commission request for any reason.</li>
+                    <li>Work on your commission will begin after I send you the initial sketch and receive confirmation.
+                    </li>
+                    <li>I do not accept commissions with deadlines. Completion usually takes 1-4 weeks after the sketch is
+                        started.</li>
+                    <li>During holidays, progress may be slower, so please be patient.</li>
+                    <li>Full payment is required before I begin working on your commission, depending on my current queue.
+                    </li>
+                    <li>Once your commission is finished, I will ask for your email or Toyhouse account to send the
+                        high-quality version.</li>
+                    <li>The customer does not have the right to use the commissioned artwork in any AI-related technology,
+                        including but not limited to training datasets, machine learning models, or any future AI-based
+                        technologies.</li>
+                </ul>
+                <p style="margin-top: 1rem;">If you have any questions, feel free to ask! :D</p>
+            </div>
+        </div>
         <section id="faq">
             <h2 style="margin-top: 2rem;">F.A.Q</h2>
             <div class="faq-section">
@@ -955,6 +957,9 @@
             const activeSection = document.querySelector(`section#${hash}`);
             if (activeSection) {
                 activeSection.classList.add('active-section');
+            } else {
+                // Unknown hash (e.g. old #terms links) — fall back to home
+                document.querySelector('section#home')?.classList.add('active-section');
             }
 
             const footer = document.querySelector('footer');
@@ -991,6 +996,42 @@
                 .catch(() => {
                     pingListButton.textContent = 'Join the Ping List';
                 });
+        }
+
+        // ---- Terms modal ----
+        function setupTermsModal() {
+            const modal = document.getElementById('terms-modal');
+            const closeButton = document.getElementById('terms-modal-close');
+            if (!modal) return;
+
+            const openModal = (e) => {
+                if (e) e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+            const closeModal = () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            };
+
+            document.querySelectorAll('a[href="#terms"]').forEach(link => {
+                link.addEventListener('click', openModal);
+            });
+
+            // Links inside the modal (e.g. F.A.Q) should navigate, not stay behind the overlay
+            modal.querySelectorAll('a[href^="#"]').forEach(link => {
+                if (link.getAttribute('href') !== '#terms') {
+                    link.addEventListener('click', closeModal);
+                }
+            });
+
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+            });
         }
 
         // ---- Image modal ----
@@ -1064,6 +1105,7 @@
         updateActiveNav();
         setupNavToggle();
         setupRequestForm();
+        setupTermsModal();
         updatePingListCount();
         setupImageModal();
         renderAll();
