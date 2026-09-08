@@ -1034,43 +1034,35 @@
 
         // ---- Nav / routing ----
         function updateActiveNav() {
-            const hash = window.location.hash.slice(1);
+            const hash = window.location.hash.slice(1) || 'home';
             const banner = document.querySelector('.banner');
 
             gtag('event', 'page_view', {
                 page_path: window.location.hash,
-                page_title: hash || 'Welcome',
+                page_title: hash,
                 page_location: window.location.href
             });
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            if (hash) {
-                banner.classList.add('collapsed');
-            } else {
-                banner.classList.remove('collapsed');
-            }
+            banner.classList.add('collapsed');
 
             document.querySelectorAll('nav').forEach(nav => {
                 nav.classList.remove('active');
             });
 
-            if (hash) {
-                const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
-                if (activeNav) {
-                    activeNav.classList.add('active');
-                }
+            const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
             }
 
             document.querySelectorAll('section').forEach(section => {
                 section.classList.remove('active-section');
             });
 
-            if (hash) {
-                const activeSection = document.querySelector(`section#${hash}`);
-                if (activeSection) {
-                    activeSection.classList.add('active-section');
-                }
+            const activeSection = document.querySelector(`section#${hash}`);
+            if (activeSection) {
+                activeSection.classList.add('active-section');
             }
 
             const footer = document.querySelector('footer');
@@ -1095,12 +1087,7 @@
                 nav.addEventListener('click', (e) => {
                     e.preventDefault();
                     const targetHash = nav.getAttribute('data-target');
-                    const currentHash = window.location.hash.slice(1);
-
-                    if (currentHash === targetHash) {
-                        history.pushState('', document.title, window.location.pathname);
-                        updateActiveNav();
-                    } else {
+                    if (window.location.hash.slice(1) !== targetHash) {
                         window.location.hash = targetHash;
                     }
                 });
