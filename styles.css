@@ -1426,17 +1426,6 @@ footer {
    Service cards (replaces pricing table)
    ========================================================================== */
 
-.discount-callout {
-    margin: 1.25rem 0;
-    padding: 0.75rem 1.25rem;
-    background: var(--color-primary-pale);
-    border: 2px dotted var(--color-primary);
-    border-radius: 1rem;
-    text-align: center;
-    font-weight: 600;
-    color: var(--color-text-dark);
-}
-
 .service-group-title {
     font-family: 'Fredoka', sans-serif;
     color: var(--color-primary);
@@ -1684,34 +1673,29 @@ footer {
     font-weight: 400;
 }
 
-.service-picker {
+.service-display {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.service-chip {
-    padding: 0.5rem 1rem;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
     border: 2px solid var(--color-primary-light);
-    border-radius: 2rem;
-    background: var(--color-bg-light);
-    color: var(--color-text-dark);
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.service-chip:hover {
-    border-color: var(--color-primary);
+    border-radius: 0.75rem;
     background: var(--color-primary-pale);
 }
 
-.service-chip.selected {
-    background: var(--color-primary);
-    border-color: var(--color-primary-dark);
-    color: var(--color-white);
+.service-display-name {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-text-dark);
+}
+
+.service-display-price {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    white-space: nowrap;
 }
 
 .number-stepper {

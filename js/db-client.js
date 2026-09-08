@@ -44,7 +44,6 @@ const SupabaseClient = (() => {
     function normalizeService(r) {
         return {
             name: r.name || '',
-            category: r.category === 'sketch' ? 'Sketch' : 'Full render',
             basePrice: Number(r.base_price) || 0,
             extraCharPrice: Number(r.extra_char_price) || 0,
             description: r.description || '',

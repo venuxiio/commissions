@@ -107,20 +107,8 @@
             <p style="margin-top: 1rem;" class="home-welcome">Before commissioning please check my <a
                     href="#terms">T.O.S</a> first!</p>
 
-            <div class="discount-callout">Choosing no shading AT ALL applies a <strong>15% discount</strong></div>
-
-            <div id="services-fullrender">
-                <h3 class="service-group-title">Full render</h3>
-                <div class="services-grid" id="services-grid-fullrender">
-                    <!-- Rendered from Supabase / seed data -->
-                </div>
-            </div>
-
-            <div id="services-sketch">
-                <h3 class="service-group-title">Sketch</h3>
-                <div class="services-grid services-grid-compact" id="services-grid-sketch">
-                    <!-- Rendered from Supabase / seed data -->
-                </div>
+            <div class="services-grid" id="services-grid">
+                <!-- Rendered from Supabase / seed data -->
             </div>
 
             <div class="addons-note">
@@ -197,9 +185,9 @@
                 <p class="form-hint">Fill at least one contact field so I can reach you. <span class="req-star">*</span></p>
 
                 <div class="form-group">
-                    <label>Service <span class="req-star">*</span></label>
-                    <div class="service-picker" id="rf-service-picker">
-                        <!-- Rendered chips from services data -->
+                    <label>Service</label>
+                    <div class="service-display" id="rf-service-display">
+                        <!-- Selected service, set automatically -->
                     </div>
                 </div>
 
@@ -218,10 +206,6 @@
                 <div class="form-group">
                     <label>Options</label>
                     <div class="options-grid">
-                        <label class="option-box">
-                            <input type="checkbox" id="rf-noshade">
-                            <span class="option-text">No shading at all<span class="option-price">−15%</span></span>
-                        </label>
                         <label class="option-box">
                             <input type="checkbox" id="rf-bg">
                             <span class="option-text">Simple background<span class="option-price">+€10</span></span>
@@ -594,15 +578,10 @@
         }
 
         function renderServices() {
-            const grids = {
-                'Full render': document.getElementById('services-grid-fullrender'),
-                'Sketch': document.getElementById('services-grid-sketch')
-            };
-            Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
+            const grid = document.getElementById('services-grid');
+            if (grid) grid.innerHTML = '';
 
             siteServices.forEach(service => {
-                const grid = grids[service.category] || grids['Full render'];
-                if (!grid) return;
 
                 const card = document.createElement('div');
                 card.className = 'service-card';
@@ -657,11 +636,13 @@
 
                 card.appendChild(imgWrap);
                 card.appendChild(body);
-                grid.appendChild(card);
+                if (grid) grid.appendChild(card);
             });
         }
 
         // ---- Request form ----
+        // The service is picked on the Services cards ("Request this →"),
+        // defaulting to the first one — the form itself just displays it.
         let selectedService = null;
         let charCount = 1;
 
@@ -669,31 +650,34 @@
             return siteServices.find(s => s.name === name) || null;
         }
 
-        function renderServicePicker() {
-            const picker = document.getElementById('rf-service-picker');
-            if (!picker) return;
-            picker.innerHTML = '';
+        function renderServiceDisplay() {
+            const display = document.getElementById('rf-service-display');
+            if (!display) return;
+            display.innerHTML = '';
 
-            siteServices.forEach(service => {
-                const chip = document.createElement('button');
-                chip.type = 'button';
-                chip.className = 'service-chip' + (selectedService === service.name ? ' selected' : '');
-                chip.textContent = service.name;
-                chip.addEventListener('click', () => {
-                    selectedService = service.name;
-                    renderServicePicker();
-                    updateEstimate();
-                });
-                picker.appendChild(chip);
-            });
+            const service = selectedService ? findService(selectedService) : null;
+            if (!service) return;
+
+            const nameEl = document.createElement('span');
+            nameEl.className = 'service-display-name';
+            nameEl.textContent = service.name;
+
+            const priceEl = document.createElement('span');
+            priceEl.className = 'service-display-price';
+            priceEl.textContent = `from €${service.basePrice}`;
+
+            display.appendChild(nameEl);
+            display.appendChild(priceEl);
         }
 
         function openRequestForm(serviceName) {
             if (serviceName && findService(serviceName)) {
                 selectedService = serviceName;
-                renderServicePicker();
-                updateEstimate();
+            } else if (!selectedService && siteServices.length) {
+                selectedService = siteServices[0].name;
             }
+            renderServiceDisplay();
+            updateEstimate();
             window.location.hash = 'request';
             // Focus the name field once the section is visible
             setTimeout(() => {
@@ -731,13 +715,6 @@
                 lines.push(`Armor/robotic × ${charCount} — +€${armorCost}`);
             }
 
-            const noshade = document.getElementById('rf-noshade');
-            if (noshade && noshade.checked) {
-                const discount = total * 0.15;
-                total -= discount;
-                lines.push(`No shading — −€${discount.toFixed(2)}`);
-            }
-
             return { total, lines };
         }
 
@@ -757,7 +734,7 @@
             if (!lines.length) {
                 const p = document.createElement('p');
                 p.className = 'quick-math-empty';
-                p.textContent = 'Pick a service to see the estimate';
+                p.textContent = 'No service available';
                 breakdown.appendChild(p);
             }
             totalEl.textContent = `≈ €${total.toFixed(2)}`;
@@ -785,7 +762,7 @@
             if (email.value.trim() && !/^\S+@\S+\.\S+$/.test(email.value.trim())) {
                 errors.push('That email address doesn\'t look right.');
             }
-            if (!selectedService) errors.push('Pick a service.');
+            if (!selectedService) errors.push('No service is available — please try again later.');
             if (!refs.value.trim()) errors.push('Add at least one reference link.');
             if (!tos.checked) errors.push('You need to agree to the Terms of Service.');
 
@@ -865,7 +842,7 @@
             minus.addEventListener('click', () => updateChars(-1));
             plus.addEventListener('click', () => updateChars(1));
 
-            ['rf-noshade', 'rf-bg', 'rf-armor', 'rf-armor-amount'].forEach(id => {
+            ['rf-bg', 'rf-armor', 'rf-armor-amount'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.addEventListener('change', () => {
                     const armor = document.getElementById('rf-armor');
@@ -875,7 +852,11 @@
                 });
             });
 
-            renderServicePicker();
+            // Default to the first service so the form starts filled in
+            if (!selectedService && siteServices.length) {
+                selectedService = siteServices[0].name;
+            }
+            renderServiceDisplay();
             updateEstimate();
         }
 
@@ -1047,9 +1028,14 @@
 
         // ---- Boot: seed first (instant), then upgrade to Supabase data ----
         function renderAll() {
+            // A refresh can drop the selected service (e.g. removed in the
+            // admin board) — fall back to the first available one
+            if (selectedService && !findService(selectedService)) {
+                selectedService = siteServices.length ? siteServices[0].name : null;
+            }
             renderStatusIndicators();
             renderServices();
-            renderServicePicker();
+            renderServiceDisplay();
             updateCommissionFormButton();
             updateEstimate();
         }
