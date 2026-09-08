@@ -23,6 +23,8 @@
     <title>Venuxiio - Commission Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <script src="commissions.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/db-client.js"></script>
 </head>
 
 <body>
@@ -34,8 +36,8 @@
             <nav data-target="examples">
                 <span>Examples</span>
             </nav>
-            <nav data-target="prices">
-                <span>Prices</span>
+            <nav data-target="services">
+                <span>Services</span>
             </nav>
             <nav data-target="terms">
                 <span>Terms</span>
@@ -83,6 +85,8 @@
                         free to
                         take a look :D
                     </p>
+                    <p class="home-welcome" style="margin-top:0.5rem;">Looking for prices or want to request a
+                        commission? Check the <a href="#services">Services</a> section!</p>
                     <div class="status-indicators" id="status-indicators"></div>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
                         target="_blank" class="commission-form-button">Request a Commission</a>
@@ -101,8 +105,9 @@
 
 
                 <div class="queue-board" id="queue-board">
-                    <!-- Dynamically populated from commissions.json -->
+                    <!-- Dynamically populated from Supabase / seed data -->
                 </div>
+                <p class="queue-refresh-hint">↻ Queue refreshes automatically every minute.</p>
             </div>
 
             <!-- <div class="note">
@@ -110,135 +115,37 @@
             </div> -->
         </section>
 
-        <section id="prices">
-            <h2>Commission Prices</h2>
-            <p style="margin-top: 1rem;" class="home-welcome">Before checking my prices please check my <a
+        <section id="services">
+            <h2>Commission Services</h2>
+            <p style="margin-top: 1rem;" class="home-welcome">Before commissioning please check my <a
                     href="#terms">T.O.S</a> first!</p>
 
-            <p style="margin-top: 1rem;" class="home-welcome">Choosing no shading AT ALL applies a 15% discount.</p>
+            <div class="discount-callout">Choosing no shading AT ALL applies a <strong>15% discount</strong></div>
 
+            <div id="services-fullrender">
+                <h3 class="service-group-title">Full render</h3>
+                <div class="services-grid" id="services-grid-fullrender">
+                    <!-- Rendered from Supabase / seed data -->
+                </div>
+            </div>
+
+            <div id="services-sketch">
+                <h3 class="service-group-title">Sketch</h3>
+                <div class="services-grid services-grid-compact" id="services-grid-sketch">
+                    <!-- Rendered from Supabase / seed data -->
+                </div>
+            </div>
+
+            <div class="addons-note">
+                <h3 class="service-group-title">Options with additional charges</h3>
+                <div class="addon-row"><span>Simple background</span><span class="addon-price">+€10</span></div>
+                <div class="addon-row"><span>Armor/weapons/robotic parts</span><span class="addon-price">+€5–10 per character</span></div>
+            </div>
 
             <div class="prices-content">
-                <div class="pricing-table">
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Bust</span>
-                            <span class="pricing-cost">€40</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">
-                            +€35 per extra character
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Halfbody</span>
-                            <span class="pricing-cost">€50</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€40 per extra character
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Knee up</span>
-                            <span class="pricing-cost">€70</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€60 per extra character
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Fullbody</span>
-                            <span class="pricing-cost">€90</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€70 per extra character</div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Chibi</span>
-                            <span class="pricing-cost">€40</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€35 per extra character</div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Custom</span>
-                            <span class="pricing-cost">€100+</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-left">Fullbody by default. The final price will vary based
-                            on character complexity and will include a moodboard plus an assigned animal
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Reference sheet</span>
-                            <span class="pricing-cost">€200+</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-left">Check image in example
-                        </div>
-                    </div>
-                    <div style="padding-top:2rem;"><h3 style="font-family:'Fredoka',sans-serif;color:var(--color-primary);">Sketch Prices</h3></div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Bust</span>
-                            <span class="pricing-cost">€15</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Halfbody</span>
-                            <span class="pricing-cost">€24</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Knee up</span>
-                            <span class="pricing-cost">€30</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Fullbody</span>
-                            <span class="pricing-cost">€40</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Chibi</span>
-                            <span class="pricing-cost">€15</span>
-                        </div>
-                    </div>
-                    <div style="padding-top:2rem;">Options with additional charges</div>
-                    <div style="padding:0rem; ">
-                        <div class="pricing-row">
-                            <div class="pricing-row-header">
-                                <span class="pricing-type">Simple background</span>
-                                <span class="pricing-cost">+€10</span>
-                            </div>
-                        </div>
-                        <div class="pricing-row">
-                            <div class="pricing-row-header">
-                                <span class="pricing-type">Armor/weapons/robotic parts</span>
-                                <span class="pricing-cost">+€5-10</span>
-                            </div>
-                        </div>
-                        <!-- <div class="pricing-row">
-                            <div class="pricing-row-header">
-                                <span class="pricing-type">Better render/less sketchy</span>
-                                <span class="pricing-cost">+40% from original price</span>
-                            </div>
-                        </div> -->
-                    </div>
-                    <!-- <div style="padding-top: 1.5rem;">
-                        <img src="assets/images/chibiex.webp" alt="Render comparison - 1 is more detailed than 2"
-                            class="chibi-comparison-img">
-                        <p
-                            style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-gray); text-align: center;">
-                            Option 2 costs 40% less than Option 1 since it's less sketchy and better rendered, plus
-                            another 15% off for no shading, meaning Option 1 is €42 and Option 2 is €25,5.</p>
-                    </div> -->
-                </div>
-                <img src="assets/images/refprices.webp" alt="Reference Prices" class="ref-prices-img">
+                <img src="assets/images/refprices.webp" alt="Reference sheet prices" class="ref-prices-img">
             </div>
+
             <div class="two-column">
                 <div class="list-section">
                     <h3>Will Draw</h3>
@@ -259,6 +166,129 @@
                         <li>Complex horns</li>
                     </ul>
                 </div>
+            </div>
+        </section>
+
+        <section id="request">
+            <h2>Commission Request</h2>
+            <p style="margin-top: 1rem;" class="home-welcome">Fill in this form to request a commission. Once you
+                submit, I'll review it and reply with the exact price and timing before we start. Submitting doesn't
+                guarantee acceptance.</p>
+
+            <div class="artist-note">
+                <p>By ordering, you're okay with the finished piece being used as an example. If you don't want it
+                    shown in my gallery, mention it in the details and we can arrange a privacy add-on.</p>
+            </div>
+
+            <div id="request-closed" class="request-closed" hidden>
+                <p id="request-closed-message">Commissions are currently closed.</p>
+                <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
+                    class="ping-list-button visible">Join the Ping List</a>
+            </div>
+
+            <form id="request-form" class="request-form" novalidate>
+                <!-- honeypot: hidden from humans, catches bots -->
+                <input type="text" name="website" id="hp-website" tabindex="-1" autocomplete="off" hidden>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rf-name">Your name <span class="req-star">*</span></label>
+                        <input type="text" id="rf-name" name="name" placeholder="Name / nickname" required>
+                    </div>
+                </div>
+
+                <div class="form-row form-row-multi">
+                    <div class="form-group">
+                        <label for="rf-email">Email</label>
+                        <input type="email" id="rf-email" name="email" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="rf-social">Discord / Instagram username</label>
+                        <input type="text" id="rf-social" name="social" placeholder="username">
+                    </div>
+                </div>
+                <p class="form-hint">Fill at least one contact field so I can reach you. <span class="req-star">*</span></p>
+
+                <div class="form-group">
+                    <label>Service <span class="req-star">*</span></label>
+                    <div class="service-picker" id="rf-service-picker">
+                        <!-- Rendered chips from services data -->
+                    </div>
+                </div>
+
+                <div class="form-row form-row-multi">
+                    <div class="form-group">
+                        <label for="rf-chars">Number of characters <span class="req-star">*</span></label>
+                        <div class="number-stepper">
+                            <button type="button" id="rf-chars-minus" aria-label="Fewer characters">−</button>
+                            <span id="rf-chars-value">1</span>
+                            <button type="button" id="rf-chars-plus" aria-label="More characters">+</button>
+                        </div>
+                        <p class="form-hint" id="rf-extra-hint"></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Options</label>
+                    <div class="options-grid">
+                        <label class="option-box">
+                            <input type="checkbox" id="rf-noshade">
+                            <span class="option-text">No shading at all<span class="option-price">−15%</span></span>
+                        </label>
+                        <label class="option-box">
+                            <input type="checkbox" id="rf-bg">
+                            <span class="option-text">Simple background<span class="option-price">+€10</span></span>
+                        </label>
+                        <label class="option-box">
+                            <input type="checkbox" id="rf-armor">
+                            <span class="option-text">Armor / weapons / robotic parts<span class="option-price">+€5–10 / char</span></span>
+                        </label>
+                    </div>
+                    <div class="form-group" id="rf-armor-detail" hidden>
+                        <label for="rf-armor-amount">Armor complexity (per character)</label>
+                        <select id="rf-armor-amount">
+                            <option value="5">Simple — +€5</option>
+                            <option value="10">Complex — +€10</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row form-row-multi">
+                    <div class="form-group">
+                        <label for="rf-refs">References <span class="req-star">*</span> <span class="form-hint-inline">(one link per line)</span></label>
+                        <textarea id="rf-refs" rows="3" placeholder="https://toyhou.se/…&#10;https://imgur.com/…"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="rf-details">Details <span class="form-hint-inline">(pose, expression, mood…)</span></label>
+                        <textarea id="rf-details" rows="3" placeholder="e.g. my OC sitting, happy expression, soft colors"></textarea>
+                    </div>
+                </div>
+
+                <div class="quick-math" id="quick-math">
+                    <h3>🧮 Quick math <span class="quick-math-sub">(estimate)</span></h3>
+                    <div id="quick-math-breakdown"></div>
+                    <div class="quick-math-total">
+                        <span id="quick-math-total">≈ €0</span>
+                        <span class="quick-math-note">Final price confirmed by me after review</span>
+                    </div>
+                </div>
+
+                <label class="tos-agree">
+                    <input type="checkbox" id="rf-tos" required>
+                    <span>I've read the <a href="#terms" target="_blank">Terms of Service</a> and agree to them. I
+                        understand submitting doesn't guarantee acceptance. <span class="req-star">*</span></span>
+                </label>
+
+                <div class="form-error" id="rf-error" hidden></div>
+
+                <button type="submit" class="submit-request-button" id="rf-submit">Submit request</button>
+            </form>
+
+            <div class="form-success" id="request-success" hidden>
+                <h3>Request sent! ✨</h3>
+                <p>Thanks! I'll review your request and get back to you with the exact price and timing. Keep an eye on
+                    your contact info (and spam folder just in case).</p>
             </div>
         </section>
 
@@ -536,27 +566,30 @@
     </div>
 
     <script>
-        // Render status indicators based on start dates
-        function renderStatusIndicators(data) {
+        // ---- Shared state (Supabase when available, seedData fallback) ----
+        let siteSettings = seedData.settings;
+        let siteServices = seedData.services;
+        let siteCommissions = seedData.commissions;
+
+        // ---- Status indicators (driven by settings, fixes old Invalid Date bug) ----
+        function renderStatusIndicators() {
             const statusContainer = document.getElementById('status-indicators');
-            if (!statusContainer || !data || !data.statuses) {
-                return;
-            }
+            if (!statusContainer) return;
 
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            const items = [
+                { name: 'COMMS', open: siteSettings.commsOpen },
+                { name: 'ART TRADES', open: siteSettings.artTradesOpen },
+                { name: 'REQUESTS', open: siteSettings.requestsOpen }
+            ];
 
-            data.statuses.forEach(status => {
-                const startDate = new Date(status.startDate);
-                startDate.setHours(0, 0, 0, 0);
-                const isOpen = today >= startDate;
-
+            statusContainer.innerHTML = '';
+            items.forEach(status => {
                 const statusDiv = document.createElement('div');
-                statusDiv.className = `status ${isOpen ? 'open' : 'closed'}`;
+                statusDiv.className = `status ${status.open ? 'open' : 'closed'}`;
 
                 const symbolSpan = document.createElement('span');
                 symbolSpan.className = 'status-symbol';
-                symbolSpan.textContent = isOpen ? '✓' : '✗';
+                symbolSpan.textContent = status.open ? '✓' : '✗';
 
                 const nameSpan = document.createElement('span');
                 nameSpan.textContent = status.name;
@@ -567,35 +600,27 @@
             });
         }
 
-        // Render the queue board from commission data
-        function renderQueueBoard(data) {
+        // ---- Queue board ----
+        function renderQueueBoard() {
             const queueBoard = document.getElementById('queue-board');
-            if (!queueBoard || !data || !data.commissions) {
-                console.error('Invalid commission data');
-                return;
-            }
+            if (!queueBoard) return;
 
-            const allCommissions = data.commissions;
             const columns = [
                 { key: 'waiting-list', title: 'Waiting List' },
                 { key: 'in-progress', title: 'In Progress' },
                 { key: 'finished', title: 'Finished' }
             ];
 
-            // Clear existing content
             queueBoard.innerHTML = '';
 
-            // Create columns
             columns.forEach(column => {
-                // Filter commissions by status
-                let commissions = allCommissions.filter(c => c.status === column.key);
+                let commissions = siteCommissions.filter(c => c.status === column.key);
                 if (column.key === 'waiting-list') {
                     commissions.sort((a, b) => (a.paid === b.paid ? 0 : a.paid ? -1 : 1));
                 }
                 const columnDiv = document.createElement('div');
                 columnDiv.className = 'queue-column';
 
-                // Column header
                 const headerDiv = document.createElement('div');
                 headerDiv.className = 'column-header';
                 const titleH3 = document.createElement('h3');
@@ -607,11 +632,9 @@
                 headerDiv.appendChild(titleH3);
                 headerDiv.appendChild(countSpan);
 
-                // Column cards container
                 const cardsDiv = document.createElement('div');
                 cardsDiv.className = 'column-cards';
 
-                // Add commission cards
                 commissions.forEach(commission => {
                     const cardDiv = document.createElement('div');
                     cardDiv.className = 'commission-card';
@@ -655,122 +678,324 @@
             });
         }
 
-        function updateActiveNav() {
-            // Get current hash, no default
-            const hash = window.location.hash.slice(1);
-            const banner = document.querySelector('.banner');
-
-            // Track navigation in Google Analytics
-            console.log('Tracking navigation:', hash || 'Welcome');
-            gtag('event', 'page_view', {
-                page_path: window.location.hash,
-                page_title: hash || 'Welcome',
-                page_location: window.location.href
-            });
-
-            // Scroll to top when changing nav
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            // If there's a hash, collapse the banner
-            if (hash) {
-                banner.classList.add('collapsed');
-            } else {
-                banner.classList.remove('collapsed');
-            }
-
-            // Remove active class from all nav elements
-            document.querySelectorAll('nav').forEach(nav => {
-                nav.classList.remove('active');
-            });
-
-            // Add active class to matching nav
-            if (hash) {
-                const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
-                if (activeNav) {
-                    activeNav.classList.add('active');
-                }
-            }
-
-            // Hide all sections
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active-section');
-            });
-
-            // Show only the matching section if hash exists
-            if (hash) {
-                const activeSection = document.querySelector(`section#${hash}`);
-                if (activeSection) {
-                    activeSection.classList.add('active-section');
-                }
-            }
-
-            // Show footer in all sections
-            const footer = document.querySelector('footer');
-            footer.style.display = 'block';
+        // ---- Service cards ----
+        function serviceIsPlus(service) {
+            // Custom / Reference sheet are "from €X" services
+            return ['Custom', 'Reference sheet'].includes(service.name);
         }
 
-        // Queue section expand/collapse functionality
-        function setupQueueSection() {
-            const queueSection = document.querySelector('.queue-section');
-            const sectionHeader = document.querySelector('.queue-section-header');
-            const sectionIcon = document.querySelector('.queue-expand-icon');
+        function renderServices() {
+            const grids = {
+                'Full render': document.getElementById('services-grid-fullrender'),
+                'Sketch': document.getElementById('services-grid-sketch')
+            };
+            Object.values(grids).forEach(g => { if (g) g.innerHTML = ''; });
 
-            sectionHeader.addEventListener('click', () => {
-                queueSection.classList.toggle('collapsed');
-                sectionIcon.style.transform = queueSection.classList.contains('collapsed')
-                    ? 'rotate(-90deg)'
-                    : 'rotate(0deg)';
+            siteServices.forEach(service => {
+                const grid = grids[service.category] || grids['Full render'];
+                if (!grid) return;
+
+                const card = document.createElement('div');
+                card.className = 'service-card';
+
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'service-card-image';
+                if (service.image) {
+                    const img = document.createElement('img');
+                    img.src = service.image;
+                    img.alt = `${service.name} example`;
+                    img.loading = 'lazy';
+                    imgWrap.appendChild(img);
+                }
+
+                const body = document.createElement('div');
+                body.className = 'service-card-body';
+
+                const nameEl = document.createElement('span');
+                nameEl.className = 'service-card-name';
+                nameEl.textContent = service.name;
+
+                const priceEl = document.createElement('span');
+                priceEl.className = 'service-card-price';
+                priceEl.textContent = `€${service.basePrice}${serviceIsPlus(service) ? '+' : ''}`;
+
+                const headerRow = document.createElement('div');
+                headerRow.className = 'service-card-header';
+                headerRow.appendChild(nameEl);
+                headerRow.appendChild(priceEl);
+
+                body.appendChild(headerRow);
+
+                if (service.extraCharPrice > 0) {
+                    const extra = document.createElement('p');
+                    extra.className = 'service-card-extra';
+                    extra.textContent = `+€${service.extraCharPrice} per extra character`;
+                    body.appendChild(extra);
+                }
+                if (service.description) {
+                    const desc = document.createElement('p');
+                    desc.className = 'service-card-desc';
+                    desc.textContent = service.description;
+                    body.appendChild(desc);
+                }
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'service-request-btn';
+                btn.textContent = 'Request this →';
+                btn.addEventListener('click', () => openRequestForm(service.name));
+                body.appendChild(btn);
+
+                card.appendChild(imgWrap);
+                card.appendChild(body);
+                grid.appendChild(card);
             });
         }
 
-        // Handle nav clicks to allow unselecting and navigation
-        function setupNavToggle() {
-            document.querySelectorAll('nav').forEach(nav => {
-                nav.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetHash = nav.getAttribute('data-target');
-                    const currentHash = window.location.hash.slice(1);
+        // ---- Request form ----
+        let selectedService = null;
+        let charCount = 1;
 
-                    // If clicking the same nav, clear the hash
-                    if (currentHash === targetHash) {
-                        history.pushState('', document.title, window.location.pathname);
-                        updateActiveNav();
-                    } else {
-                        // Navigate to the target section
-                        window.location.hash = targetHash;
-                    }
+        function findService(name) {
+            return siteServices.find(s => s.name === name) || null;
+        }
+
+        function renderServicePicker() {
+            const picker = document.getElementById('rf-service-picker');
+            if (!picker) return;
+            picker.innerHTML = '';
+
+            siteServices.forEach(service => {
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'service-chip' + (selectedService === service.name ? ' selected' : '');
+                chip.textContent = service.name;
+                chip.addEventListener('click', () => {
+                    selectedService = service.name;
+                    renderServicePicker();
+                    updateEstimate();
+                });
+                picker.appendChild(chip);
+            });
+        }
+
+        function openRequestForm(serviceName) {
+            if (serviceName && findService(serviceName)) {
+                selectedService = serviceName;
+                renderServicePicker();
+                updateEstimate();
+            }
+            window.location.hash = 'request';
+            // Focus the name field once the section is visible
+            setTimeout(() => {
+                const nameField = document.getElementById('rf-name');
+                if (nameField) nameField.focus({ preventScroll: true });
+            }, 100);
+        }
+
+        function computeEstimate() {
+            if (!selectedService) return { total: 0, lines: [] };
+            const service = findService(selectedService);
+            if (!service) return { total: 0, lines: [] };
+
+            const lines = [];
+            let total = service.basePrice;
+            lines.push(`${service.name} × ${charCount} — €${service.basePrice}`);
+
+            if (charCount > 1 && service.extraCharPrice > 0) {
+                const extras = (charCount - 1) * service.extraCharPrice;
+                total += extras;
+                lines.push(`+${charCount - 1} extra character${charCount > 2 ? 's' : ''} — +€${extras}`);
+            }
+
+            const bg = document.getElementById('rf-bg');
+            if (bg && bg.checked) {
+                total += 10;
+                lines.push('Simple background — +€10');
+            }
+
+            const armor = document.getElementById('rf-armor');
+            const armorAmount = document.getElementById('rf-armor-amount');
+            if (armor && armor.checked && armorAmount) {
+                const armorCost = Number(armorAmount.value) * charCount;
+                total += armorCost;
+                lines.push(`Armor/robotic × ${charCount} — +€${armorCost}`);
+            }
+
+            const noshade = document.getElementById('rf-noshade');
+            if (noshade && noshade.checked) {
+                const discount = total * 0.15;
+                total -= discount;
+                lines.push(`No shading — −€${discount.toFixed(2)}`);
+            }
+
+            return { total, lines };
+        }
+
+        function updateEstimate() {
+            const breakdown = document.getElementById('quick-math-breakdown');
+            const totalEl = document.getElementById('quick-math-total');
+            const extraHint = document.getElementById('rf-extra-hint');
+            if (!breakdown || !totalEl) return;
+
+            const { total, lines } = computeEstimate();
+            breakdown.innerHTML = '';
+            lines.forEach(line => {
+                const p = document.createElement('p');
+                p.textContent = line;
+                breakdown.appendChild(p);
+            });
+            if (!lines.length) {
+                const p = document.createElement('p');
+                p.className = 'quick-math-empty';
+                p.textContent = 'Pick a service to see the estimate';
+                breakdown.appendChild(p);
+            }
+            totalEl.textContent = `≈ €${total.toFixed(2)}`;
+
+            const service = selectedService ? findService(selectedService) : null;
+            if (extraHint) {
+                extraHint.textContent = service && service.extraCharPrice > 0
+                    ? `Each extra character: +€${service.extraCharPrice}`
+                    : '';
+            }
+        }
+
+        function validateForm() {
+            const errors = [];
+            const name = document.getElementById('rf-name');
+            const email = document.getElementById('rf-email');
+            const social = document.getElementById('rf-social');
+            const refs = document.getElementById('rf-refs');
+            const tos = document.getElementById('rf-tos');
+
+            if (!name.value.trim()) errors.push('Your name is required.');
+            if (!email.value.trim() && !social.value.trim()) {
+                errors.push('Fill at least one contact (email or Discord/Instagram).');
+            }
+            if (email.value.trim() && !/^\S+@\S+\.\S+$/.test(email.value.trim())) {
+                errors.push('That email address doesn\'t look right.');
+            }
+            if (!selectedService) errors.push('Pick a service.');
+            if (!refs.value.trim()) errors.push('Add at least one reference link.');
+            if (!tos.checked) errors.push('You need to agree to the Terms of Service.');
+
+            return errors;
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const errorBox = document.getElementById('rf-error');
+            errorBox.hidden = true;
+            errorBox.innerHTML = '';
+
+            // Honeypot: silently "succeed" for bots
+            const honeypot = document.getElementById('hp-website');
+            if (honeypot && honeypot.value) {
+                document.getElementById('request-form').hidden = true;
+                document.getElementById('request-success').hidden = false;
+                return;
+            }
+
+            const errors = validateForm();
+            if (errors.length) {
+                errorBox.innerHTML = errors.map(err => `<p>• ${err}</p>`).join('');
+                errorBox.hidden = false;
+                errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            const submitBtn = document.getElementById('rf-submit');
+            const email = document.getElementById('rf-email').value.trim();
+            const social = document.getElementById('rf-social').value.trim();
+            const contact = [email, social && (social.includes('@') ? social : `@${social}`)].filter(Boolean).join(' · ');
+
+            const payload = {
+                client: document.getElementById('rf-name').value.trim(),
+                contact,
+                service: selectedService,
+                details: document.getElementById('rf-details').value.trim(),
+                refs: document.getElementById('rf-refs').value.trim(),
+                estimate: computeEstimate().total
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending…';
+
+            try {
+                await SupabaseClient.submitRequest(payload);
+                gtag('event', 'request_submit', { service: payload.service, estimate: payload.estimate });
+                document.getElementById('request-form').hidden = true;
+                document.getElementById('request-success').hidden = false;
+                document.getElementById('request-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } catch (err) {
+                console.error('Request submit failed:', err);
+                errorBox.innerHTML = '<p>• Sending failed — the form isn\'t connected yet, or the connection dropped. Try again in a minute, or reach me on Instagram.</p>';
+                errorBox.hidden = false;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit request';
+            }
+        }
+
+        function setupRequestForm() {
+            const form = document.getElementById('request-form');
+            if (!form) return;
+
+            form.addEventListener('submit', handleFormSubmit);
+
+            const minus = document.getElementById('rf-chars-minus');
+            const plus = document.getElementById('rf-chars-plus');
+            const valueEl = document.getElementById('rf-chars-value');
+            const updateChars = (delta) => {
+                charCount = Math.min(6, Math.max(1, charCount + delta));
+                valueEl.textContent = charCount;
+                updateEstimate();
+            };
+            minus.addEventListener('click', () => updateChars(-1));
+            plus.addEventListener('click', () => updateChars(1));
+
+            ['rf-noshade', 'rf-bg', 'rf-armor', 'rf-armor-amount'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('change', () => {
+                    const armor = document.getElementById('rf-armor');
+                    const detail = document.getElementById('rf-armor-detail');
+                    if (armor && detail) detail.hidden = !armor.checked;
+                    updateEstimate();
                 });
             });
+
+            renderServicePicker();
+            updateEstimate();
         }
 
-        // Control commission form button availability
+        // ---- Commission button + form open/close gating ----
         function updateCommissionFormButton() {
             const commissionButton = document.querySelector('.commission-form-button');
             const pingListButton = document.querySelector('.ping-list-button');
-            const slotCounter = document.getElementById('queue-slot-counter');
-            if (!commissionButton || !commissionData.statuses) {
-                return;
-            }
+            const closedBox = document.getElementById('request-closed');
+            const formSection = document.getElementById('request');
+            if (!commissionButton) return;
 
-            // Count active (non-finished) commissions
-            const activeCount = commissionData.commissions.filter(c => c.status === 'waiting-list').length;
-            const maxSlots = commissionData.maxSlots;
+            const activeCount = siteCommissions.filter(c => c.status === 'waiting-list').length;
+            const maxSlots = siteSettings.maxSlots;
             const isFull = activeCount >= maxSlots;
-
+            const isOpen = siteSettings.commsOpen;
             const slotText = `${activeCount} / ${maxSlots} slots taken`;
 
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            // Find the COMMS status
-            const commsStatus = commissionData.statuses.find(status => status.name === 'COMMS');
-            if (!commsStatus) {
-                return;
+            // Gate the request form section
+            if (closedBox) {
+                closedBox.hidden = isOpen;
             }
-
-            const startDate = new Date(commsStatus.startDate);
-            startDate.setHours(0, 0, 0, 0);
-            const isOpen = today >= startDate;
+            if (!isOpen && closedBox) {
+                const msg = closedBox.querySelector('#request-closed-message');
+                if (msg) {
+                    msg.textContent = siteSettings.reopenDate
+                        ? `Commissions are currently closed — they open on ${siteSettings.reopenDate}.`
+                        : 'Commissions are currently closed. Join the ping list to be notified when they reopen!';
+                }
+            }
 
             if (isOpen && isFull) {
                 commissionButton.innerHTML = `Queue is full<br><span style="font-size:0.8em;opacity:0.8">${slotText}</span>`;
@@ -784,27 +1009,105 @@
                 commissionButton.style.opacity = '1';
                 commissionButton.style.cursor = 'pointer';
                 commissionButton.style.pointerEvents = 'auto';
+                commissionButton.href = '#request';
                 commissionButton.onclick = null;
                 if (pingListButton) pingListButton.classList.remove('visible');
             } else {
                 const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = startDate.toLocaleDateString('en-US', options);
-                commissionButton.innerHTML = `Commissions open on <span style="white-space: nowrap;">${formattedDate}</span>`;
+                const formatted = siteSettings.reopenDate
+                    ? new Date(siteSettings.reopenDate).toLocaleDateString('en-US', options)
+                    : null;
+                commissionButton.innerHTML = formatted
+                    ? `Commissions open on <span style="white-space: nowrap;">${formatted}</span>`
+                    : 'Commissions closed — join the ping list';
                 commissionButton.style.opacity = '0.5';
                 commissionButton.style.cursor = 'not-allowed';
                 commissionButton.style.pointerEvents = 'none';
                 commissionButton.onclick = (e) => e.preventDefault();
                 if (pingListButton) pingListButton.classList.add('visible');
             }
+            // Request form section only exists when relevant; nav has no "request" tab
+            if (formSection && !isOpen) {
+                // keep section present but the closed box communicates state
+            }
         }
 
-        // Update on page load
-        updateActiveNav();
-        setupQueueSection();
-        setupNavToggle();
-        updateCommissionFormButton();
+        // ---- Nav / routing ----
+        function updateActiveNav() {
+            const hash = window.location.hash.slice(1);
+            const banner = document.querySelector('.banner');
 
-        // Fetch and display ping list count
+            gtag('event', 'page_view', {
+                page_path: window.location.hash,
+                page_title: hash || 'Welcome',
+                page_location: window.location.href
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (hash) {
+                banner.classList.add('collapsed');
+            } else {
+                banner.classList.remove('collapsed');
+            }
+
+            document.querySelectorAll('nav').forEach(nav => {
+                nav.classList.remove('active');
+            });
+
+            if (hash) {
+                const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
+                if (activeNav) {
+                    activeNav.classList.add('active');
+                }
+            }
+
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+
+            if (hash) {
+                const activeSection = document.querySelector(`section#${hash}`);
+                if (activeSection) {
+                    activeSection.classList.add('active-section');
+                }
+            }
+
+            const footer = document.querySelector('footer');
+            footer.style.display = 'block';
+        }
+
+        function setupQueueSection() {
+            const queueSection = document.querySelector('.queue-section');
+            const sectionHeader = document.querySelector('.queue-section-header');
+            const sectionIcon = document.querySelector('.queue-expand-icon');
+
+            sectionHeader.addEventListener('click', () => {
+                queueSection.classList.toggle('collapsed');
+                sectionIcon.style.transform = queueSection.classList.contains('collapsed')
+                    ? 'rotate(-90deg)'
+                    : 'rotate(0deg)';
+            });
+        }
+
+        function setupNavToggle() {
+            document.querySelectorAll('nav').forEach(nav => {
+                nav.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetHash = nav.getAttribute('data-target');
+                    const currentHash = window.location.hash.slice(1);
+
+                    if (currentHash === targetHash) {
+                        history.pushState('', document.title, window.location.pathname);
+                        updateActiveNav();
+                    } else {
+                        window.location.hash = targetHash;
+                    }
+                });
+            });
+        }
+
+        // ---- Ping list count ----
         function updatePingListCount() {
             const pingListButton = document.querySelector('.ping-list-button');
             if (!pingListButton) return;
@@ -823,16 +1126,8 @@
                     pingListButton.textContent = 'Join the Ping List';
                 });
         }
-        updatePingListCount();
 
-        // Render status indicators and commissions from commission data
-        renderStatusIndicators(commissionData);
-        renderQueueBoard(commissionData);
-
-        // Update when hash changes
-        window.addEventListener('hashchange', updateActiveNav);
-
-        // Image Modal functionality
+        // ---- Image modal ----
         function setupImageModal() {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
@@ -840,12 +1135,12 @@
             const closeButton = document.querySelector('.modal-close');
             const exampleCards = document.querySelectorAll('.example-card');
 
-            // Open modal when clicking on example card
             exampleCards.forEach(card => {
                 card.addEventListener('click', (e) => {
                     const imageSrc = card.dataset.image;
                     const title = card.dataset.title;
                     modalImage.src = imageSrc;
+                    modalImage.alt = title;
                     modalTitle.textContent = title;
                     modal.classList.add('active');
                     document.body.style.overflow = 'hidden';
@@ -853,17 +1148,14 @@
                         image_id: imageSrc,
                         image_name: title
                     });
-
                 });
             });
 
-            // Close modal when clicking close button
             closeButton.addEventListener('click', () => {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             });
 
-            // Close modal when clicking outside the content
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.classList.remove('active');
@@ -871,7 +1163,6 @@
                 }
             });
 
-            // Close modal with Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && modal.classList.contains('active')) {
                     modal.classList.remove('active');
@@ -880,7 +1171,43 @@
             });
         }
 
+        // ---- Boot: seed first (instant), then upgrade to Supabase data ----
+        function renderAll() {
+            renderStatusIndicators();
+            renderQueueBoard();
+            renderServices();
+            renderServicePicker();
+            updateCommissionFormButton();
+            updateEstimate();
+        }
+
+        async function loadData() {
+            const [services, commissions, settings] = await Promise.all([
+                SupabaseClient.getServices(),
+                SupabaseClient.getCommissions(),
+                SupabaseClient.getSettings()
+            ]);
+            if (services) siteServices = services;
+            if (commissions) siteCommissions = commissions;
+            if (settings) siteSettings = settings;
+            renderAll();
+        }
+
+        updateActiveNav();
+        setupQueueSection();
+        setupNavToggle();
+        setupRequestForm();
+        updatePingListCount();
         setupImageModal();
+        renderAll();
+        loadData();
+
+        // Keep queue/status fresh from Supabase
+        setInterval(() => {
+            if (SupabaseClient.isConfigured()) loadData();
+        }, 60000);
+
+        window.addEventListener('hashchange', updateActiveNav);
     </script>
 
     <!-- Bottom right character - Desktop only -->

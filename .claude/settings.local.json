@@ -16,7 +16,8 @@
       "WebFetch(domain:venuxiio.carrd.co)",
       "Bash(del:*)",
       "Bash(for folder in \"C:\\\\Users\\\\Jade Richez\\\\Documents\\\\commissions\\\\assets\\\\images\\\\examples\"/*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(node *)"
     ]
   }
 }
