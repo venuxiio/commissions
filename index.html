@@ -97,19 +97,6 @@
 
 
 
-            <div class="queue-section collapsed">
-                <div class="queue-section-header">
-                    <h2>Commission Queue</h2>
-                    <span class="queue-expand-icon" style="transform: rotate(-90deg);">▼</span>
-                </div>
-
-
-                <div class="queue-board" id="queue-board">
-                    <!-- Dynamically populated from Supabase / seed data -->
-                </div>
-                <p class="queue-refresh-hint">↻ Queue refreshes automatically every minute.</p>
-            </div>
-
             <!-- <div class="note">
                 Website is still in progress so prices may change!!!
             </div> -->
@@ -506,8 +493,8 @@
                 </div>
                 <div class="faq-item">
                     <h3>When can I expect my commission to be completed?</h3>
-                    <p>As I work on multiple commissions at once, you can track your commission's progress through the
-                        commission status tab.</p>
+                    <p>As I work on multiple commissions at once, I'll keep you updated personally on your
+                        commission's progress.</p>
                 </div>
             </div>
         </section>
@@ -567,9 +554,9 @@
 
     <script>
         // ---- Shared state (Supabase when available, seedData fallback) ----
+        // No commission rows here: anon has no read access to commissions.
         let siteSettings = seedData.settings;
         let siteServices = seedData.services;
-        let siteCommissions = seedData.commissions;
 
         // ---- Status indicators (driven by settings, fixes old Invalid Date bug) ----
         function renderStatusIndicators() {
@@ -597,84 +584,6 @@
                 statusDiv.appendChild(symbolSpan);
                 statusDiv.appendChild(nameSpan);
                 statusContainer.appendChild(statusDiv);
-            });
-        }
-
-        // ---- Queue board ----
-        function renderQueueBoard() {
-            const queueBoard = document.getElementById('queue-board');
-            if (!queueBoard) return;
-
-            const columns = [
-                { key: 'waiting-list', title: 'Waiting List' },
-                { key: 'in-progress', title: 'In Progress' },
-                { key: 'finished', title: 'Finished' }
-            ];
-
-            queueBoard.innerHTML = '';
-
-            columns.forEach(column => {
-                let commissions = siteCommissions.filter(c => c.status === column.key);
-                if (column.key === 'waiting-list') {
-                    commissions.sort((a, b) => (a.paid === b.paid ? 0 : a.paid ? -1 : 1));
-                }
-                const columnDiv = document.createElement('div');
-                columnDiv.className = 'queue-column';
-
-                const headerDiv = document.createElement('div');
-                headerDiv.className = 'column-header';
-                const titleH3 = document.createElement('h3');
-                titleH3.textContent = column.title;
-                const countSpan = document.createElement('span');
-                countSpan.className = 'column-count';
-                countSpan.textContent = commissions.length;
-
-                headerDiv.appendChild(titleH3);
-                headerDiv.appendChild(countSpan);
-
-                const cardsDiv = document.createElement('div');
-                cardsDiv.className = 'column-cards';
-
-                commissions.forEach(commission => {
-                    const cardDiv = document.createElement('div');
-                    cardDiv.className = 'commission-card';
-
-                    const cardHeader = document.createElement('div');
-                    cardHeader.className = 'card-header';
-
-                    const cardNumber = document.createElement('span');
-                    cardNumber.className = 'card-number';
-                    cardNumber.textContent = `#${commission.id}`;
-
-                    const paidDot = document.createElement('span');
-                    paidDot.className = `paid-dot ${commission.paid ? 'paid' : 'unpaid'}`;
-                    paidDot.title = commission.paid ? 'Paid' : 'Unpaid';
-
-                    cardHeader.appendChild(cardNumber);
-                    cardHeader.appendChild(paidDot);
-
-                    const cardContent = document.createElement('div');
-                    cardContent.className = 'card-content';
-
-                    const cardTitle = document.createElement('p');
-                    cardTitle.className = 'card-title';
-                    cardTitle.textContent = commission.title;
-
-                    const cardDescription = document.createElement('p');
-                    cardDescription.className = 'card-detail';
-                    cardDescription.textContent = commission.description;
-
-                    cardContent.appendChild(cardTitle);
-                    cardContent.appendChild(cardDescription);
-
-                    cardDiv.appendChild(cardHeader);
-                    cardDiv.appendChild(cardContent);
-                    cardsDiv.appendChild(cardDiv);
-                });
-
-                columnDiv.appendChild(headerDiv);
-                columnDiv.appendChild(cardsDiv);
-                queueBoard.appendChild(columnDiv);
             });
         }
 
@@ -978,11 +887,9 @@
             const formSection = document.getElementById('request');
             if (!commissionButton) return;
 
-            const activeCount = siteCommissions.filter(c => c.status === 'waiting-list').length;
-            const maxSlots = siteSettings.maxSlots;
-            const isFull = activeCount >= maxSlots;
+            // Slot usage lives on the admin board now — the public site only
+            // knows open/closed + reopen date from settings.
             const isOpen = siteSettings.commsOpen;
-            const slotText = `${activeCount} / ${maxSlots} slots taken`;
 
             // Gate the request form section
             if (closedBox) {
@@ -997,15 +904,8 @@
                 }
             }
 
-            if (isOpen && isFull) {
-                commissionButton.innerHTML = `Queue is full<br><span style="font-size:0.8em;opacity:0.8">${slotText}</span>`;
-                commissionButton.style.opacity = '0.5';
-                commissionButton.style.cursor = 'not-allowed';
-                commissionButton.style.pointerEvents = 'none';
-                commissionButton.onclick = (e) => e.preventDefault();
-                if (pingListButton) pingListButton.classList.add('visible');
-            } else if (isOpen) {
-                commissionButton.innerHTML = `Request a Commission<br><span style="font-size:0.8em;opacity:0.8">${slotText}</span>`;
+            if (isOpen) {
+                commissionButton.innerHTML = `Request a Commission`;
                 commissionButton.style.opacity = '1';
                 commissionButton.style.cursor = 'pointer';
                 commissionButton.style.pointerEvents = 'auto';
@@ -1067,19 +967,6 @@
 
             const footer = document.querySelector('footer');
             footer.style.display = 'block';
-        }
-
-        function setupQueueSection() {
-            const queueSection = document.querySelector('.queue-section');
-            const sectionHeader = document.querySelector('.queue-section-header');
-            const sectionIcon = document.querySelector('.queue-expand-icon');
-
-            sectionHeader.addEventListener('click', () => {
-                queueSection.classList.toggle('collapsed');
-                sectionIcon.style.transform = queueSection.classList.contains('collapsed')
-                    ? 'rotate(-90deg)'
-                    : 'rotate(0deg)';
-            });
         }
 
         function setupNavToggle() {
@@ -1161,7 +1048,6 @@
         // ---- Boot: seed first (instant), then upgrade to Supabase data ----
         function renderAll() {
             renderStatusIndicators();
-            renderQueueBoard();
             renderServices();
             renderServicePicker();
             updateCommissionFormButton();
@@ -1169,19 +1055,16 @@
         }
 
         async function loadData() {
-            const [services, commissions, settings] = await Promise.all([
+            const [services, settings] = await Promise.all([
                 SupabaseClient.getServices(),
-                SupabaseClient.getCommissions(),
                 SupabaseClient.getSettings()
             ]);
             if (services) siteServices = services;
-            if (commissions) siteCommissions = commissions;
             if (settings) siteSettings = settings;
             renderAll();
         }
 
         updateActiveNav();
-        setupQueueSection();
         setupNavToggle();
         setupRequestForm();
         updatePingListCount();
@@ -1189,7 +1072,7 @@
         renderAll();
         loadData();
 
-        // Keep queue/status fresh from Supabase
+        // Keep status/prices fresh from Supabase
         setInterval(() => {
             if (SupabaseClient.isConfigured()) loadData();
         }, 60000);

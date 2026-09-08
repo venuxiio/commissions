@@ -18,12 +18,12 @@ In the Supabase dashboard: **SQL Editor** → "New query" → paste **everything
 
 That single script does everything:
 - creates the `services`, `commissions`, `settings` tables
-- seeds them with your current prices and queue
+- seeds services with your current prices (commissions start empty — queue is admin-only)
 - enables **Row Level Security** with these policies:
 
 | Who (key) | services | commissions | settings |
 |---|---|---|---|
-| public (`anon` key, in the site) | read active rows | read **non-Request** rows · **insert only Request rows** | read |
+| public (`anon` key, in the site) | read active rows | **no reads** · **insert only Request rows** | read |
 | admin (`service_role` key, yours) | full control | full control | full control |
 
 The database itself rejects anything else — if someone extracts the anon key from the site, the worst they can do is read public data or file a request. No editing, no deleting, no reading other people's contact info.
@@ -61,15 +61,15 @@ Commit + push → done. The site reads Supabase (polls every 60 s).
 
 ## 6. Smoke test
 
-1. Public site → service cards + queue render from Supabase.
+1. Public site → service cards + status chips render from Supabase.
 2. Public site → submit the request form → row appears with `status = 'request'` (check the Table Editor).
-3. Public site → that request is **not visible anywhere** on the page.
-4. **Permission proof**: run
+3. **Permission proof**: run
    `curl "https://YOUR-PROJECT.supabase.co/rest/v1/commissions?select=*" -H "apikey: ANON_KEY" -H "Authorization: Bearer ANON_KEY"`
-   → you get queue rows **without** any `request` rows, and no `contact`/`refs`/`details` columns (the script drops them for anon).
-5. Same curl with `select=contact` → **error** (column not exposed to anon).
-6. `admin.html` → request shows in 📥 Requests with full info → drag/click to Waiting List → public queue shows it within 60 s.
-7. Admin ⚙ → toggle Commissions open → public button flips.
+   → **error / empty**: anon cannot read commissions at all (the public queue is gone — only the admin board reads them).
+4. `admin.html` → request shows in 📥 Requests with full info → drag/click to Waiting List.
+5. Admin ⚙ → toggle Commissions open → public button flips.
+
+> Already set up before Sep 2026? Run [`migrations/2026-09-08-drop-public-queue.sql`](migrations/2026-09-08-drop-public-queue.sql) in the SQL Editor to drop the old `commissions_public` view and lock anon out of commission reads.
 
 ## 7. Editing data by hand
 
@@ -84,5 +84,5 @@ You don't need the admin board for bulk edits — dashboard → **Table Editor**
 
 ## Why the keys are safe where they are
 
-- `anon` key in public JS: every request is checked against RLS policies server-side. Public = can read public data, can submit a request. That's it.
+- `anon` key in public JS: every request is checked against RLS policies server-side. Public = can read services + settings, can submit a request. It cannot read commissions at all.
 - `service_role` in your browser only: full control. If a device is compromised, dashboard → Settings → API → rotate JWT secret (invalidates old keys).

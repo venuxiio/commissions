@@ -1,7 +1,10 @@
 -- ============================================================================
 -- Venuxiio commission site — Supabase schema + permissions + seed data
 -- Paste into: Supabase dashboard → SQL Editor → New query → Run (once)
--- ============================================================================
+-- NOTE (Sep 2026): the public queue was removed — anon no longer reads
+-- commissions at all. Existing installs should run migrations/
+-- 2026-09-08-drop-public-queue.sql. The view + queue seeds below are kept
+-- out; fresh installs match the current site.
 
 -- --------------------------------------------------------------------------
 -- Tables
@@ -45,26 +48,13 @@ create table if not exists public.settings (
 );
 
 -- --------------------------------------------------------------------------
--- Public (anon) view of commissions: hides pending requests entirely and
--- strips contact / details / refs columns so client info never reaches a
--- browser via the anon key. Admin (service_role) reads the base table.
--- --------------------------------------------------------------------------
-
-create or replace view public.commissions_public as
-select id, client, service, estimate, status, paid, sort_order, created_at
-from public.commissions
-where status <> 'request';
-
-grant select on public.commissions_public to anon, authenticated;
-
--- --------------------------------------------------------------------------
 -- Row Level Security — this is the whole permission model.
 -- The anon key (embedded in the public site) is limited by the DATABASE:
 --   services   : read active rows
---   commissions: read the public view (no request rows, no contact columns);
---                insert ONLY rows with status = 'request' (and no way to
---                mark paid, impersonate update/delete — those are simply
---                not granted)
+--   commissions: NO read access at all (the public queue is gone — only the
+--                admin board reads commissions); insert ONLY rows with
+--                status = 'request' (and no way to mark paid, impersonate
+--                update/delete — those are simply not granted)
 --   settings   : read
 -- The service_role key bypasses RLS entirely (admin board).
 -- --------------------------------------------------------------------------
@@ -100,12 +90,12 @@ create policy "settings_public_read"
     to anon, authenticated
     using (true);
 
--- NOTE: commissions has NO anon select policy on the base table — anon reads
--- go through the commissions_public view above. No update/delete policies
--- exist for anon anywhere: by default RLS denies everything not granted.
+-- NOTE: commissions has NO anon select policy — anon cannot read commission
+-- rows at all (insert-only for requests). No update/delete policies exist
+-- for anon anywhere: by default RLS denies everything not granted.
 
 -- --------------------------------------------------------------------------
--- Seed data — current prices + queue (September 2026)
+-- Seed data — current prices (September 2026)
 -- --------------------------------------------------------------------------
 
 insert into public.services (name, category, base_price, extra_char_price, description, image, active, sort) values
@@ -123,28 +113,8 @@ insert into public.services (name, category, base_price, extra_char_price, descr
     ('Sketch Chibi',    'sketch', 15, 0, '', 'assets/images/examples/chibi/chibi1.webp', true, 12)
 on conflict do nothing;
 
--- queue: waiting list
-insert into public.commissions (client, service, status, paid, sort_order) values
-    ('da_glooba',   'Halfbody',          'waiting', false, 1),
-    ('thealvinxu',  'two knees up',      'waiting', false, 2),
-    ('lexlul09',    'halfbody unshaded', 'waiting', false, 3),
-    ('Seong_strz',  'Fullbody',          'waiting', false, 4),
-    ('cyborne_exe', 'Custom',            'waiting', false, 5);
-
--- queue: finished history
-insert into public.commissions (client, service, status, paid, sort_order) values
-    ('eddytails',         'fullbody + bg',         'finished', true, 1),
-    ('da.veed05',         '2 Knee ups',            'finished', true, 2),
-    ('Ashttro',           'Sketch fullbody',       'finished', true, 3),
-    ('H.z.a3_',           'Two fullbodies',        'finished', true, 4),
-    ('Sif_3905',          'Halfbody',              'finished', true, 5),
-    ('simp4lava',         'Halfbody',              'finished', true, 6),
-    ('Landspeeda',        '2 halfbodies',          'finished', true, 7),
-    ('Albino_Trash_Panda','Knee up',               'finished', true, 8),
-    ('H.z.a3_',           'Sketch fullbody',       'finished', true, 9),
-    ('Jesusrocha',        'Halfbody + background', 'finished', true, 10),
-    ('theo_frv1',         'Fullbody+background',   'finished', true, 11),
-    ('nexystuff',         '2 halfbodies',          'finished', true, 12);
+-- No commission seed rows: the queue is admin-only now, so it starts empty
+-- and real rows arrive through the request form / admin board.
 
 -- settings: single row (commissions currently closed)
 insert into public.settings (id, comms_open, reopen_date, max_slots, art_trades_open, requests_open)

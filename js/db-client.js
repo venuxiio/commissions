@@ -1,12 +1,12 @@
 // Supabase REST wrapper for the commission site (no SDK — plain fetch).
-// Public site: read services/queue/settings + submit requests (anon key).
+// Public site: read services/settings + submit requests (anon key).
 // When Supabase is unreachable or not configured, callers fall back to
 // seedData (bundled in commissions.js) so the site never renders empty.
 //
 // Keys (see js/config.js + SUPABASE_SETUP.md):
 //   anon         — public, in config.js. Enforced by Row Level Security:
-//                  read services (active) / settings / commissions_public
-//                  view; insert commissions rows with status='request' only.
+//                  read services (active) / settings; insert commissions
+//                  rows with status='request' only. No commission reads.
 //   service_role — private, pasted into admin.html. Bypasses RLS: full
 //                  control of all tables.
 
@@ -54,7 +54,7 @@ const SupabaseClient = (() => {
     }
 
     function normalizeCommission(r) {
-        // DB status → legacy status keys used by the queue renderer
+        // DB status → legacy status keys used by the admin board renderer
         const statusMap = {
             'request': 'request',
             'waiting': 'waiting-list',
@@ -100,21 +100,6 @@ const SupabaseClient = (() => {
             return rows.map(normalizeService).filter(s => s.active);
         } catch (err) {
             console.warn('Supabase unavailable, using seed services:', err.message);
-            return null;
-        }
-    }
-
-    async function getCommissions() {
-        if (!isConfigured()) return null;
-        try {
-            // commissions_public view: DB already excludes request rows and
-            // contact/details/refs columns for the anon key.
-            const rows = await request('commissions_public', {
-                query: { select: '*', order: 'id.asc' }
-            });
-            return rows.map(normalizeCommission);
-        } catch (err) {
-            console.warn('Supabase unavailable, using seed commissions:', err.message);
             return null;
         }
     }
@@ -241,7 +226,6 @@ const SupabaseClient = (() => {
     return {
         isConfigured,
         getServices,
-        getCommissions,
         getSettings,
         submitRequest,
         adminGetAll,
