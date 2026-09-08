@@ -1789,12 +1789,46 @@ footer {
     white-space: nowrap;
 }
 
-#rf-armor-detail {
-    margin-top: 0.5rem;
+.option-with-sub {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
 }
 
-#rf-armor-detail select {
+.option-main {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.option-sub {
+    margin: 0.5rem 0.25rem 0.25rem calc(0.75rem + 18px + 0.75rem); /* align under the text, past the checkbox */
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.option-sub-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-gray);
+}
+
+.option-sub select {
     width: fit-content;
+    padding: 0.45rem 0.75rem;
+    border: 2px solid var(--color-primary-light);
+    border-radius: 0.6rem;
+    background: var(--color-bg-light);
+    font-family: inherit;
+    font-size: 0.88rem;
+    color: var(--color-text-dark);
+    cursor: pointer;
+}
+
+#rf-armor-detail[hidden] {
+    display: none;
 }
 
 .quick-math {

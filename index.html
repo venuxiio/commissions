@@ -210,17 +210,19 @@
                             <input type="checkbox" id="rf-bg">
                             <span class="option-text">Simple background<span class="option-price">+€10</span></span>
                         </label>
-                        <label class="option-box">
-                            <input type="checkbox" id="rf-armor">
-                            <span class="option-text">Armor / weapons / robotic parts<span class="option-price">+€5–10 / char</span></span>
-                        </label>
-                    </div>
-                    <div class="form-group" id="rf-armor-detail" hidden>
-                        <label for="rf-armor-amount">Armor complexity (per character)</label>
-                        <select id="rf-armor-amount">
-                            <option value="5">Simple — +€5</option>
-                            <option value="10">Complex — +€10</option>
-                        </select>
+                        <div class="option-box option-with-sub">
+                            <label class="option-main">
+                                <input type="checkbox" id="rf-armor">
+                                <span class="option-text">Armor / weapons / robotic parts<span class="option-price">+€5–10 / char</span></span>
+                            </label>
+                            <div class="option-sub" id="rf-armor-detail" hidden>
+                                <label class="option-sub-label" for="rf-armor-amount">Armor complexity (per character)</label>
+                                <select id="rf-armor-amount">
+                                    <option value="5">Simple — +€5</option>
+                                    <option value="10">Complex — +€10</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -797,12 +799,21 @@
             const social = document.getElementById('rf-social').value.trim();
             const contact = [email, social && (social.includes('@') ? social : `@${social}`)].filter(Boolean).join(' · ');
 
+            // Selected options ride along as structured data (options column)
+            const options = {};
+            if (document.getElementById('rf-bg')?.checked) options.background = true;
+            const armorEl = document.getElementById('rf-armor');
+            if (armorEl?.checked) {
+                options.armor = Number(document.getElementById('rf-armor-amount')?.value) === 10 ? 'complex' : 'simple';
+            }
+
             const payload = {
                 client: document.getElementById('rf-name').value.trim(),
                 contact,
                 service: selectedService,
                 details: document.getElementById('rf-details').value.trim(),
                 refs: document.getElementById('rf-refs').value.trim(),
+                options,
                 estimate: computeEstimate().total
             };
 

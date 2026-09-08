@@ -794,6 +794,16 @@
                 el.textContent = price;
                 card.appendChild(el);
             }
+            if (c.options && Object.keys(c.options).length) {
+                const el = document.createElement('div');
+                el.className = 'card-meta';
+                // e.g. background: true, armor: 'simple' | 'complex'
+                const parts = [];
+                if (c.options.background) parts.push('simple bg');
+                if (c.options.armor) parts.push(`armor (${c.options.armor})`);
+                el.textContent = `⚙ ${parts.join(' · ')}`;
+                card.appendChild(el);
+            }
             if (c.refs) {
                 if (isRequest) {
                     // full links on requests — you need them to decide

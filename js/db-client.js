@@ -69,6 +69,7 @@ const SupabaseClient = (() => {
             contact: r.contact || '',
             details: r.details || '',
             refs: r.refs || '',
+            options: r.options || {},
             estimate: r.estimate != null ? Number(r.estimate) : null,
             paid: Boolean(r.paid),
             sortOrder: r.sort_order != null ? Number(r.sort_order) : null,
@@ -128,6 +129,7 @@ const SupabaseClient = (() => {
             service: payload.service,
             details: payload.details,
             refs: payload.refs,
+            options: payload.options || {},
             estimate: payload.estimate,
             status: 'request',
             paid: false

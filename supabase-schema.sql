@@ -28,6 +28,7 @@ create table if not exists public.commissions (
     service text not null default '',
     details text not null default '',
     refs text not null default '',
+    options jsonb not null default '{}'::jsonb,
     estimate numeric,
     status text not null default 'request'
         check (status in ('request', 'waiting', 'in_progress', 'finished')),
