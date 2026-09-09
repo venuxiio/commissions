@@ -31,24 +31,27 @@
     <div class="layout">
 
         <aside class="sidebar">
-            <div class="sidebar-cover">
-                <img src="assets/images/banner.webp" alt="">
+            <div class="sidebar-header">
+                <div class="sidebar-cover">
+                    <img src="assets/images/banner.webp" alt="">
+                </div>
+                <img src="assets/images/profile.webp" alt="Venuxiio" class="profile-image sidebar-avatar">
             </div>
-            <img src="assets/images/profile.webp" alt="Venuxiio" class="profile-image sidebar-avatar">
-            <h1 class="sidebar-name">Venuxiio</h1>
 
-            <a href="#request" class="commission-form-button">Request a Commission</a>
+            <div class="sidebar-content">
+                <h1 class="sidebar-name">Venuxiio</h1>
+                <a href="#request" class="commission-form-button">Request a Commission</a>
 
-            <p class="sidebar-bio">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and
-                chilling.</p>
+                <p class="sidebar-bio">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and
+                    chilling.</p>
 
-            <div class="status-indicators" id="status-indicators"></div>
+                <div class="status-indicators" id="status-indicators"></div>
 
-            <p class="sidebar-links">Check my <a href="#terms" class="tos-link">T.O.S</a> and the <a href="#faq">F.A.Q</a>
-                before requesting!</p>
+                <p class="sidebar-links">Check my <a href="#terms" class="tos-link">T.O.S</a> and the <a href="#faq">F.A.Q</a>
+                    before requesting!</p>
 
-            <div class="sidebar-socials">
-                <div class="social-icons">
+                <div class="sidebar-socials">
+                    <div class="social-icons">
                     <a href="https://www.instagram.com/venuxiio/" target="_blank" rel="noopener noreferrer"
                         class="social-icon" title="Instagram">
                         <svg viewBox="0 0 24 24" fill="currentColor">
@@ -83,14 +86,17 @@
                             </g>
                         </svg>
                     </a>
+                    </div>
                 </div>
             </div>
         </aside>
 
         <main class="content">
-            <div class="tab-bar" role="tablist">
-                <nav data-target="services" role="tab" aria-selected="true"><span>Commissions</span></nav>
-                <nav data-target="examples" role="tab" aria-selected="false"><span>Portfolio</span></nav>
+            <div class="tab-bar-wrap">
+                <div class="tab-bar" role="tablist">
+                    <nav data-target="services" role="tab" aria-selected="true"><span>Commissions</span></nav>
+                    <nav data-target="examples" role="tab" aria-selected="false"><span>Portfolio</span></nav>
+                </div>
             </div>
 
         <section id="services">
