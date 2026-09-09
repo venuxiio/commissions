@@ -103,8 +103,9 @@ body {
 .sidebar-cover img {
     display: block;
     width: 100%;
-    height: 9rem;
+    height: 10rem;
     object-fit: cover;
+    object-position: center top; /* keeps the character's head in the crop */
     border-radius: 1rem;
     border: 2px solid var(--color-primary);
     box-shadow: var(--shadow-primary);
@@ -114,6 +115,7 @@ body {
     width: 8rem;
     height: 8rem;
     margin: -4.5rem auto 0; /* overlaps the cover, Ko-fi style */
+    background: var(--color-white); /* the artwork is transparent — white shows inside the border */
     position: relative;
     z-index: 1;
 }
@@ -126,26 +128,9 @@ body {
     margin: 0;
 }
 
-.sidebar-card {
-    width: 100%;
-    background: var(--color-white);
-    border: 2px dotted var(--color-primary-pale);
-    border-radius: 1rem;
-    box-shadow: var(--shadow-primary);
-    padding: 1rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-}
-
-.sidebar-card .commission-form-button {
+.sidebar .commission-form-button {
     margin-top: 0;
-}
-
-/* The sidebar ping-list button is a standing CTA — always visible.
-   The .visible toggling only matters for the one inside #request-closed. */
-.sidebar-card .ping-list-button {
-    display: inline-block;
+    width: 100%;
 }
 
 .sidebar-bio {
@@ -901,7 +886,7 @@ footer {
     }
 
     .sidebar-cover img {
-        height: 7rem;
+        height: 9rem;
     }
 
     .sidebar .sidebar-avatar {
