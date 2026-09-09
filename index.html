@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Venuxiio - Commission Portfolio</title>
+    <title>Venuxiio - Commissions &amp; Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <script src="commissions.js"></script>
     <script src="js/config.js"></script>
@@ -28,80 +28,77 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="banner">
-            <nav data-target="home">
-                <span>Home</span>
-            </nav>
-            <nav data-target="examples">
-                <span>Examples</span>
-            </nav>
-            <nav data-target="services">
-                <span>Services</span>
-            </nav>
-        </div>
+    <div class="layout">
 
-        <section id="home">
-            <div class="home-intro">
-                <div class="home-profile-section">
-                    <img src="assets/images/profile.webp" alt="Profile Picture" class="profile-image">
-                    <p class="profile-description">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of
-                        time gaming and chilling.</p>
+        <aside class="sidebar">
+            <div class="sidebar-cover">
+                <img src="assets/images/background2.webp" alt="">
+            </div>
+            <img src="assets/images/profile.webp" alt="Venuxiio" class="profile-image sidebar-avatar">
+            <h1 class="sidebar-name">Venuxiio</h1>
 
-                    <svg class="animated-arrow" width="25.484392mm" height="47.411819mm"
-                        viewBox="0 0 25.484392 47.411819" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:svg="http://www.w3.org/2000/svg">
-                        <defs id="defs1" />
-                        <g id="layer1" transform="translate(-159.89931,-108.91639)">
-                            <path class="arrow-path"
-                                style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
-                                d="m 184.88369,155.82822 c -7.84552,-3.40874 -15.69104,-6.81749 -19.85728,-10.60498 -4.16624,-3.78749 -4.6532,-7.95373 -4.62615,-10.90256 0.0271,-2.94883 0.56813,-4.68026 2.38072,-7.16918 1.81258,-2.48893 4.89668,-5.73534 7.68319,-8.00784 2.78651,-2.2725 5.27543,-3.57106 6.70927,-4.27445 1.43383,-0.70339 1.81258,-0.81161 1.9208,-0.81161 0.10821,0 -0.0541,0.10821 -0.13527,0.13527 -0.0812,0.0271 -0.0812,-0.0271 -0.32464,-0.18938 -0.24348,-0.16232 -0.73045,-0.43286 -1.1092,-0.83866 -0.37875,-0.4058 -0.64928,-0.94687 0.21643,-1.62321 0.86571,-0.67633 2.86768,-1.48794 4.30151,-1.86669 1.43384,-0.37875 2.29955,-0.32464 2.54303,0.0541 0.24348,0.37875 -0.13527,1.08214 -0.86572,2.43481 -0.73044,1.35268 -1.81258,3.35464 -2.89472,5.3566"
-                                id="path114" />
-                        </g>
-                    </svg>
-                </div>
-                <div class="home-info-section">
-                    <h1 class="home-title">Venuxiio</h1>
-                    <script>
-                        // Animate arrow path with exact length
-                        const arrowPath = document.querySelector('.arrow-path');
-                        if (arrowPath) {
-                            const pathLength = arrowPath.getTotalLength();
-                            arrowPath.style.strokeDasharray = pathLength;
-                            arrowPath.style.strokeDashoffset = pathLength;
-
-                            // Trigger animation
-                            setTimeout(() => {
-                                arrowPath.style.transition = 'stroke-dashoffset 2.5s ease-in-out';
-                                arrowPath.style.strokeDashoffset = '0';
-                            }, 100);
-                        }
-                    </script>
-                    <p class="home-welcome">Welcome to my personal space! Here you'll find info about commissions,
-                        <a href="#terms" class="tos-link">T.O.S</a>., the <a href="#faq">F.A.Q</a>, my gallery
-                        (examples), and more, feel
-                        free to
-                        take a look :D
-                    </p>
-                    <p class="home-welcome" style="margin-top:0.5rem;">Looking for prices or want to request a
-                        commission? Check the <a href="#services">Services</a> section!</p>
-                    <div class="status-indicators" id="status-indicators"></div>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
-                        target="_blank" class="commission-form-button">Request a Commission</a>
-                    <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
-                        class="ping-list-button">Join the Ping List</a>
-                </div>
+            <div class="sidebar-card">
+                <a href="#request" class="commission-form-button">Request a Commission</a>
+                <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank" class="ping-list-button visible">Join the
+                    Ping List</a>
             </div>
 
+            <p class="sidebar-bio">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and
+                chilling.</p>
 
+            <div class="status-indicators" id="status-indicators"></div>
 
-            <!-- <div class="note">
-                Website is still in progress so prices may change!!!
-            </div> -->
-        </section>
+            <p class="sidebar-links">Check my <a href="#terms" class="tos-link">T.O.S</a> and the <a href="#faq">F.A.Q</a>
+                before requesting!</p>
+
+            <div class="sidebar-socials">
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/venuxiio/" target="_blank" rel="noopener noreferrer"
+                        class="social-icon" title="Instagram">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor"
+                                stroke-width="2" />
+                            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                            <circle cx="18" cy="6" r="1.5" />
+                        </svg>
+                    </a>
+                    <a href="https://www.xiaohongshu.com/user/profile/5ff053e50000000001003054" target="_blank"
+                        rel="noopener noreferrer" class="social-icon" title="Rednote">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@venuxiio7" target="_blank" rel="noopener noreferrer"
+                        class="social-icon" title="TikTok">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74a2.89 2.89 0 0 1 2.31-4.64a2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                        </svg>
+                    </a>
+                    <a href="https://toyhou.se/Venuxiio" target="_blank" rel="noopener noreferrer"
+                        class="social-icon" title="Toyhouse">
+                        <svg viewBox="0 0 197.72693 190.30197" fill="currentColor">
+                            <g transform="translate(6.2923729,-54.858845)">
+                                <path
+                                    d="M -6.2923729,154.22213 92.377447,54.858845 121.69053,84.093271 V 69.076617 h 31.14565 v 46.273543 l 38.59837,38.59837 h -32.36923 v 91.21228 H 25.02776 v -91.10105 z" />
+                                <path style="fill:#ffffff"
+                                    d="m 54.338047,170.6337 v 8.39821 H 70.80075 v 53.94872 h 11.012215 v -54.00434 h 17.920872 c 0,0 2.72e-4,-0.23357 2.72e-4,2.12606 v 51.91208 h 8.966631 v -29.12162 h 26.03469 v 28.76768 h 9.28125 v -61.66526 h -8.96663 v 25.72008 h -26.42796 l 0.22247,-26.09986 z" />
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="tab-bar" role="tablist">
+                <nav data-target="services" role="tab" aria-selected="true"><span>Commissions</span></nav>
+                <nav data-target="examples" role="tab" aria-selected="false"><span>Portfolio</span></nav>
+            </div>
 
         <section id="services">
-            <h2>Commission Services</h2>
+            <h2>Commissions</h2>
             <p style="margin-top: 1rem;" class="home-welcome">Before commissioning please check my <a
                     href="#terms" class="tos-link">T.O.S</a> first!</p>
 
@@ -142,16 +139,18 @@
             </div>
         </section>
 
-        <section id="request">
-            <h2>Commission Request</h2>
-            <p style="margin-top: 1rem;" class="home-welcome">Fill in this form to request a commission. Once you
-                submit, I'll review it and reply with the exact price and timing before we start. Submitting doesn't
-                guarantee acceptance.</p>
+        <!-- Request modal — opened from the sidebar card, the service cards and #request links -->
+        <div id="request-modal" class="page-modal">
+            <div class="page-modal-content">
+                <button class="modal-close" aria-label="Close">&times;</button>
+                <h2>Commission Request</h2>
+                <p class="home-welcome">Fill in this form to request a commission. Once you submit, I'll review it and
+                    reply with the exact price and timing before we start. Submitting doesn't guarantee acceptance.</p>
 
-            <div class="artist-note">
-                <p>By ordering, you're okay with the finished piece being used as an example. If you don't want it
-                    shown in my gallery, mention it in the details and we can arrange a privacy add-on.</p>
-            </div>
+                <div class="artist-note">
+                    <p>By ordering, you're okay with the finished piece being used as an example. If you don't want it
+                        shown in my gallery, mention it in the details and we can arrange a privacy add-on.</p>
+                </div>
 
             <div id="request-closed" class="request-closed" hidden>
                 <p id="request-closed-message">Commissions are currently closed.</p>
@@ -261,10 +260,11 @@
                 <p>Thanks! I'll review your request and get back to you with the exact price and timing. Keep an eye on
                     your contact info (and spam folder just in case).</p>
             </div>
-        </section>
+            </div>
+        </div>
 
         <section id="examples">
-            <h2>Commission Examples</h2>
+            <h2>Portfolio</h2>
             <p style="margin-top: 1rem;" class="home-welcome">Here are some examples of different commission types I
                 offer! Click on any image to view it in full.</p>
 
@@ -462,8 +462,11 @@
                 <p style="margin-top: 1rem;">If you have any questions, feel free to ask! :D</p>
             </div>
         </div>
-        <section id="faq">
-            <h2 style="margin-top: 2rem;">F.A.Q</h2>
+        <!-- F.A.Q modal — opened from the sidebar link, the terms modal and #faq links -->
+        <div id="faq-modal" class="page-modal">
+            <div class="page-modal-content">
+                <button class="modal-close" aria-label="Close">&times;</button>
+                <h2>F.A.Q</h2>
             <div class="faq-section">
                 <div class="faq-item">
                     <h3>Do you make reference sheets?</h3>
@@ -485,59 +488,18 @@
                         commission's progress.</p>
                 </div>
             </div>
-        </section>
-
-
-        <footer>
-            <div class="footer-content">
-                <div class="footer-social">
-                    <p class="footer-heading">Other medias</p>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/venuxiio/" target="_blank" rel="noopener noreferrer"
-                            class="social-icon" title="Instagram">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor"
-                                    stroke-width="2" />
-                                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
-                                <circle cx="18" cy="6" r="1.5" />
-                            </svg>
-                        </a>
-                        <a href="https://www.xiaohongshu.com/user/profile/5ff053e50000000001003054" target="_blank"
-                            rel="noopener noreferrer" class="social-icon" title="Rednote">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" />
-                            </svg>
-                        </a>
-                        <a href="https://www.tiktok.com/@venuxiio7" target="_blank" rel="noopener noreferrer"
-                            class="social-icon" title="TikTok">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74a2.89 2.89 0 0 1 2.31-4.64a2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                            </svg>
-                        </a>
-                        <a href="https://toyhou.se/Venuxiio" target="_blank" rel="noopener noreferrer"
-                            class="social-icon" title="Toyhouse">
-                            <svg viewBox="0 0 197.72693 190.30197" fill="currentColor">
-                                <g transform="translate(6.2923729,-54.858845)">
-                                    <path
-                                        d="M -6.2923729,154.22213 92.377447,54.858845 121.69053,84.093271 V 69.076617 h 31.14565 v 46.273543 l 38.59837,38.59837 h -32.36923 v 91.21228 H 25.02776 v -91.10105 z" />
-                                    <path style="fill:#ffffff"
-                                        d="m 54.338047,170.6337 v 8.39821 H 70.80075 v 53.94872 h 11.012215 v -54.00434 h 17.920872 c 0,0 2.72e-4,-0.23357 2.72e-4,2.12606 v 51.91208 h 8.966631 v -29.12162 h 26.03469 v 28.76768 h 9.28125 v -61.66526 h -8.96663 v 25.72008 h -26.42796 l 0.22247,-26.09986 z" />
-                                </g>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
             </div>
+        </div>
 
-            <div class="footer-bottom">
+
+            <footer>
+                <div class="footer-bottom">
                 <p>&copy; 2026 Venuxiio. All rights reserved.</p>
                 
                 <p class="footer-note" style="font-size: 0.75rem; margin-top: 0.5rem;">Last updated: May 15, 2026 at 2:07</p>
-            </div>
-        </footer>
-
+                </div>
+            </footer>
+        </main>
     </div>
 
     <script>
@@ -682,11 +644,13 @@
             }
             renderServiceDisplay();
             updateEstimate();
-            window.location.hash = 'request';
-            // Focus the name field once the section is visible
+            requestModal.open();
+            // Focus the name field once the modal is visible
             setTimeout(() => {
                 const nameField = document.getElementById('rf-name');
-                if (nameField) nameField.focus({ preventScroll: true });
+                if (nameField && !document.getElementById('request-form').hidden) {
+                    nameField.focus({ preventScroll: true });
+                }
             }, 100);
         }
 
@@ -876,18 +840,21 @@
         // ---- Commission button + form open/close gating ----
         function updateCommissionFormButton() {
             const commissionButton = document.querySelector('.commission-form-button');
-            const pingListButton = document.querySelector('.ping-list-button');
+            const pingListButtons = document.querySelectorAll('.ping-list-button');
             const closedBox = document.getElementById('request-closed');
-            const formSection = document.getElementById('request');
+            const requestForm = document.getElementById('request-form');
             if (!commissionButton) return;
 
             // Slot usage lives on the admin board now — the public site only
             // knows open/closed + reopen date from settings.
             const isOpen = siteSettings.commsOpen;
 
-            // Gate the request form section
+            // Closed modal shows the notice + ping list instead of the form
             if (closedBox) {
                 closedBox.hidden = isOpen;
+            }
+            if (requestForm) {
+                requestForm.hidden = !isOpen;
             }
             if (!isOpen && closedBox) {
                 const msg = closedBox.querySelector('#request-closed-message');
@@ -905,7 +872,7 @@
                 commissionButton.style.pointerEvents = 'auto';
                 commissionButton.href = '#request';
                 commissionButton.onclick = null;
-                if (pingListButton) pingListButton.classList.remove('visible');
+                pingListButtons.forEach(btn => btn.classList.remove('visible'));
             } else {
                 const options = { year: 'numeric', month: 'long', day: 'numeric' };
                 const formatted = siteSettings.reopenDate
@@ -918,70 +885,67 @@
                 commissionButton.style.cursor = 'not-allowed';
                 commissionButton.style.pointerEvents = 'none';
                 commissionButton.onclick = (e) => e.preventDefault();
-                if (pingListButton) pingListButton.classList.add('visible');
-            }
-            // Request form section only exists when relevant; nav has no "request" tab
-            if (formSection && !isOpen) {
-                // keep section present but the closed box communicates state
+                pingListButtons.forEach(btn => btn.classList.add('visible'));
             }
         }
 
-        // ---- Nav / routing ----
+        // ---- Tabs / routing ----
+        // Visible tabs: Commissions + Portfolio. Canonical hashes are
+        // #commissions / #portfolio; the section ids (services / examples)
+        // and old #services / #examples deep links keep working via the map.
+        const TAB_ROUTES = {
+            commissions: 'services',
+            portfolio: 'examples',
+            services: 'services',   // legacy deep links
+            examples: 'examples'    // legacy deep links
+        };
+        const CANONICAL_HASH = { services: 'commissions', examples: 'portfolio' };
+        const DEFAULT_TAB = 'commissions';
+
+        function currentRoute() {
+            const hash = window.location.hash.slice(1);
+            return TAB_ROUTES[hash] || TAB_ROUTES[DEFAULT_TAB];
+        }
+
         function updateActiveNav() {
-            const hash = window.location.hash.slice(1) || 'home';
-            const banner = document.querySelector('.banner');
+            const route = currentRoute();
 
             gtag('event', 'page_view', {
-                page_path: window.location.hash,
-                page_title: hash,
+                page_path: '#' + route,
+                page_title: route,
                 page_location: window.location.href
             });
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            banner.classList.add('collapsed');
-
-            document.querySelectorAll('nav').forEach(nav => {
-                nav.classList.remove('active');
+            document.querySelectorAll('.tab-bar nav').forEach(nav => {
+                const active = TAB_ROUTES[nav.dataset.target] === route;
+                nav.classList.toggle('active', active);
+                nav.setAttribute('aria-selected', active ? 'true' : 'false');
             });
 
-            const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
-            if (activeNav) {
-                activeNav.classList.add('active');
-            }
-
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active-section');
+            document.querySelectorAll('.content > section').forEach(section => {
+                section.classList.toggle('active-section', section.id === route);
             });
-
-            const activeSection = document.querySelector(`section#${hash}`);
-            if (activeSection) {
-                activeSection.classList.add('active-section');
-            } else {
-                // Unknown hash (e.g. old #terms links) — fall back to home
-                document.querySelector('section#home')?.classList.add('active-section');
-            }
-
-            const footer = document.querySelector('footer');
-            footer.style.display = 'block';
         }
 
-        function setupNavToggle() {
-            document.querySelectorAll('nav').forEach(nav => {
-                nav.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetHash = nav.getAttribute('data-target');
-                    if (window.location.hash.slice(1) !== targetHash) {
-                        window.location.hash = targetHash;
+        function setupTabs() {
+            document.querySelectorAll('.tab-bar nav').forEach(nav => {
+                nav.addEventListener('click', () => {
+                    const canonical = CANONICAL_HASH[nav.dataset.target];
+                    if (window.location.hash.slice(1) !== canonical) {
+                        window.location.hash = canonical; // hashchange -> updateActiveNav
+                    } else {
+                        updateActiveNav();
                     }
+                    // Instant jump: smooth scrolling visibly lags with the sticky bar
+                    window.scrollTo({ top: 0, behavior: 'auto' });
                 });
             });
         }
 
         // ---- Ping list count ----
         function updatePingListCount() {
-            const pingListButton = document.querySelector('.ping-list-button');
-            if (!pingListButton) return;
+            const pingListButtons = document.querySelectorAll('.ping-list-button');
+            if (!pingListButtons.length) return;
 
             const csvUrl = 'https://docs.google.com/spreadsheets/d/18iP-LAX37ew6r6WjqLBY9HeW47DoEH6XAy5cqZGxy54/export?format=csv';
 
@@ -991,55 +955,80 @@
                     const rows = csv.trim().split('\n');
                     const count = Math.max(0, rows.length - 1);
                     const max = 20;
-                    pingListButton.textContent = `Join the Ping List (${count}/${max})`;
+                    pingListButtons.forEach(btn => {
+                        btn.textContent = `Join the Ping List (${count}/${max})`;
+                    });
                 })
                 .catch(() => {
-                    pingListButton.textContent = 'Join the Ping List';
+                    pingListButtons.forEach(btn => {
+                        btn.textContent = 'Join the Ping List';
+                    });
                 });
         }
 
-        // ---- Terms modal ----
-        function setupTermsModal() {
-            const modal = document.getElementById('terms-modal');
-            const closeButton = document.getElementById('terms-modal-close');
-            if (!modal) return;
+        // ---- Modals (terms / request / faq share one helper) ----
+        function setupModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return { open: () => { }, close: () => { } };
 
-            const openModal = (e) => {
-                if (e) e.preventDefault();
+            const activeModals = () =>
+                document.querySelectorAll('.page-modal.active, .terms-modal.active, .image-modal.active');
+
+            const close = () => {
+                modal.classList.remove('active');
+                // Only unlock scrolling once no modal is left open
+                // (e.g. the terms modal links straight into the F.A.Q)
+                if (!activeModals().length) document.body.style.overflow = '';
+            };
+
+            const open = () => {
+                // One modal at a time — opening the F.A.Q from inside terms closes terms
+                activeModals().forEach(m => { if (m !== modal) m.classList.remove('active'); });
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                const content = modal.querySelector('.page-modal-content, .terms-modal-content');
+                if (content) content.scrollTop = 0;
+                gtag('event', 'modal_open', { modal_id: id });
             };
-            const closeModal = () => {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            };
 
-            document.querySelectorAll('a[href="#terms"]').forEach(link => {
-                link.addEventListener('click', openModal);
-            });
-
-            // Links inside the modal (e.g. F.A.Q) should navigate, not stay behind the overlay
-            modal.querySelectorAll('a[href^="#"]').forEach(link => {
-                if (link.getAttribute('href') !== '#terms') {
-                    link.addEventListener('click', closeModal);
-                }
-            });
-
-            closeButton.addEventListener('click', closeModal);
+            modal.querySelector('.modal-close')?.addEventListener('click', close);
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
+                if (e.target === modal) close();
             });
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+                if (e.key === 'Escape' && modal.classList.contains('active')) close();
             });
+
+            return { open, close };
         }
+
+        const requestModal = setupModal('request-modal');
+        const faqModal = setupModal('faq-modal');
+        const termsModal = setupModal('terms-modal');
+
+        // Delegated so the links keep working even when their href is rewritten
+        // at runtime (updateCommissionFormButton swaps the sidebar button href)
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href="#request"], a[href="#faq"], a[href="#terms"]');
+            if (!link) return;
+            e.preventDefault();
+            ({ request: requestModal, faq: faqModal, terms: termsModal })[link.getAttribute('href').slice(1)].open();
+        });
+
+        // Old deep links (#request / #faq / #terms) now open their modal on load
+        (function openLegacyHash() {
+            const hash = window.location.hash.slice(1);
+            const modals = { request: requestModal, faq: faqModal, terms: termsModal };
+            if (modals[hash]) modals[hash].open();
+        })();
 
         // ---- Image modal ----
         function setupImageModal() {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
             const modalTitle = document.getElementById('modal-title');
-            const closeButton = document.querySelector('.modal-close');
+            // Scoped to the lightbox: other modals (request/faq) also use .modal-close
+            const closeButton = document.querySelector('#image-modal .modal-close');
             const exampleCards = document.querySelectorAll('.example-card');
 
             exampleCards.forEach(card => {
@@ -1103,9 +1092,8 @@
         }
 
         updateActiveNav();
-        setupNavToggle();
+        setupTabs();
         setupRequestForm();
-        setupTermsModal();
         updatePingListCount();
         setupImageModal();
         renderAll();
