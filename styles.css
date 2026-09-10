@@ -77,7 +77,7 @@ body {
     align-items: start; /* required for position: sticky to engage */
     max-width: 90rem;
     margin: 0 auto;
-    padding: 0 1.5rem 2rem;
+    padding: 1rem 1.5rem 2rem;
 }
 
 .sidebar {
@@ -174,7 +174,10 @@ body {
 
 .content {
     min-width: 0;
-    padding-top: 1.5rem;
+    background: var(--color-white);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-large);
+    padding: 0 0 1.5rem; /* horizontal insets belong to the children — keeps the stuck bar full-bleed */
 }
 
 /* Sticky menu — stays visible while the content scrolls under it */
@@ -185,20 +188,41 @@ body {
     top: 0;
     z-index: 50;
     container-type: scroll-state;
+    padding: 1.25rem 2rem 0.75rem;
 }
 
 .tab-bar {
     display: flex;
     justify-content: center;
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
+    position: relative;
 }
 
+/* Container queries can't style the container (.tab-bar-wrap) itself,
+   so the stuck styles live on its child .tab-bar */
 @container scroll-state(stuck: top) {
     .tab-bar {
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.92);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 0.5rem 1rem -0.4rem rgba(167, 139, 250, 0.35);
+        /* bleed over the wrap's padding so the band reaches the panel
+           edges — top included, or content shows in a crisp strip above */
+        margin: -1.25rem -2rem 0.75rem;
+        padding: 1.25rem 2rem 0;
+    }
+
+    /* Soft fade below the bar so its edge isn't sharp while scrolling */
+    .tab-bar::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        height: 1.25rem;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0));
+        pointer-events: none;
     }
 }
 
@@ -206,7 +230,7 @@ body {
     display: flex;
     flex-wrap: nowrap;
     gap: 0.5rem;
-    background: #f5f1e8d6;
+    background: var(--color-cream);
     padding: 0.75rem 1.5rem;
     border-radius: 2rem;
     border: 2px solid var(--color-primary);
@@ -270,7 +294,7 @@ body {
     color: var(--color-text-gray);
     font-size: 1.05rem;
     line-height: 1.6;
-    margin: 0;
+    margin: 0 0 1.25rem;
 }
 
 .home-welcome a {
@@ -366,13 +390,9 @@ body {
 }
 
 section {
-    padding: 1.5rem 2rem;
+    padding: 0 2rem 1.5rem;
     display: none;
-    background: var(--color-white);
-    border-radius: 1rem;
-    box-shadow: var(--shadow-large);
     overflow: clip;
-    margin-bottom: 2rem;
 }
 
 section.active-section {
@@ -384,23 +404,13 @@ h1, h2 {
 }
 
 h2 {
-    font-size: 1.5em;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase; /* big letters */
     margin-bottom: 1rem;
     color: var(--color-black);
-}
-
-.prices-content {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.ref-prices-img {
-    height: 300px;
-    width: auto;
-    object-fit: contain;
-    flex-shrink: 0;
 }
 
 .chibi-comparison-img {
@@ -521,68 +531,49 @@ h2 {
 }
 
 footer {
-    padding: 1.5rem 2rem;
-    background: var(--color-white);
-    border-radius: 1rem;
-    box-shadow: var(--shadow-large);
+    padding: 1.25rem 2rem 0;
+    border-top: 2px dotted var(--color-primary-pale);
 }
 
-.social-icons {
+/* Icon + label rows, like a link list — matches the sidebar's centered
+   layout (block centered, rows left-aligned internally) */
+.social-links {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: flex-start;
+    width: fit-content;
+    margin: 0 auto;
 }
 
-.social-icon {
-    display: flex;
+.social-link {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    background: var(--color-white);
-    border-radius: 50%;
-    color: var(--color-primary);
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.2);
+    gap: 0.6rem;
+    color: var(--color-text-dark);
     text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
 }
 
-.social-icon:hover {
-    transform: translateY(-4px) scale(1.1);
-    background: var(--color-primary);
-    color: var(--color-white);
-    box-shadow: var(--shadow-hover);
+.social-link svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    flex-shrink: 0;
 }
 
-.social-icon:active,
-.social-icon:focus {
-    outline: none;
-    transform: translateY(0);
-    background: var(--color-white);
-    color: var(--color-primary);
-    box-shadow: 0 2px 8px rgba(167, 139, 250, 0.2);
+.social-link:hover {
+    color: var(--color-primary-dark);
 }
 
-.social-icon:focus-visible {
+.social-link:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
 }
 
-.social-icon svg {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-.social-icon img {
-    width: 1.5rem;
-    height: 1.5rem;
-    object-fit: contain;
-}
-
 .footer-bottom {
     text-align: center;
-    padding-top: 1.5rem;
+    padding-top: 0;
     
 }
 
@@ -910,11 +901,23 @@ footer {
     }
 
     .content {
-        padding-top: 0;
+        padding: 0 0 1.25rem;
+    }
+
+    .tab-bar-wrap {
+        padding: 1rem 1rem 0.75rem;
+    }
+
+    @container scroll-state(stuck: top) {
+        .tab-bar {
+            margin: -1rem -1rem 0.75rem;
+            padding: 1rem 1rem 0;
+        }
     }
 
     .tab-bar {
         gap: 0.5rem;
+        margin-bottom: 0.75rem;
     }
 
     .tab-bar nav {
@@ -922,33 +925,17 @@ footer {
         margin: 0;
     }
 
+    section {
+        padding: 0 1rem 1.25rem;
+    }
+
     .two-column {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    .prices-content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .ref-prices-img {
-        height: 350px;
-        width: 100%;
-        max-width: 100%;
-    }
-
     footer {
-        padding: 2rem 1rem 1.5rem;
-    }
-
-    .social-icons {
-        gap: 0.75rem;
-    }
-
-    .social-icon {
-        width: 2.5rem;
-        height: 2.5rem;
+        padding: 1.25rem 1rem 0;
     }
 
     /* Hide bottom character on mobile */
@@ -1023,6 +1010,7 @@ footer {
 }
 
 .service-card-image {
+    position: relative;
     flex: 0 0 50%;
     border-radius: 0.75rem 0 0 0.75rem;
     overflow: hidden;
@@ -1035,6 +1023,16 @@ footer {
     height: 100%;
     object-fit: contain; /* keep the art's ratio, centered in the box */
     display: block;
+    position: relative; /* sharp art sits above the blurred backdrop */
+}
+
+/* Same artwork, cover-cropped and blurred, filling the box behind it */
+.service-card-image .service-card-img-bg {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    filter: blur(0.8rem);
+    transform: scale(1.15); /* hides the blur's soft edges */
 }
 
 .service-card-body {
