@@ -346,7 +346,7 @@
                 <div class="footer-bottom">
                 <p>&copy; 2026 Venuxiio. All rights reserved.</p>
                 
-                <p class="footer-note" style="font-size: 0.75rem; margin-top: 0.5rem;">Last updated: May 15, 2026 at 2:07</p>
+                <p class="footer-note" id="last-updated" style="margin-top: 0.5rem;"></p>
                 </div>
             </footer>
         </main>
@@ -357,6 +357,15 @@
         // No commission rows here: anon has no read access to commissions.
         let siteSettings = seedData.settings;
         let siteServices = seedData.services;
+
+        // ---- Footer: last-updated stamp straight from the deployed file's mtime ----
+        const lastUpdated = document.getElementById('last-updated');
+        if (lastUpdated) {
+            const d = new Date(document.lastModified);
+            lastUpdated.textContent = 'Last updated: '
+                + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                + ' at ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        }
 
         // ---- Commissions status banner (the only status shown) ----
         function renderStatusIndicators() {
