@@ -617,44 +617,74 @@ footer {
     }
 }
 
-/* Examples Gallery Styles */
-.examples-gallery {
+/* ==========================================================================
+   Portfolio — uniform 3-column grid, filter chips, category badges
+   ========================================================================== */
+
+.portfolio-filter {
     display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin: 1.5rem 0 1.75rem;
+}
+
+/* Same recipe as .tab-bar nav: cream pill, 2px border, nested dotted outline */
+.filter-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.1rem;
+    background: var(--color-cream);
+    border: 2px solid var(--color-primary);
+    border-radius: 999px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-black);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-chip::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 2px dotted var(--color-black);
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+.filter-chip:hover {
+    background: var(--color-cream-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Active chip = the site's active-tab treatment */
+.filter-chip.active {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    border-color: var(--color-primary-dark);
+    color: var(--color-white);
+    box-shadow: var(--shadow-primary);
+}
+
+.filter-chip.active::after {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
     margin-bottom: 2rem;
 }
 
-.example-type-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.example-type-title {
-    font-size: 1.3rem;
-    color: var(--color-primary-dark);
-    margin: 0;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--color-primary-pale);
-}
-
-.example-variants {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1.5rem;
-}
-
 .example-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border-radius: 1rem;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .example-card:hover {
@@ -663,35 +693,36 @@ footer {
 
 .example-image {
     width: 100%;
-    height: 200px;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
     border-radius: 1rem;
     background: var(--color-bg-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.15);
+    box-shadow: var(--shadow-primary);
     transition: box-shadow 0.3s ease;
 }
 
 .example-card:hover .example-image {
-    box-shadow: 0 6px 20px rgba(167, 139, 250, 0.25);
+    box-shadow: var(--shadow-hover);
 }
 
 .example-image img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 1rem;
+    object-position: center;
+    transition: transform 0.3s ease;
 }
 
-.example-card h3 {
-    font-size: 1.1rem;
-    color: var(--color-text-dark);
-    margin: 0;
+.example-card:hover .example-image img {
+    transform: scale(1.04);
+}
+
+.portfolio-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--color-text-gray);
     font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
 }
 
 /* Terms Modal Styles */
@@ -855,19 +886,26 @@ footer {
     font-weight: 600;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-    .example-variants {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 1rem;
+@media (max-width: 850px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        max-width: 32rem; /* single-column cells shouldn't be poster-sized on tablets */
+        margin-inline: auto;
     }
 
-    .example-image {
-        height: 150px;
+    .portfolio-filter {
+        gap: 0.5rem;
     }
 
-    .example-type-title {
-        font-size: 1.1rem;
+    .filter-chip {
+        padding: 0.45rem 0.95rem;
+        font-size: 0.9rem;
     }
 }
 
@@ -1546,5 +1584,21 @@ footer {
 
     .service-card-image img {
         height: 100%;
+    }
+}
+
+/* Respect reduced-motion for the portfolio hover/filter interactions */
+@media (prefers-reduced-motion: reduce) {
+    .example-card,
+    .example-image,
+    .example-image img,
+    .filter-chip {
+        transition: none;
+    }
+
+    .example-card:hover,
+    .example-card:hover .example-image img,
+    .filter-chip:hover {
+        transform: none;
     }
 }

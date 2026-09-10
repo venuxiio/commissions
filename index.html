@@ -23,6 +23,7 @@
     <title>Venuxiio - Commissions &amp; Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <script src="commissions.js"></script>
+    <script src="portfolio.js"></script>
     <script src="js/config.js"></script>
     <script src="js/db-client.js"></script>
 </head>
@@ -267,162 +268,10 @@
         <section id="examples">
             <h2>Portfolio</h2>
             <p style="margin-top: 1rem;" class="home-welcome">Here are some examples of different commission types I
-                offer! Click on any image to view it in full.</p>
+                offer! Click on any image to view it in full, or use the buttons to filter by type.</p>
 
-            <div class="examples-gallery">
-                <!-- Bust Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Bust</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/bust/bust.webp" data-title="Bust">
-                            <div class="example-image">
-                                <img src="assets/images/examples/bust/bust.webp" alt="Bust example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/bust/bust2.webp" data-title="Bust">
-                            <div class="example-image">
-                                <img src="assets/images/examples/bust/bust2.webp" alt="Bust example 2">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.webp"
-                            data-title="Bust">
-                            <div class="example-image">
-                                <img src="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.webp"
-                                    alt="Bust example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Halfbody Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Halfbody</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody.webp"
-                            data-title="Halfbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/halfbody/halfbody.webp" alt="Halfbody example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody2.webp"
-                            data-title="Halfbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/halfbody/halfbody2.webp" alt="Halfbody example 2">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/halfbody/239.webp"
-                            data-title="Halfbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/halfbody/239.webp" alt="Halfbody example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Knee up Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Knee up</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup.webp"
-                            data-title="Knee up">
-                            <div class="example-image">
-                                <img src="assets/images/examples/kneeup/kneeup.webp" alt="Knee up example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup2.webp"
-                            data-title="Knee up">
-                            <div class="example-image">
-                                <img src="assets/images/examples/kneeup/kneeup2.webp" alt="Knee up example 2">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup3.webp"
-                            data-title="Knee up">
-                            <div class="example-image">
-                                <img src="assets/images/examples/kneeup/kneeup3.webp" alt="Knee up example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Fullbody Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Fullbody</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody.webp"
-                            data-title="Fullbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/fullbody/fullbody.webp" alt="Fullbody example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody1.webp"
-                            data-title="Fullbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/fullbody/fullbody1.webp" alt="Fullbody example 2">
-                            </div>
-                        </div>
-                        <div class="example-card"
-                            data-image="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.webp"
-                            data-title="Fullbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.webp"
-                                    alt="Fullbody example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chibi Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Chibi</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/chibi/chibi.webp"
-                            data-title="Chibi">
-                            <div class="example-image">
-                                <img src="assets/images/examples/chibi/chibi.webp" alt="Chibi example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/chibi/chibi1.webp"
-                            data-title="Chibi">
-                            <div class="example-image">
-                                <img src="assets/images/examples/chibi/chibi1.webp" alt="Chibi example 2">
-                            </div>
-                        </div>
-                        <div class="example-card"
-                            data-image="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.webp" data-title="Chibi">
-                            <div class="example-image">
-                                <img src="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.webp"
-                                    alt="Chibi example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Custom Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Custom</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/custom/custom.webp"
-                            data-title="Custom">
-                            <div class="example-image">
-                                <img src="assets/images/examples/custom/custom.webp" alt="Custom example">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Reference Sheet Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Reference Sheet</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/refsheet/Illustration15.webp"
-                            data-title="Reference Sheet">
-                            <div class="example-image">
-                                <img src="assets/images/examples/refsheet/Illustration15.webp" alt="Reference sheet example">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="portfolio-filter" id="portfolio-filter" role="group" aria-label="Filter portfolio by type"></div>
+            <div class="portfolio-grid" id="portfolio-grid"></div>
         </section>
 
         <!-- Image Modal -->
@@ -616,6 +465,87 @@
                 card.appendChild(imgWrap);
                 card.appendChild(body);
                 if (grid) grid.appendChild(card);
+            });
+        }
+
+        // ---- Portfolio (data in portfolio.js — no database) ----
+        let activePortfolioFilter = 'All';
+
+        function sortedPortfolio() {
+            // sort is stable in modern engines → equal dates keep file order
+            return [...portfolioItems].sort((a, b) => b.date.localeCompare(a.date));
+        }
+
+        function renderPortfolioFilters() {
+            const bar = document.getElementById('portfolio-filter');
+            if (!bar) return;
+            bar.innerHTML = '';
+
+            const present = [...new Set(portfolioItems.map(i => i.category))];
+            const categories = [
+                ...portfolioCategories.filter(c => present.includes(c)),
+                ...present.filter(c => !portfolioCategories.includes(c)) // new types still get a chip
+            ];
+
+            ['All', ...categories].forEach(category => {
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'filter-chip';
+                chip.dataset.filter = category;
+                chip.textContent = category;
+                chip.setAttribute('aria-pressed', category === activePortfolioFilter ? 'true' : 'false');
+                if (category === activePortfolioFilter) chip.classList.add('active');
+                chip.addEventListener('click', () => {
+                    if (activePortfolioFilter === category) return;
+                    activePortfolioFilter = category;
+                    bar.querySelectorAll('.filter-chip').forEach(c => {
+                        const on = c.dataset.filter === activePortfolioFilter;
+                        c.classList.toggle('active', on);
+                        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+                    });
+                    renderPortfolio();
+                    gtag('event', 'portfolio_filter', { category });
+                });
+                bar.appendChild(chip);
+            });
+        }
+
+        function renderPortfolio() {
+            const grid = document.getElementById('portfolio-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const visible = sortedPortfolio().filter(i =>
+                activePortfolioFilter === 'All' || i.category === activePortfolioFilter
+            );
+
+            if (!visible.length) {
+                const empty = document.createElement('p');
+                empty.className = 'portfolio-empty';
+                empty.textContent = 'Nothing here yet!';
+                grid.appendChild(empty);
+                return;
+            }
+
+            visible.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'example-card';
+                card.dataset.image = item.src;
+                card.dataset.title = item.title || item.category;
+
+                const frame = document.createElement('div');
+                frame.className = 'example-image';
+
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.alt = `${item.category} example ${index + 1}`;
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                if (item.focus) img.style.objectPosition = item.focus;
+
+                frame.appendChild(img);
+                card.appendChild(frame);
+                grid.appendChild(card);
             });
         }
 
@@ -1092,6 +1022,8 @@
         updatePingListCount();
         setupImageModal();
         renderAll();
+        renderPortfolioFilters();
+        renderPortfolio();
         loadData();
 
         // Keep status/prices fresh from Supabase

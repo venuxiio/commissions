@@ -18,7 +18,11 @@
       "Bash(for folder in \"C:\\\\Users\\\\Jade Richez\\\\Documents\\\\commissions\\\\assets\\\\images\\\\examples\"/*)",
       "Bash(done)",
       "Bash(node *)",
-      "Bash(command -v npx python)"
+      "Bash(command -v npx python)",
+      "Bash(command -v python)",
+      "Bash(command -v magick identify)",
+      "Bash(command -v node)",
+      "Bash(file */*.webp)"
     ]
   }
 }
