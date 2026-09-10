@@ -557,6 +557,8 @@
                 const imgWrap = document.createElement('div');
                 imgWrap.className = 'service-card-image';
                 if (service.image) {
+                    imgWrap.dataset.image = service.image;
+                    imgWrap.dataset.title = service.name;
                     const img = document.createElement('img');
                     img.src = service.image;
                     img.alt = `${service.name} example`;
@@ -1010,22 +1012,25 @@
             const modalTitle = document.getElementById('modal-title');
             // Scoped to the lightbox: other modals (request/faq) also use .modal-close
             const closeButton = document.querySelector('#image-modal .modal-close');
-            const exampleCards = document.querySelectorAll('.example-card');
 
-            exampleCards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    const imageSrc = card.dataset.image;
-                    const title = card.dataset.title;
-                    modalImage.src = imageSrc;
-                    modalImage.alt = title;
-                    modalTitle.textContent = title;
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    gtag('event', 'image_view', {
-                        image_id: imageSrc,
-                        image_name: title
-                    });
+            const openViewer = (imageSrc, title) => {
+                modalImage.src = imageSrc;
+                modalImage.alt = title;
+                modalTitle.textContent = title;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                gtag('event', 'image_view', {
+                    image_id: imageSrc,
+                    image_name: title
                 });
+            };
+
+            // Delegated: covers the portfolio cards and the service card
+            // images, which are rendered after this setup runs
+            document.addEventListener('click', (e) => {
+                const card = e.target.closest('.example-card, .service-card-image');
+                if (!card || !card.dataset.image) return;
+                openViewer(card.dataset.image, card.dataset.title || '');
             });
 
             closeButton.addEventListener('click', () => {
