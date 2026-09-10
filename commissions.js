@@ -9,8 +9,6 @@ const seedData = {
     "commsOpen": false,
     "reopenDate": null,
     "maxSlots": 8,
-    "artTradesOpen": false,
-    "requestsOpen": false,
     "announcement": ""
   },
   "services": [

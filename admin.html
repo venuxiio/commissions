@@ -588,16 +588,8 @@
         <div class="settings-panel">
             <h2>⚙ Settings</h2>
             <div class="setting-row">
-                <label>Commissions open<small>flips the public commission button</small></label>
+                <label>Commissions open<small>flips the public status banner + request form</small></label>
                 <span class="toggle"><input type="checkbox" id="set-comms"><span class="toggle-track"></span></span>
-            </div>
-            <div class="setting-row">
-                <label>Art trades open<small>status chip on Home</small></label>
-                <span class="toggle"><input type="checkbox" id="set-trades"><span class="toggle-track"></span></span>
-            </div>
-            <div class="setting-row">
-                <label>Requests open<small>status chip on Home</small></label>
-                <span class="toggle"><input type="checkbox" id="set-reqs"><span class="toggle-track"></span></span>
             </div>
             <div class="setting-row">
                 <label>Max slots<small>waiting-list count vs slots → "Queue is full"</small></label>
@@ -1009,8 +1001,6 @@
         function openSettings() {
             if (!settings) return;
             $('set-comms').checked = settings.commsOpen;
-            $('set-trades').checked = settings.artTradesOpen;
-            $('set-reqs').checked = settings.requestsOpen;
             $('set-slots').value = settings.maxSlots;
             $('set-reopen').value = settings.reopenDate || '';
             $('settings-status').textContent = '';
@@ -1025,8 +1015,6 @@
             try {
                 settings = await SupabaseClient.adminUpdateSettings(adminToken,  {
                     commsOpen: $('set-comms').checked,
-                    artTradesOpen: $('set-trades').checked,
-                    requestsOpen: $('set-reqs').checked,
                     maxSlots: Number($('set-slots').value) || 8,
                     reopenDate: $('set-reopen').value || null
                 });

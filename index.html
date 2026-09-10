@@ -40,7 +40,6 @@
 
             <div class="sidebar-content">
                 <h1 class="sidebar-name">Venuxiio</h1>
-                <a href="#request" class="commission-form-button">Request a Commission</a>
 
                 <p class="sidebar-bio">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and
                     chilling.</p>
@@ -510,33 +509,34 @@
         let siteSettings = seedData.settings;
         let siteServices = seedData.services;
 
-        // ---- Status indicators (driven by settings, fixes old Invalid Date bug) ----
+        // ---- Commissions status banner (the only status shown) ----
         function renderStatusIndicators() {
             const statusContainer = document.getElementById('status-indicators');
             if (!statusContainer) return;
 
-            const items = [
-                { name: 'COMMS', open: siteSettings.commsOpen },
-                { name: 'ART TRADES', open: siteSettings.artTradesOpen },
-                { name: 'REQUESTS', open: siteSettings.requestsOpen }
-            ];
-
             statusContainer.innerHTML = '';
-            items.forEach(status => {
-                const statusDiv = document.createElement('div');
-                statusDiv.className = `status ${status.open ? 'open' : 'closed'}`;
 
-                const symbolSpan = document.createElement('span');
-                symbolSpan.className = 'status-symbol';
-                symbolSpan.textContent = status.open ? '✓' : '✗';
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${siteSettings.commsOpen ? 'open' : 'closed'}`;
 
-                const nameSpan = document.createElement('span');
-                nameSpan.textContent = status.name;
+            const symbolSpan = document.createElement('span');
+            symbolSpan.className = 'status-symbol';
+            symbolSpan.textContent = siteSettings.commsOpen ? '' : '🔒';
 
-                statusDiv.appendChild(symbolSpan);
-                statusDiv.appendChild(nameSpan);
-                statusContainer.appendChild(statusDiv);
-            });
+            const msgSpan = document.createElement('span');
+            if (siteSettings.commsOpen) {
+                msgSpan.textContent = 'Commissions are open';
+            } else if (siteSettings.reopenDate) {
+                const formatted = new Date(siteSettings.reopenDate)
+                    .toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                msgSpan.textContent = `Commissions are closed until ${formatted}`;
+            } else {
+                msgSpan.textContent = 'Commissions are currently closed';
+            }
+
+            statusDiv.appendChild(symbolSpan);
+            statusDiv.appendChild(msgSpan);
+            statusContainer.appendChild(statusDiv);
         }
 
         // ---- Service cards ----
@@ -839,13 +839,13 @@
             updateEstimate();
         }
 
-        // ---- Commission button + form open/close gating ----
-        function updateCommissionFormButton() {
-            const commissionButton = document.querySelector('.commission-form-button');
+        // ---- Request form open/close gating ----
+        // Requesting happens through the service cards ("Request this →") —
+        // the modal itself shows a notice + ping list while closed.
+        function updateCommissionGating() {
             const pingListButtons = document.querySelectorAll('.ping-list-button');
             const closedBox = document.getElementById('request-closed');
             const requestForm = document.getElementById('request-form');
-            if (!commissionButton) return;
 
             // Slot usage lives on the admin board now — the public site only
             // knows open/closed + reopen date from settings.
@@ -867,28 +867,7 @@
                 }
             }
 
-            if (isOpen) {
-                commissionButton.innerHTML = `Request a Commission`;
-                commissionButton.style.opacity = '1';
-                commissionButton.style.cursor = 'pointer';
-                commissionButton.style.pointerEvents = 'auto';
-                commissionButton.href = '#request';
-                commissionButton.onclick = null;
-                pingListButtons.forEach(btn => btn.classList.remove('visible'));
-            } else {
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                const formatted = siteSettings.reopenDate
-                    ? new Date(siteSettings.reopenDate).toLocaleDateString('en-US', options)
-                    : null;
-                commissionButton.innerHTML = formatted
-                    ? `Commissions open on <span style="white-space: nowrap;">${formatted}</span>`
-                    : 'Commissions closed — join the ping list';
-                commissionButton.style.opacity = '0.5';
-                commissionButton.style.cursor = 'not-allowed';
-                commissionButton.style.pointerEvents = 'none';
-                commissionButton.onclick = (e) => e.preventDefault();
-                pingListButtons.forEach(btn => btn.classList.add('visible'));
-            }
+            pingListButtons.forEach(btn => btn.classList.toggle('visible', !isOpen));
         }
 
         // ---- Tabs / routing ----
@@ -1008,8 +987,8 @@
         const faqModal = setupModal('faq-modal');
         const termsModal = setupModal('terms-modal');
 
-        // Delegated so the links keep working even when their href is rewritten
-        // at runtime (updateCommissionFormButton swaps the sidebar button href)
+        // Delegated so #request / #faq / #terms links work from anywhere,
+        // including content rendered later
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a[href="#request"], a[href="#faq"], a[href="#terms"]');
             if (!link) return;
@@ -1079,7 +1058,7 @@
             renderStatusIndicators();
             renderServices();
             renderServiceDisplay();
-            updateCommissionFormButton();
+            updateCommissionGating();
             updateEstimate();
         }
 

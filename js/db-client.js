@@ -82,8 +82,6 @@ const SupabaseClient = (() => {
             commsOpen: Boolean(r.comms_open),
             reopenDate: r.reopen_date || null,
             maxSlots: Number(r.max_slots) || 8,
-            artTradesOpen: Boolean(r.art_trades_open),
-            requestsOpen: Boolean(r.requests_open),
             announcement: r.announcement || ''
         };
     }
@@ -202,8 +200,6 @@ const SupabaseClient = (() => {
         if (settings.commsOpen !== undefined) patch.comms_open = settings.commsOpen;
         if (settings.reopenDate !== undefined) patch.reopen_date = settings.reopenDate || null;
         if (settings.maxSlots !== undefined) patch.max_slots = settings.maxSlots;
-        if (settings.artTradesOpen !== undefined) patch.art_trades_open = settings.artTradesOpen;
-        if (settings.requestsOpen !== undefined) patch.requests_open = settings.requestsOpen;
         if (settings.announcement !== undefined) patch.announcement = settings.announcement;
         const rows = await request('settings?id=eq.1', { method: 'PATCH', key, body: patch });
         return rows && rows.length ? normalizeSettings(rows[0]) : null;

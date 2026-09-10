@@ -42,8 +42,6 @@ create table if not exists public.settings (
     comms_open boolean not null default false,
     reopen_date date,
     max_slots int not null default 8,
-    art_trades_open boolean not null default false,
-    requests_open boolean not null default false,
     announcement text not null default ''
 );
 
@@ -112,6 +110,6 @@ on conflict do nothing;
 -- and real rows arrive through the request form / admin board.
 
 -- settings: single row (commissions currently closed)
-insert into public.settings (id, comms_open, reopen_date, max_slots, art_trades_open, requests_open)
-values (1, false, null, 8, false, false)
+insert into public.settings (id, comms_open, reopen_date, max_slots)
+values (1, false, null, 8)
 on conflict (id) do nothing;

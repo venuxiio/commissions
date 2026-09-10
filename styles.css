@@ -133,7 +133,7 @@ body {
     height: 8rem;
     margin: -4.5rem auto 0; /* overlaps the cover, Ko-fi style */
     background: var(--color-white); /* the artwork is transparent — white shows behind it */
-    border: none;
+    border: 3px solid var(--color-profile-border);
     position: relative;
     z-index: 1;
 }
@@ -144,11 +144,6 @@ body {
     font-weight: bold;
     color: var(--color-primary-dark);
     margin: 0;
-}
-
-.sidebar .commission-form-button {
-    margin-top: 0;
-    width: 100%;
 }
 
 .sidebar-bio {
@@ -292,31 +287,49 @@ body {
 
 .status-indicators {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    align-self: center;
+    justify-content: center;
+    width: 100%;
     padding-top: 1rem;
 }
 
+/* Single comms status banner — the only status shown */
 .status {
-    padding: 0.3rem 0;
-    font-weight: 500;
-    font-size: 1.1rem;
-    font-family: 'Fredoka', sans-serif;
-    position: relative;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    font-family: 'Fredoka', sans-serif;
+    text-align: center;
     transition: all 0.3s ease;
-    background: transparent;
-    color: var(--color-black);
+}
+
+.status.open {
+    background: var(--color-status-open);
+    color: var(--color-status-open-text);
+    border: 2px solid var(--color-status-open-text);
+}
+
+.status.closed {
+    background: var(--color-status-closed);
+    color: var(--color-status-closed-text);
+    border: 2px solid var(--color-status-closed-text);
 }
 
 .status-symbol {
-    font-size: 1.3rem;
-    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1;
     flex-shrink: 0;
+}
+
+/* open shows a pulsing dot, closed shows the 🔒 set in JS */
+.status.open .status-symbol {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: var(--color-status-open-text);
     animation: pulse-symbol 2s ease-in-out infinite;
 }
 
@@ -350,14 +363,6 @@ body {
     100% {
         border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
     }
-}
-
-.status.open .status-symbol {
-    color: #10B981;
-}
-
-.status.closed .status-symbol {
-    color: #EC4899;
 }
 
 section {
@@ -488,27 +493,6 @@ h2 {
     color: var(--color-primary);
     font-weight: bold;
     margin-right: 0.5rem;
-}
-
-.commission-form-button {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-    color: var(--color-white);
-    padding: 0.75rem 2rem;
-    border-radius: 1rem;
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-    font-family: 'Fredoka', sans-serif;
-    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
-    text-align: center;
-}
-
-.commission-form-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, #7C3AED 100%);
 }
 
 .ping-list-button {
@@ -954,11 +938,6 @@ footer {
         max-width: 100%;
     }
 
-    .status-indicators {
-        flex-direction: column;
-        align-items: center;
-    }
-
     footer {
         padding: 2rem 1rem 1.5rem;
     }
@@ -1034,6 +1013,7 @@ footer {
     border-radius: 1rem;
     overflow: hidden;
     display: flex;
+    min-height: 15rem; /* ~1.5× the content height — request button pins to the bottom */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -1567,7 +1547,7 @@ footer {
 
     .service-card-image {
         flex: none;
-        height: 140px;
+        height: 210px; /* 1.5× the old 140px, matches the taller cards */
     }
 
     .service-card-image img {
