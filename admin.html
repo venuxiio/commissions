@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Venuxiio — Admin</title>
+    <!-- Page styles stay inline below; css/request-form.css is the shared
+         commission form component (same file the public site loads) -->
+    <link rel="stylesheet" href="css/request-form.css">
     <style>
-        /* Self-contained: no shared stylesheet on purpose (private tool page) */
+        /* Self-contained page styles: no shared *page* stylesheet on purpose
+           (private tool page) — only the form component ships its own CSS */
         :root {
             --purple: #A78BFA;
             --purple-dark: #8B5CF6;
@@ -357,28 +361,6 @@
             background: var(--purple-dark);
         }
 
-        .card-edit {
-            margin-top: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-
-        .card-edit input,
-        .card-edit select,
-        .card-edit textarea {
-            padding: 0.35rem 0.55rem;
-            border: 1.5px solid var(--purple-pale);
-            border-radius: 0.5rem;
-            font-family: inherit;
-            font-size: 0.78rem;
-        }
-
-        .card-edit textarea {
-            resize: vertical;
-            min-height: 3rem;
-        }
-
         .empty-hint {
             color: #b9a7e8;
             font-size: 0.75rem;
@@ -403,6 +385,135 @@
             text-align: center;
             padding: 3rem 0;
             font-size: 0.95rem;
+        }
+
+        /* ---------- add/edit dialog ---------- */
+        .commission-dialog {
+            /* request-form.css styles the form with the public --color-*
+               palette; alias it to this page's tokens so the shared form
+               renders here without duplicating any rules */
+            --color-primary: var(--purple);
+            --color-primary-dark: var(--purple-dark);
+            --color-primary-light: var(--purple-pale);
+            --color-primary-pale: var(--purple-pale);
+            --color-bg-light: #fff;
+            --color-white: #fff;
+            --color-text-dark: var(--ink);
+            --color-text-gray: var(--gray);
+            --color-text-gray-muted: var(--gray);
+            --color-status-closed: var(--pink);
+            --color-status-closed-text: var(--pink-dark);
+            --color-status-open: var(--purple-pale);
+            --color-status-open-text: var(--green-dark);
+
+            border: 2px solid var(--purple);
+            border-radius: 1rem;
+            padding: 0;
+            width: min(34rem, 92vw);
+            max-height: 90vh;
+            color: var(--ink);
+
+            /* the page's `* { margin: 0 }` reset kills the UA's dialog
+               centering (margin: auto) — without this the dialog pins
+               top-left and stretches to its max-height */
+            margin: auto;
+        }
+
+        /* flex layout only while open — `display: flex` on the base rule
+           would override the UA's `dialog { display: none }` and leave an
+           empty ghost shell on screen after closing */
+        .commission-dialog[open] {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .commission-dialog::backdrop {
+            background: rgba(45, 27, 78, 0.55);
+        }
+
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--purple-pale);
+        }
+
+        .dialog-header h2 {
+            font-size: 1.05rem;
+        }
+
+        .dialog-close {
+            border: none;
+            background: none;
+            font-size: 1rem;
+            color: var(--gray);
+            padding: 0.25rem 0.5rem;
+        }
+
+        .dialog-close:hover {
+            color: var(--ink);
+        }
+
+        .dialog-body {
+            flex: 1;
+            min-height: 0; /* lets the body shrink so the dialog never overflows */
+            padding: 0 1.25rem 1rem;
+            overflow-y: auto;
+        }
+
+        .dialog-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            padding: 0.9rem 1.25rem;
+            border-top: 1px solid var(--purple-pale);
+        }
+
+        /* reference image previews on request cards */
+        .card-attachments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin: 0.3rem 0 0 0.75rem;
+        }
+
+        .card-attachment {
+            position: relative;
+        }
+
+        .card-attachment img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 0.4rem;
+            border: 1.5px solid var(--purple-pale);
+            background: var(--purple-pale);
+            cursor: zoom-in;
+            display: block;
+        }
+
+        .card-download {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(45, 27, 78, 0.75);
+            color: #fff;
+            font-size: 0.7rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .card-download:hover {
+            background: var(--purple-dark);
         }
 
         @media (max-width: 900px) {
@@ -460,9 +571,24 @@
 
     <div class="loading" id="loading" hidden>Loading board…</div>
 
+    <!-- Add / edit commission — hosts the same RequestForm component as the
+         public request modal -->
+    <dialog id="commission-dialog" class="commission-dialog">
+        <div class="dialog-header">
+            <h2 id="commission-dialog-title">Add commission</h2>
+            <button type="button" class="dialog-close" id="commission-dialog-close" aria-label="Close">✕</button>
+        </div>
+        <div class="dialog-body" id="commission-dialog-body"></div>
+        <div class="dialog-footer">
+            <button type="button" class="btn-soft" id="commission-dialog-cancel">Cancel</button>
+            <button type="submit" class="btn-primary" id="commission-dialog-save">Save</button>
+        </div>
+    </dialog>
+
     <script src="commissions.js"></script>
     <script src="js/config.js"></script>
     <script src="js/db-client.js"></script>
+    <script src="js/request-form.js"></script>
     <script>
         const TOKEN_KEY = 'venuxiio_admin_token';
         const STATUSES = ['request', 'waiting-list', 'in-progress', 'finished'];
@@ -471,7 +597,7 @@
 
         let adminToken = localStorage.getItem(TOKEN_KEY) || null;
         let commissions = [];
-        let editingCardId = null; // recordId of card with open edit form
+        let dialogHandle = null; // open add/edit RequestForm inside the dialog
 
         // ---------- helpers ----------
         const $ = (id) => document.getElementById(id);
@@ -638,12 +764,67 @@
             if (c.options && Object.keys(c.options).length) {
                 const el = document.createElement('div');
                 el.className = 'card-meta';
-                // e.g. background: true, armor: 'simple' | 'complex'
+                // option labels live in commissions.js (siteData.addons) —
+                // e.g. simple background · armor (simple) · 2 chars
                 const parts = [];
-                if (c.options.background) parts.push('simple bg');
-                if (c.options.armor) parts.push(`armor (${c.options.armor})`);
-                el.textContent = `⚙ ${parts.join(' · ')}`;
-                card.appendChild(el);
+                Object.values(siteData.addons || {}).forEach(addon => {
+                    const chosen = c.options[addon.key];
+                    if (!chosen) return;
+                    parts.push(addon.perCharacter
+                        ? `${addon.label.split(' /')[0].toLowerCase()} (${chosen})`
+                        : addon.label.toLowerCase());
+                });
+                if (c.options.chars) parts.push(`${c.options.chars} char${c.options.chars > 1 ? 's' : ''}`);
+                if (parts.length) {
+                    el.textContent = `⚙ ${parts.join(' · ')}`;
+                    card.appendChild(el);
+                }
+            }
+            if (c.attachments && c.attachments.length) {
+                if (isRequest) {
+                    // previews on requests — you need them to decide
+                    const label = document.createElement('div');
+                    label.className = 'card-refs';
+                    label.textContent = '🖼 refs:';
+                    card.appendChild(label);
+                    const row = document.createElement('div');
+                    row.className = 'card-attachments';
+                    c.attachments.forEach((path, index) => {
+                        const wrap = document.createElement('div');
+                        wrap.className = 'card-attachment';
+                        const img = document.createElement('img');
+                        img.alt = 'reference image';
+                        img.loading = 'lazy';
+                        img.title = 'Click to view full size';
+                        SupabaseClient.getAttachmentUrl(adminToken, path)
+                            .then(url => {
+                                img.src = url;
+                                img.addEventListener('click', () => window.open(url, '_blank', 'noopener'));
+                            })
+                            .catch(() => { img.alt = 'preview unavailable'; });
+                        const dl = document.createElement('button');
+                        dl.className = 'card-download';
+                        dl.textContent = '↓';
+                        dl.title = 'Download image';
+                        dl.setAttribute('aria-label', `Download reference ${index + 1}`);
+                        dl.addEventListener('click', async () => {
+                            try {
+                                await downloadAttachment(c.id, index, path);
+                            } catch (err) {
+                                console.error(err);
+                                alert('Download failed: ' + err.message);
+                            }
+                        });
+                        wrap.append(img, dl);
+                        row.appendChild(wrap);
+                    });
+                    card.appendChild(row);
+                } else {
+                    const el = document.createElement('div');
+                    el.className = 'card-refs';
+                    el.textContent = `🖼 ${c.attachments.length} ref image(s)`;
+                    card.appendChild(el);
+                }
             }
             if (c.refs) {
                 if (isRequest) {
@@ -707,7 +888,7 @@
             edit.className = 'card-btn';
             edit.textContent = '✏️';
             edit.title = 'Edit';
-            edit.addEventListener('click', () => toggleEdit(c, card));
+            edit.addEventListener('click', () => openCommissionDialog('admin-edit', c));
             actions.appendChild(edit);
 
             const del = document.createElement('button');
@@ -719,66 +900,7 @@
 
             card.appendChild(actions);
 
-            // keep edit form open across re-renders
-            if (editingCardId === c.recordId) {
-                card.appendChild(buildEditForm(c));
-            }
-
             return card;
-        }
-
-        function toggleEdit(c, cardEl) {
-            editingCardId = editingCardId === c.recordId ? null : c.recordId;
-            renderBoard();
-        }
-
-        function buildEditForm(c) {
-            const form = document.createElement('div');
-            form.className = 'card-edit';
-
-            const client = document.createElement('input');
-            client.type = 'text';
-            client.value = c.description || '';
-            client.placeholder = 'client name';
-
-            const service = document.createElement('input');
-            service.type = 'text';
-            service.value = c.title || '';
-            service.placeholder = 'service';
-
-            const details = document.createElement('textarea');
-            details.value = c.details || '';
-            details.placeholder = 'details / notes';
-
-            const estimate = document.createElement('input');
-            estimate.type = 'number';
-            estimate.value = c.estimate ?? '';
-            estimate.placeholder = 'estimate €';
-
-            const save = document.createElement('button');
-            save.className = 'card-btn accept';
-            save.textContent = 'Save';
-            save.addEventListener('click', async () => {
-                setSaving('saving');
-                try {
-                    await SupabaseClient.adminUpdateCommission(adminToken, c.recordId, {
-                        client: client.value.trim(),
-                        service: service.value.trim(),
-                        details: details.value.trim(),
-                        estimate: estimate.value === '' ? null : Number(estimate.value)
-                    });
-                    editingCardId = null;
-                    setSaving('saved');
-                    await loadData();
-                } catch (err) {
-                    console.error(err);
-                    setSaving('error');
-                    alert('Save failed: ' + err.message);
-                }
-            });
-
-            form.append(client, service, details, estimate, save);
-            return form;
         }
 
         // ---------- mutations (optimistic) ----------
@@ -823,6 +945,11 @@
             try {
                 await SupabaseClient.adminDeleteCommission(adminToken, c.recordId);
                 commissions = commissions.filter(x => x.recordId !== c.recordId);
+                // best-effort: drop the reference images too, never block the
+                // row delete on it
+                (c.attachments || []).forEach(path => {
+                    SupabaseClient.adminDeleteAttachment(adminToken, path).catch(err => console.error(err));
+                });
                 renderBoard();
                 setSaving('saved');
             } catch (err) {
@@ -831,26 +958,100 @@
             }
         }
 
-        async function addCommission() {
-            const client = prompt('Client name for the new commission:');
-            if (!client) return;
-            const service = prompt('Service (e.g. Fullbody):') || '';
-            setSaving('saving');
-            try {
-                await SupabaseClient.adminCreateCommission(adminToken, { client, service, status: 'waiting-list' });
-                setSaving('saved');
-                await loadData();
-            } catch (err) {
-                setSaving('error');
-                alert('Add failed: ' + err.message);
+        // Force a browser download of one stored reference image. The blob
+        // URL comes from the shared cache (already fetched for the preview,
+        // or fetched on demand); `download` names the file since blob URLs
+        // carry no filename of their own.
+        async function downloadAttachment(cardId, index, path) {
+            const url = await SupabaseClient.getAttachmentUrl(adminToken, path);
+            const ext = path.includes('.') ? path.split('.').pop() : 'jpg';
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `commission-${cardId}-ref-${index + 1}.${ext}`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        // ---------- add / edit dialog (shared RequestForm component) ----------
+
+        // Destroy the mounted form + revoke staged image previews. The
+        // `!open` guard matters: `close` events arrive as a QUEUED task, so a
+        // stale one can land after the dialog was already re-opened — without
+        // the guard it would wipe the freshly mounted form.
+        function releaseDialogHandle() {
+            if (dialogHandle && !$('commission-dialog').open) {
+                dialogHandle.destroy();
+                dialogHandle = null;
             }
+        }
+
+        function closeCommissionDialog() {
+            $('commission-dialog').close();
+            releaseDialogHandle(); // synchronous — no reliance on the queued close event
+        }
+
+        function openCommissionDialog(mode, c) {
+            closeCommissionDialog(); // clean up any leftover handle / prior open
+            dialogHandle = RequestForm.mount($('commission-dialog-body'), {
+                mode,
+                services: siteData.services, // ALL — edit must see deactivated ones too
+                initial: c ? {
+                    client: c.description,
+                    contact: c.contact,
+                    service: c.title,
+                    details: c.details,
+                    chars: c.options && c.options.chars,
+                    options: c.options,
+                    estimate: c.estimate,
+                    attachments: c.attachments,
+                    status: c.status
+                } : undefined,
+                submitButton: $('commission-dialog-save'),
+                resolveAttachment: (path) => SupabaseClient.getAttachmentUrl(adminToken, path),
+                onSubmit: async (data) => {
+                    // removals first — drop the storage objects (best-effort;
+                    // adminDeleteAttachment also revokes the cached blob URL)
+                    for (const path of data.removedAttachments) {
+                        try {
+                            await SupabaseClient.adminDeleteAttachment(adminToken, path);
+                        } catch (err) {
+                            console.error('Attachment cleanup failed:', err);
+                        }
+                    }
+                    if (mode === 'admin-add') {
+                        await SupabaseClient.adminCreateCommission(adminToken, { ...data, paid: false });
+                    } else {
+                        await SupabaseClient.adminUpdateCommission(adminToken, c.recordId, data);
+                    }
+                    closeCommissionDialog();
+                    setSaving('saved');
+                    await loadData();
+                }
+            });
+            // the footer Save button lives outside the rendered form — aim it
+            // at the form id the component just created
+            $('commission-dialog-save').setAttribute('form', dialogHandle.formId);
+            $('commission-dialog-title').textContent = mode === 'admin-add'
+                ? 'Add commission'
+                : `Edit commission #${c.id}`;
+            const dlg = $('commission-dialog');
+            if (!dlg.open) dlg.showModal(); // a re-click while open must not throw
         }
 
         // ---------- boot ----------
         $('gate-unlock').addEventListener('click', tryUnlock);
         $('gate-token').addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
         $('refresh-btn').addEventListener('click', loadData);
-        $('add-btn').addEventListener('click', addCommission);
+        $('add-btn').addEventListener('click', () => openCommissionDialog('admin-add'));
+        // Cancel + ✕ close the dialog — delegated on the <dialog> itself so
+        // the buttons can never lose their handler
+        $('commission-dialog').addEventListener('click', (e) => {
+            if (e.target.closest('#commission-dialog-cancel, #commission-dialog-close')) closeCommissionDialog();
+        });
+        // Esc closes natively — release the mounted form then too
+        // (releaseDialogHandle no-ops if a newer open already happened)
+        $('commission-dialog').addEventListener('close', releaseDialogHandle);
         $('forget-btn').addEventListener('click', () => {
             if (!confirm('Forget the token on this device? You\'ll need to paste it again to come back.')) return;
             localStorage.removeItem(TOKEN_KEY);

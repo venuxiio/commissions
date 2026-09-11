@@ -6,7 +6,8 @@
 -- they are deliberately not tables.
 -- NOTE (Sep 2026): existing installs should run migrations/
 -- 2026-09-11-drop-settings-services-tables.sql to drop the now-unused
--- services + settings tables.
+-- services + settings tables, and migrations/2026-09-11-reference-images.sql
+-- for the attachments column + the commission-refs storage bucket.
 
 -- --------------------------------------------------------------------------
 -- Tables
@@ -20,6 +21,7 @@ create table if not exists public.commissions (
     details text not null default '',
     refs text not null default '',
     options jsonb not null default '{}'::jsonb,
+    attachments jsonb not null default '[]'::jsonb,
     estimate numeric,
     status text not null default 'request'
         check (status in ('request', 'waiting', 'in_progress', 'finished')),

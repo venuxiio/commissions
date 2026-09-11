@@ -53,6 +53,7 @@ Everything stays **static hosting** (GitHub Pages). No server of your own, no bu
 **User story:** As a visitor, I see each commission type as a card with an example image, price and description — like a VGen listing — and can jump straight into requesting it.
 
 - VGen-style card grid: example image, service name, price (e.g. `€40` / `€100+`), extra-character / option notes.
+- Example image is a **carousel** of that service's portfolio pieces (matched by category), with wrap-around ‹ › arrows, blurred edge peeks, swipe on mobile, and lightbox on click (Sep 11 2026).
 - Two groups: **Full render** and **Sketch** (matching current pricing).
 - Each card has a **Request this →** button that opens the F2 form with the service pre-selected.
 - Data from `commissions.js` (since Sep 11 2026 — was the `services` table).
@@ -74,8 +75,8 @@ Modeled on VGen's request form (the reference the user provided):
 - **Contact** — email and/or Discord / Instagram username (required, at least one)
 - **Service** select (from F1 data, required)
 - **# of characters** (min 1; extra characters priced per service)
-- **Options:** no shading (−15%), simple background (+€10), armor/weapons/robotic parts (+€5–10, select)
-- **References** (links, one per line)
+- **Options:** simple background (+€10), armor/weapons/robotic parts (+€5–10, select) — labels/prices from `siteData.addons`
+- **Reference images** (up to 3, required ≥1 — uploaded to the private `commission-refs` Storage bucket; replaced the old links textarea, Sep 11 2026)
 - **Details** (free text)
 - **Quick math**: live estimate breakdown, base + extras, with "final price confirmed by Ven" note
 - **T.O.S agreement checkbox** (required), hidden honeypot field (anti-spam)
@@ -95,9 +96,9 @@ Modeled on VGen's request form (the reference the user provided):
 
 - **Key gate**: paste the Supabase service_role key once → validated → stored in `localStorage` (per device). "Forget token" button. Token never appears in the repo.
 - **Board**: 4 columns — **📥 Requests → Waiting List → In Progress → Finished**, with counts.
-- **Requests column**: full contact info, clickable ref links, full details — everything the form captured. Cards have an **Accept → Waiting** shortcut (dragging works too).
+- **Requests column**: full contact info, reference image previews (click to view, ⬇ on the thumb to download), full details — everything the form captured. Cards have an **Accept → Waiting** shortcut (dragging works too).
 - **Drag & drop** (HTML5, desktop) + **◀ ▶ move buttons** per card (touch/mobile + a11y fallback).
-- **Per card**: paid toggle (dot), edit (client/service/contact/details/estimate), delete (confirm).
+- **Per card**: paid toggle (dot), edit (same shared form as the public site, incl. attachments + status), delete (confirm + storage cleanup).
 - **Settings panel**: removed (Sep 11 2026) — comms open/closed, reopen date and max slots are edited in `commissions.js` now.
 - Optimistic updates with rollback + "saving…" indicator.
 
@@ -138,7 +139,9 @@ Modeled on VGen's request form (the reference the user provided):
 | contact | text |
 | service | text |
 | details | text |
-| refs | text |
+| refs | text (legacy — old link references) |
+| options | jsonb (`{background, armor, chars}`) |
+| attachments | jsonb (array of `commission-refs` storage paths) |
 | estimate | numeric |
 | status | `request` / `waiting` / `in_progress` / `finished` |
 | paid | bool |
@@ -722,7 +725,7 @@ Wireframes, not pixel-perfect. Colors follow the site's purple palette (`#A78BFA
 
 ### Future ideas 💡
 - Reviews / testimonials section (VGen-style star ratings)
-- File uploads in the form (v1 = links only)
+- ~~File uploads in the form (v1 = links only)~~ done (Sep 11 2026 — up to 3 images into the `commission-refs` bucket)
 - Serverless token proxy (Cloudflare Worker) to remove client-side tokens
 - Auto "Last updated" footer from Supabase timestamps
 

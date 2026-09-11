@@ -70,6 +70,7 @@ Commit + push → done. The request form posts straight to Supabase; everything 
 > Already set up before Sep 2026? Run in the SQL Editor, in order:
 > - [`migrations/2026-09-08-drop-public-queue.sql`](migrations/2026-09-08-drop-public-queue.sql) — drop the old `commissions_public` view, lock anon out of commission reads
 > - [`migrations/2026-09-11-drop-settings-services-tables.sql`](migrations/2026-09-11-drop-settings-services-tables.sql) — drop the now-unused `services` + `settings` tables (data moved to `commissions.js`)
+> - [`migrations/2026-09-11-reference-images.sql`](migrations/2026-09-11-reference-images.sql) — `attachments` column + the private `commission-refs` storage bucket (reference image uploads; run **before** deploying the form change)
 
 ## 7. Editing data by hand
 

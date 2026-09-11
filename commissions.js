@@ -3,6 +3,9 @@
 // the database stores commission requests only, nothing here is read back.
 //
 // `services`: array order = display order on the site.
+// `addons`: the request form's optional add-ons (rendered + priced from here
+//   by js/request-form.js). `key`/`tier.value` are what gets stored in the
+//   commissions.options column — renaming them orphans existing rows.
 // `settings.commsOpen` flips the public banner + request form;
 // `settings.reopenDate` (YYYY-MM-DD or null) shows "closed until <date>";
 // `settings.maxSlots` is admin-board display only (waiting-list slots).
@@ -12,6 +15,18 @@ const siteData = {
     "commsOpen": true,
     "reopenDate": null,
     "maxSlots": 8
+  },
+  "addons": {
+    "background": {
+      "key": "background", "label": "Simple background", "price": 10
+    },
+    "armor": {
+      "key": "armor", "label": "Armor / weapons / robotic parts", "perCharacter": true,
+      "tiers": [
+        { "value": "simple",  "label": "Simple — +€5",  "price": 5 },
+        { "value": "complex", "label": "Complex — +€10", "price": 10 }
+      ]
+    }
   },
   "services": [
     { "name": "Bust",           "basePrice": 40,  "extraCharPrice": 35, "description": "",                                                              "image": "assets/images/examples/bust/bust.webp",        "active": true },

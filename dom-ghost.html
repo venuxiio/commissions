@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>DONE</title></head><body>
+<pre id="out">PASS closed dialog hidden before any open
+PASS open: visible + flex layout
+PASS open: still centered
+PASS open: body scrolls, dialog does not
+PASS after Cancel: fully invisible
+PASS after X: fully invisible
+PASS edit open: form mounted
+PASS edit closed: fully invisible
+PASS reopen after ghost-fix still works</pre>
+<iframe id="adm" src="http://localhost:8123/admin.html" style="width:1280px;height:900px;border:0"></iframe>
+<script>
+const results = [];
+const check = (name, cond, extra) => results.push((cond ? 'PASS ' : 'FAIL ') + name + (extra && !cond ? ' -> ' + extra : ''));
+const loaded = new Promise(r => document.getElementById('adm').addEventListener('load', r));
+(async () => {
+  await loaded;
+  await new Promise(r => setTimeout(r, 400));
+  const AW = document.getElementById('adm').contentWindow;
+  const ad = document.getElementById('adm').contentDocument;
+  const dlg = ad.getElementById('commission-dialog');
+  const disp = () => AW.getComputedStyle(dlg).display;
+  const rectW = () => dlg.getBoundingClientRect().width;
+
+  check('closed dialog hidden before any open', disp() === 'none' && rectW() === 0, disp());
+
+  AW.openCommissionDialog('admin-add');
+  await new Promise(r => setTimeout(r, 200));
+  check('open: visible + flex layout', dlg.open && disp() === 'flex', disp());
+  const r = dlg.getBoundingClientRect();
+  check('open: still centered', Math.abs((r.left + r.right) / 2 - AW.innerWidth / 2) < 3 &&
+        Math.abs((r.top + r.bottom) / 2 - AW.innerHeight / 2) < 3);
+  check('open: body scrolls, dialog does not', dlg.scrollHeight <= dlg.clientHeight + 1 &&
+        ad.getElementById('commission-dialog-body').scrollHeight > ad.getElementById('commission-dialog-body').clientHeight);
+
+  ad.getElementById('commission-dialog-cancel').click();
+  await new Promise(r => setTimeout(r, 200));
+  check('after Cancel: fully invisible', !dlg.open && disp() === 'none' && rectW() === 0, disp());
+
+  AW.openCommissionDialog('admin-add');
+  await new Promise(r => setTimeout(r, 200));
+  ad.getElementById('commission-dialog-close').click();
+  await new Promise(r => setTimeout(r, 200));
+  check('after X: fully invisible', !dlg.open && disp() === 'none' && rectW() === 0, disp());
+
+  // the exact user flow: edit -> close -> the screen must be clean
+  AW.openCommissionDialog('admin-edit', { recordId: 1, id: 1, status: 'request', title: 'Bust', description: 'A', contact: '', details: '', estimate: null, paid: false, options: {}, attachments: [], refs: '' });
+  await new Promise(r => setTimeout(r, 200));
+  check('edit open: form mounted', dlg.open && !!dlg.querySelector('form'));
+  AW.eval('closeCommissionDialog()');
+  await new Promise(r => setTimeout(r, 200));
+  check('edit closed: fully invisible', !dlg.open && disp() === 'none' && rectW() === 0, disp());
+
+  // and it can still be reopened cleanly afterwards
+  AW.openCommissionDialog('admin-add');
+  await new Promise(r => setTimeout(r, 200));
+  check('reopen after ghost-fix still works', dlg.open && disp() === 'flex' && !!dlg.querySelector('form'));
+
+  document.getElementById('out').textContent = results.join('\n');
+  document.title = 'DONE';
+})().catch(e => {
+  document.getElementById('out').textContent = results.join('\n') + '\nFATAL ' + (e.stack || e.message);
+  document.title = 'DONE';
+});
+</script>
+</body></html>
