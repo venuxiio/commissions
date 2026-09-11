@@ -2,7 +2,7 @@
 // Fill these in after following SUPABASE_SETUP.md.
 // The anon key is PUBLIC by design — every request is checked against
 // Row Level Security policies in the database (see supabase-schema.sql):
-// it can read services/settings/queue and create request rows. Nothing else.
+// it can only submit commission requests. It cannot read anything.
 // The admin key (service_role) is never stored here — it's pasted directly
 // into admin.html and kept in the browser's localStorage.
 const CONFIG = {

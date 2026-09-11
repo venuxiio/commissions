@@ -1,15 +1,17 @@
-// Seed / fallback data. Used when Supabase is not configured or unreachable
-// (see js/db-client.js and SUPABASE_SETUP.md).
-// Once Supabase is live this file is only a safety net — edit data there.
-// Commissions have no public surface anymore (admin board only), so the
-// seed queue is empty.
+// Services + site settings — edit this file to change prices, add a service,
+// or flip commissions open/closed. This file is the single source of truth:
+// the database stores commission requests only, nothing here is read back.
+//
+// `services`: array order = display order on the site.
+// `settings.commsOpen` flips the public banner + request form;
+// `settings.reopenDate` (YYYY-MM-DD or null) shows "closed until <date>";
+// `settings.maxSlots` is admin-board display only (waiting-list slots).
 
-const seedData = {
+const siteData = {
   "settings": {
-    "commsOpen": false,
+    "commsOpen": true,
     "reopenDate": null,
-    "maxSlots": 8,
-    "announcement": ""
+    "maxSlots": 8
   },
   "services": [
     { "name": "Bust",           "basePrice": 40,  "extraCharPrice": 35, "description": "",                                                              "image": "assets/images/examples/bust/bust.webp",        "active": true },
@@ -19,6 +21,5 @@ const seedData = {
     { "name": "Chibi",          "basePrice": 40,  "extraCharPrice": 35, "description": "",                                                              "image": "assets/images/examples/chibi/chibi.webp",      "active": true },
     { "name": "Custom",         "basePrice": 100, "extraCharPrice": 0,  "description": "Fullbody by default. Final price varies with character complexity; includes a moodboard plus an assigned animal.", "image": "assets/images/examples/custom/custom.webp", "active": true },
     { "name": "Reference sheet","basePrice": 200, "extraCharPrice": 0,  "description": "Check the example image in the gallery.",                                            "image": "assets/images/examples/refsheet/Illustration15.webp", "active": true }
-  ],
-  "commissions": []
+  ]
 };

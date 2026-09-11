@@ -109,7 +109,7 @@
                     href="#terms" class="tos-link">T.O.S</a> first!</p>
 
             <div class="services-grid" id="services-grid">
-                <!-- Rendered from Supabase / seed data -->
+                <!-- Rendered from commissions.js -->
             </div>
 
             <div class="addons-note">
@@ -353,10 +353,11 @@
     </div>
 
     <script>
-        // ---- Shared state (Supabase when available, seedData fallback) ----
-        // No commission rows here: anon has no read access to commissions.
-        let siteSettings = seedData.settings;
-        let siteServices = seedData.services;
+        // ---- Site data (commissions.js) ----
+        // Services + settings are hand-edited in that file; the database
+        // stores commission requests only (this page never reads them).
+        const siteSettings = siteData.settings;
+        const siteServices = siteData.services;
 
         // ---- Footer: last-updated stamp straight from the deployed file's mtime ----
         const lastUpdated = document.getElementById('last-updated');
@@ -798,7 +799,7 @@
             const requestForm = document.getElementById('request-form');
 
             // Slot usage lives on the admin board now — the public site only
-            // knows open/closed + reopen date from settings.
+            // knows open/closed + reopen date from commissions.js.
             const isOpen = siteSettings.commsOpen;
 
             // Closed modal shows the notice + ping list instead of the form
@@ -871,30 +872,6 @@
                     window.scrollTo({ top: 0, behavior: 'auto' });
                 });
             });
-        }
-
-        // ---- Ping list count ----
-        function updatePingListCount() {
-            const pingListButtons = document.querySelectorAll('.ping-list-button');
-            if (!pingListButtons.length) return;
-
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/18iP-LAX37ew6r6WjqLBY9HeW47DoEH6XAy5cqZGxy54/export?format=csv';
-
-            fetch(csvUrl)
-                .then(res => res.text())
-                .then(csv => {
-                    const rows = csv.trim().split('\n');
-                    const count = Math.max(0, rows.length - 1);
-                    const max = 20;
-                    pingListButtons.forEach(btn => {
-                        btn.textContent = `Join the Ping List (${count}/${max})`;
-                    });
-                })
-                .catch(() => {
-                    pingListButtons.forEach(btn => {
-                        btn.textContent = 'Join the Ping List';
-                    });
-                });
         }
 
         // ---- Modals (terms / request / faq share one helper) ----
@@ -1001,13 +978,8 @@
             });
         }
 
-        // ---- Boot: seed first (instant), then upgrade to Supabase data ----
+        // ---- Boot ----
         function renderAll() {
-            // A refresh can drop the selected service (e.g. removed in the
-            // admin board) — fall back to the first available one
-            if (selectedService && !findService(selectedService)) {
-                selectedService = siteServices.length ? siteServices[0].name : null;
-            }
             renderStatusIndicators();
             renderServices();
             renderServiceDisplay();
@@ -1015,30 +987,13 @@
             updateEstimate();
         }
 
-        async function loadData() {
-            const [services, settings] = await Promise.all([
-                SupabaseClient.getServices(),
-                SupabaseClient.getSettings()
-            ]);
-            if (services) siteServices = services;
-            if (settings) siteSettings = settings;
-            renderAll();
-        }
-
         updateActiveNav();
         setupTabs();
         setupRequestForm();
-        updatePingListCount();
         setupImageModal();
         renderAll();
         renderPortfolioFilters();
         renderPortfolio();
-        loadData();
-
-        // Keep status/prices fresh from Supabase
-        setInterval(() => {
-            if (SupabaseClient.isConfigured()) loadData();
-        }, 60000);
 
         window.addEventListener('hashchange', updateActiveNav);
     </script>

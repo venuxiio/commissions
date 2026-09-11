@@ -3,6 +3,15 @@
 > Feature spec + roadmap. Written **before** implementation (approved plan, Sep 7 2026).
 > Status legend: ✅ shipped · 🚧 in progress · 📋 planned · 💡 future idea
 
+> **Update (2026-09-11):** services, prices and the open/closed settings no
+> longer live in the database — `commissions.js` is their single source of
+> truth, hand-edited like `portfolio.js`. Supabase stores **commission
+> requests only**; the `services` + `settings` tables are dropped
+> (migration `2026-09-11-drop-settings-services-tables.sql`), the admin
+> ⚙ settings panel is gone, and the public site no longer polls Supabase.
+> Sections below are kept as written for history; lines that would mislead
+> as a build guide are corrected in place.
+
 ---
 
 ## 1. Overview
@@ -46,7 +55,7 @@ Everything stays **static hosting** (GitHub Pages). No server of your own, no bu
 - VGen-style card grid: example image, service name, price (e.g. `€40` / `€100+`), extra-character / option notes.
 - Two groups: **Full render** and **Sketch** (matching current pricing).
 - Each card has a **Request this →** button that opens the F2 form with the service pre-selected.
-- Data from the `services` table (F4); falls back to bundled seed data.
+- Data from `commissions.js` (since Sep 11 2026 — was the `services` table).
 - Kept as-is below the cards: Will draw / Won't draw lists, reference-sheet price image, "no shading = −15%" callout.
 
 **Acceptance criteria**
@@ -89,7 +98,7 @@ Modeled on VGen's request form (the reference the user provided):
 - **Requests column**: full contact info, clickable ref links, full details — everything the form captured. Cards have an **Accept → Waiting** shortcut (dragging works too).
 - **Drag & drop** (HTML5, desktop) + **◀ ▶ move buttons** per card (touch/mobile + a11y fallback).
 - **Per card**: paid toggle (dot), edit (client/service/contact/details/estimate), delete (confirm).
-- **Settings panel**: Comms open ✓, reopen date, max slots, Art trades ✓, Requests ✓.
+- **Settings panel**: removed (Sep 11 2026) — comms open/closed, reopen date and max slots are edited in `commissions.js` now.
 - Optimistic updates with rollback + "saving…" indicator.
 
 **Acceptance criteria**
@@ -104,10 +113,9 @@ Modeled on VGen's request form (the reference the user provided):
 
 **User story:** As the site owner, I edit data in Supabase (or via the admin board) and the site updates itself — no code edits, no deploys.
 
-- 3 tables: `services`, `commissions`, `settings` + a `commissions_public` **view** (Postgres schema in `supabase-schema.sql`)
-- `js/db-client.js`: `getServices / getCommissions / getSettings / submitRequest / adminGetAll / adminUpdateCommission / adminCreateCommission / adminDeleteCommission / adminUpdateSettings` — plain `fetch` against the REST API, no SDK
-- **Seed-data fallback**: if Supabase is unreachable/misconfigured, the site renders the bundled seed data so it never shows an empty page.
-- 60s auto-refresh of queue/status on the public site.
+- 1 table: `commissions` (Postgres schema in `supabase-schema.sql`). Services + settings are **not** tables — they live in `commissions.js` (Sep 11 2026).
+- `js/db-client.js`: `submitRequest / adminGetCommissions / adminUpdateCommission / adminCreateCommission / adminDeleteCommission / validateKey` — plain `fetch` against the REST API, no SDK
+- No auto-refresh: the public site reads everything from the JS data files; its only Supabase call is the form submit.
 
 **Schema — `services`**
 | Column | Type |
@@ -137,18 +145,9 @@ Modeled on VGen's request form (the reference the user provided):
 | sort_order | int |
 | created_at | timestamptz |
 
-**View — `commissions_public`**: `id, client, service, estimate, status, paid, sort_order, created_at` where `status <> 'request'` — this is the *only* commissions data the public key can read. Contact, details and refs never reach a visitor's browser.
+**View — `commissions_public`**: dropped (Sep 8 2026) along with all anon commission reads — only the admin board reads commissions now.
 
-**Schema — `settings`** (single row, id=1)
-| Column | Type |
-|---|---|
-| id | int (always 1) |
-| comms_open | bool |
-| reopen_date | date |
-| max_slots | int |
-| art_trades_open | bool |
-| requests_open | bool |
-| announcement | text |
+**Schema — `settings`**: table dropped (Sep 11 2026). Comms open/closed, reopen date and max slots live in `commissions.js` under `siteData.settings`.
 
 ---
 
@@ -159,20 +158,18 @@ Modeled on VGen's request form (the reference the user provided):
 │  PUBLIC SITE (index.html)   │        │  ADMIN (admin.html) ⬆ unlisted│
 │  visitors + Ven             │        │  Ven only                    │
 │                             │        │                              │
-│  service cards  ──read──▶   │        │  drag-drop board             │
-│  queue board    ──read──▶   │        │  (incl. request cards)       │
-│  request form   ──create─▶  │        │  settings panel              │
+│  service cards  ◀─ commissions.js    │  drag-drop board             │
+│  settings       ◀─ commissions.js    │  (incl. request cards)       │
+│  request form   ──create─▶  │        │  full CRUD                   │
 └────────────┬────────────────┘        └────────────┬─────────────────┘
              │ anon key (in js/config.js)            │ service_role key
              │  RLS-enforced:                        │ (pasted, localStorage)
-             │  · read services/settings/            │  bypasses RLS:
-             │    commissions_public view            │  full control
-             │  · insert status='request' only
+             │  · insert status='request' only —     │  bypasses RLS:
+             │    no reads/updates/deletes at all    │  full control
              ▼                                       ▼
       ┌────────────────────────────────────────────────┐
       │  SUPABASE (free Postgres) — Row Level Security  │
-      │  services · commissions · commissions_public   │
-      │  view · settings                               │
+      │  commissions (the only table)                  │
       └────────────────────────────────────────────────┘
 ```
 
@@ -180,7 +177,7 @@ Modeled on VGen's request form (the reference the user provided):
 
 | Key | Can do | Cannot do | Lives |
 |---|---|---|---|
-| `anon` (public) | read active services; read settings; read `commissions_public` view (no request rows, no contact/details/refs columns); insert a commission **iff** `status='request'` and `paid=false` and client+service non-empty | read base commissions table; read any request row; UPDATE / DELETE anything; insert anything with another status | `js/config.js` (committed — it's designed to be public) |
+| `anon` (public) | insert a commission **iff** `status='request'` and `paid=false` and client+service non-empty | read commissions (or anything); UPDATE / DELETE anything; insert anything with another status | `js/config.js` (committed — it's designed to be public) |
 | `service_role` (private) | everything (bypasses RLS) | — | pasted into `admin.html`, browser `localStorage` only |
 
 > This fixes the Airtable limitation: "create-only" and "can't see requests" are **database policies** (`with check (status='request' …)`, view column filtering, no anon update/delete grants), not front-end filtering. Even a crafted API call with the anon key is rejected by Postgres. If the anon key is ever abused: dashboard → rotate JWT secret.

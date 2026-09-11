@@ -1074,13 +1074,13 @@ footer {
 
 .service-card-name {
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 1.25rem;
     color: var(--color-text-dark);
 }
 
 .service-card-price {
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.25rem;
     color: var(--color-primary-dark);
     white-space: nowrap;
 }

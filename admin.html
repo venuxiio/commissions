@@ -389,128 +389,6 @@
             margin: 0.25rem;
         }
 
-        /* ---------- settings panel ---------- */
-        .settings-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(45, 27, 78, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            z-index: 50;
-        }
-
-        .settings-overlay[hidden] {
-          display: none;
-        }
-
-
-        .settings-panel {
-            background: #fff;
-            border-radius: 1rem;
-            border: 2px solid var(--purple);
-            max-width: 30rem;
-            width: 100%;
-            padding: 1.5rem;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .settings-panel h2 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .setting-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            padding: 0.65rem 0;
-            border-bottom: 1px dotted var(--purple-pale);
-        }
-
-        .setting-row label {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .setting-row small {
-            display: block;
-            font-weight: 400;
-            color: var(--gray);
-            font-size: 0.75rem;
-        }
-
-        .setting-row input[type="number"],
-        .setting-row input[type="date"] {
-            padding: 0.4rem 0.6rem;
-            border: 1.5px solid var(--purple-pale);
-            border-radius: 0.5rem;
-            font-family: inherit;
-            width: 8rem;
-        }
-
-        .toggle {
-            position: relative;
-            width: 3rem;
-            height: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .toggle input {
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .toggle-track {
-            position: absolute;
-            inset: 0;
-            background: var(--pink);
-            border: 1.5px solid var(--pink-dark);
-            border-radius: 2rem;
-            transition: background 0.15s ease;
-        }
-
-        .toggle-track::after {
-            content: '';
-            position: absolute;
-            top: 0.125rem;
-            left: 0.125rem;
-            width: 1.1rem;
-            height: 1.1rem;
-            background: #fff;
-            border-radius: 50%;
-            transition: transform 0.15s ease;
-        }
-
-        .toggle input:checked + .toggle-track {
-            background: var(--green);
-            border-color: var(--green-dark);
-        }
-
-        .toggle input:checked + .toggle-track::after {
-            transform: translateX(1.5rem);
-        }
-
-        .settings-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1.25rem;
-            gap: 0.75rem;
-        }
-
-        .settings-status {
-            font-size: 0.8rem;
-            color: var(--gray);
-        }
-
         /* ---------- misc ---------- */
         .board-footer {
             color: var(--purple-pale);
@@ -553,7 +431,7 @@
         <p>Paste your Supabase service_role key (Project Settings → API).<br>
             It's stored in this browser only — never in the site's files.</p>
         <div class="gate-error" id="gate-error" hidden></div>
-        <input type="password" id="gate-token" placeholder="pat… (personal access token)" autocomplete="off">
+        <input type="password" id="gate-token" placeholder="service_role key (Project Settings → API)" autocomplete="off">
         <button class="btn-primary" id="gate-unlock">Unlock board →</button>
     </div>
 
@@ -568,7 +446,6 @@
                 <span class="save-indicator" id="save-indicator"></span>
                 <button class="btn-soft" id="refresh-btn">↻ Refresh</button>
                 <button class="btn-soft" id="add-btn">+ Add commission</button>
-                <button class="btn-soft" id="settings-btn">⚙ Settings</button>
                 <button class="btn-danger" id="forget-btn">🔓 Forget token</button>
             </div>
         </div>
@@ -577,37 +454,11 @@
 
         <p class="board-footer">
             Drag cards between columns (desktop) or use the ◀ ▶ buttons on each card (works everywhere).<br>
-            Every change saves to Supabase instantly — the public queue updates within a minute.
+            Every change saves to Supabase instantly.
         </p>
     </div>
 
     <div class="loading" id="loading" hidden>Loading board…</div>
-
-    <!-- Settings modal -->
-    <div class="settings-overlay" id="settings-overlay" hidden>
-        <div class="settings-panel">
-            <h2>⚙ Settings</h2>
-            <div class="setting-row">
-                <label>Commissions open<small>flips the public status banner + request form</small></label>
-                <span class="toggle"><input type="checkbox" id="set-comms"><span class="toggle-track"></span></span>
-            </div>
-            <div class="setting-row">
-                <label>Max slots<small>waiting-list count vs slots → "Queue is full"</small></label>
-                <input type="number" id="set-slots" min="1" max="30">
-            </div>
-            <div class="setting-row">
-                <label>Reopen date<small>shown as "Commissions open on…" while closed</small></label>
-                <input type="date" id="set-reopen">
-            </div>
-            <div class="settings-footer">
-                <span class="settings-status" id="settings-status"></span>
-                <div>
-                    <button class="btn-soft" id="settings-cancel">Close</button>
-                    <button class="btn-primary" id="settings-save">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="commissions.js"></script>
     <script src="js/config.js"></script>
@@ -616,10 +467,10 @@
         const TOKEN_KEY = 'venuxiio_admin_token';
         const STATUSES = ['request', 'waiting-list', 'in-progress', 'finished'];
         const STATUS_LABELS = { 'request': '📥 Requests', 'waiting-list': '⏳ Waiting List', 'in-progress': '🎨 In Progress', 'finished': '✅ Finished' };
+        const MAX_SLOTS = siteData.settings.maxSlots; // commissions.js
 
         let adminToken = localStorage.getItem(TOKEN_KEY) || null;
         let commissions = [];
-        let settings = null;
         let editingCardId = null; // recordId of card with open edit form
 
         // ---------- helpers ----------
@@ -645,11 +496,11 @@
             }
             $('gate-unlock').disabled = true;
             $('gate-unlock').textContent = 'Checking…';
-            const ok = await SupabaseClient.validateToken(token);
+            const ok = await SupabaseClient.validateKey(token);
             $('gate-unlock').disabled = false;
             $('gate-unlock').textContent = 'Unlock board →';
             if (!ok) {
-                err.textContent = 'That token didn\'t work. Check it has read + write data access to the Commissions base (and that js/config.js has the base ID filled in).';
+                err.textContent = 'That key didn\'t work. Use the service_role key (Supabase dashboard → Project Settings → API).';
                 err.hidden = false;
                 return;
             }
@@ -668,9 +519,7 @@
         async function loadData() {
             $('loading').hidden = false;
             try {
-                const data = await SupabaseClient.adminGetAll(adminToken);
-                commissions = data.commissions;
-                settings = data.settings;
+                commissions = await SupabaseClient.adminGetCommissions(adminToken);
                 renderBoard();
             } catch (err) {
                 console.error(err);
@@ -686,7 +535,7 @@
             board.innerHTML = '';
 
             const waitingCount = commissions.filter(c => c.status === 'waiting-list').length;
-            $('slots-summary').textContent = `${waitingCount}/${settings ? settings.maxSlots : '?'} waiting-list slots used`;
+            $('slots-summary').textContent = `${waitingCount}/${MAX_SLOTS} waiting-list slots used`;
 
             STATUSES.forEach(status => {
                 const cards = commissions.filter(c => c.status === status)
@@ -704,10 +553,10 @@
                 header.innerHTML = `<span>${STATUS_LABELS[status]}</span><span class="column-count">${cards.length}</span>`;
                 col.appendChild(header);
 
-                if (status === 'waiting-list' && settings) {
+                if (status === 'waiting-list') {
                     const slots = document.createElement('div');
                     slots.className = 'column-slots';
-                    slots.textContent = `${waitingCount}/${settings.maxSlots} slots`;
+                    slots.textContent = `${waitingCount}/${MAX_SLOTS} slots`;
                     col.appendChild(slots);
                 }
 
@@ -997,46 +846,11 @@
             }
         }
 
-        // ---------- settings ----------
-        function openSettings() {
-            if (!settings) return;
-            $('set-comms').checked = settings.commsOpen;
-            $('set-slots').value = settings.maxSlots;
-            $('set-reopen').value = settings.reopenDate || '';
-            $('settings-status').textContent = '';
-            $('settings-overlay').hidden = false;
-        }
-
-        async function saveSettings() {
-            const btn = $('settings-save');
-            btn.disabled = true;
-            $('settings-status').textContent = 'Saving…';
-
-            try {
-                settings = await SupabaseClient.adminUpdateSettings(adminToken,  {
-                    commsOpen: $('set-comms').checked,
-                    maxSlots: Number($('set-slots').value) || 8,
-                    reopenDate: $('set-reopen').value || null
-                });
-                $('settings-status').textContent = 'Saved ✓';
-                $('settings-overlay').hidden = true;
-                renderBoard();
-            } catch (err) {
-                $('settings-status').textContent = 'Save failed: ' + err.message;
-                console.error(err);
-            } finally {
-                btn.disabled = false;
-            }
-        }
-
         // ---------- boot ----------
         $('gate-unlock').addEventListener('click', tryUnlock);
         $('gate-token').addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
         $('refresh-btn').addEventListener('click', loadData);
         $('add-btn').addEventListener('click', addCommission);
-        $('settings-btn').addEventListener('click', openSettings);
-        $('settings-save').addEventListener('click', saveSettings);
-        $('settings-cancel').addEventListener('click', () => $('settings-overlay').hidden = true);
         $('forget-btn').addEventListener('click', () => {
             if (!confirm('Forget the token on this device? You\'ll need to paste it again to come back.')) return;
             localStorage.removeItem(TOKEN_KEY);

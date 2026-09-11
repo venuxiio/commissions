@@ -1,14 +1,15 @@
 // Supabase REST wrapper for the commission site (no SDK — plain fetch).
-// Public site: read services/settings + submit requests (anon key).
-// When Supabase is unreachable or not configured, callers fall back to
-// seedData (bundled in commissions.js) so the site never renders empty.
+// The database stores COMMISSION REQUESTS ONLY. Services, prices and the
+// open/closed settings live in commissions.js and are hand-edited there.
+// Public site: submit requests (anon key). Admin board: full CRUD on
+// commissions (service_role key, pasted into admin.html).
 //
 // Keys (see js/config.js + SUPABASE_SETUP.md):
 //   anon         — public, in config.js. Enforced by Row Level Security:
-//                  read services (active) / settings; insert commissions
-//                  rows with status='request' only. No commission reads.
+//                  insert commissions rows with status='request' and
+//                  paid=false only. No reads, no updates, no deletes.
 //   service_role — private, pasted into admin.html. Bypasses RLS: full
-//                  control of all tables.
+//                  control of the commissions table.
 
 const SupabaseClient = (() => {
     const isConfigured = () => Boolean(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey);
@@ -41,17 +42,6 @@ const SupabaseClient = (() => {
 
     // ---- Normalizers: DB columns → the shapes the site's renderers expect ----
 
-    function normalizeService(r) {
-        return {
-            name: r.name || '',
-            basePrice: Number(r.base_price) || 0,
-            extraCharPrice: Number(r.extra_char_price) || 0,
-            description: r.description || '',
-            image: r.image || '',
-            active: r.active !== false
-        };
-    }
-
     function normalizeCommission(r) {
         // DB status → legacy status keys used by the admin board renderer
         const statusMap = {
@@ -77,41 +67,7 @@ const SupabaseClient = (() => {
         };
     }
 
-    function normalizeSettings(r) {
-        return {
-            commsOpen: Boolean(r.comms_open),
-            reopenDate: r.reopen_date || null,
-            maxSlots: Number(r.max_slots) || 8,
-            announcement: r.announcement || ''
-        };
-    }
-
-    // ---- Public API (anon key) — getters resolve to null when unavailable
-    //      so callers fall back to seed data instead of crashing ----
-
-    async function getServices() {
-        if (!isConfigured()) return null;
-        try {
-            const rows = await request('services', {
-                query: { select: '*', order: 'sort.asc' }
-            });
-            return rows.map(normalizeService).filter(s => s.active);
-        } catch (err) {
-            console.warn('Supabase unavailable, using seed services:', err.message);
-            return null;
-        }
-    }
-
-    async function getSettings() {
-        if (!isConfigured()) return null;
-        try {
-            const rows = await request('settings', { query: { select: '*', id: 'eq.1' } });
-            return rows.length ? normalizeSettings(rows[0]) : null;
-        } catch (err) {
-            console.warn('Supabase unavailable, using seed settings:', err.message);
-            return null;
-        }
-    }
+    // ---- Public API (anon key) ----
 
     // Submit a request-form payload as a new commissions row (status: request).
     // The DB policy rejects anything else — even a crafted request can't
@@ -144,17 +100,9 @@ const SupabaseClient = (() => {
 
     // ---- Admin-only helpers (service_role key passed in, never stored here) ----
 
-    async function adminGetAll(key) {
-        const [services, commissions, settings] = await Promise.all([
-            request('services', { key, query: { select: '*', order: 'sort.asc' } }),
-            request('commissions', { key, query: { select: '*', order: 'id.asc' } }),
-            request('settings', { key, query: { select: '*', id: 'eq.1' } })
-        ]);
-        return {
-            services: services.map(normalizeService),
-            commissions: commissions.map(normalizeCommission),
-            settings: settings.length ? normalizeSettings(settings[0]) : null
-        };
+    async function adminGetCommissions(key) {
+        const rows = await request('commissions', { key, query: { select: '*', order: 'id.asc' } });
+        return rows.map(normalizeCommission);
     }
 
     const STATUS_TO_DB = {
@@ -195,16 +143,6 @@ const SupabaseClient = (() => {
         return rows && rows.length ? normalizeCommission(rows[0]) : null;
     }
 
-    async function adminUpdateSettings(key, settings) {
-        const patch = {};
-        if (settings.commsOpen !== undefined) patch.comms_open = settings.commsOpen;
-        if (settings.reopenDate !== undefined) patch.reopen_date = settings.reopenDate || null;
-        if (settings.maxSlots !== undefined) patch.max_slots = settings.maxSlots;
-        if (settings.announcement !== undefined) patch.announcement = settings.announcement;
-        const rows = await request('settings?id=eq.1', { method: 'PATCH', key, body: patch });
-        return rows && rows.length ? normalizeSettings(rows[0]) : null;
-    }
-
     async function validateKey(key) {
         if (!CONFIG.supabaseUrl || !key) return false;
         try {
@@ -222,14 +160,11 @@ const SupabaseClient = (() => {
 
     return {
         isConfigured,
-        getServices,
-        getSettings,
         submitRequest,
-        adminGetAll,
+        adminGetCommissions,
         adminUpdateCommission,
         adminDeleteCommission,
         adminCreateCommission,
-        adminUpdateSettings,
         validateKey
     };
 })();
