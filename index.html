@@ -144,21 +144,22 @@
         <!-- Request modal — opened from the sidebar card, the service cards and #request links -->
         <div id="request-modal" class="page-modal">
             <div class="page-modal-content">
-                <button class="modal-close" aria-label="Close">&times;</button>
-                <h2>Commission Request</h2>
-                <p class="home-welcome">Fill in this form to request a commission. Once you submit, I'll review it and
-                    reply with the exact price and timing before we start. Submitting doesn't guarantee acceptance.</p>
-
-                <div class="artist-note">
-                    <p>By ordering, you're okay with the finished piece being used as an example. If you don't want it
-                        shown in my gallery, mention it in the details and we can arrange a privacy add-on.</p>
+                <div class="modal-header">
+                    <h2>Commission Request</h2>
+                    <button class="modal-close" aria-label="Close">&times;</button>
                 </div>
+                <div class="modal-body">
+                    <p class="home-welcome">Fill in this form to request a commission. Once you submit, I'll review it and
+                        reply with the exact price and timing before we start. Submitting doesn't guarantee acceptance.</p>
 
-            <div id="request-closed" class="request-closed" hidden>
-                <p id="request-closed-message">Commissions are currently closed.</p>
-                <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
-                    class="ping-list-button visible">Join the Ping List</a>
-            </div>
+                    <div class="artist-note">
+                        <p>By ordering, you're okay with the finished piece being used as an example. If you don't want it
+                            shown in my gallery, mention it in the details and we can arrange a privacy add-on.</p>
+                    </div>
+
+                <div id="request-closed" class="request-closed" hidden>
+                    <p id="request-closed-message">Commissions are currently closed.</p>
+                </div>
 
             <form id="request-form" class="request-form" novalidate>
                 <!-- honeypot: hidden from humans, catches bots -->
@@ -253,14 +254,20 @@
                 </label>
 
                 <div class="form-error" id="rf-error" hidden></div>
-
-                <button type="submit" class="submit-request-button" id="rf-submit">Submit request</button>
             </form>
 
             <div class="form-success" id="request-success" hidden>
                 <h3>Request sent! ✨</h3>
                 <p>Thanks! I'll review your request and get back to you with the exact price and timing. Keep an eye on
                     your contact info (and spam folder just in case).</p>
+            </div>
+            </div>
+
+            <div class="modal-footer" id="request-modal-footer">
+                <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
+                    class="ping-list-button visible">Join the Ping List</a>
+                <button type="submit" class="submit-request-button" id="rf-submit"
+                    form="request-form">Submit request</button>
             </div>
             </div>
         </div>
@@ -277,17 +284,27 @@
         <!-- Image Modal -->
         <div id="image-modal" class="image-modal">
             <div class="modal-content">
-                <button class="modal-close" aria-label="Close">&times;</button>
-                <img id="modal-image" src="" alt="">
-                <h3 id="modal-title"></h3>
+                <div class="modal-header">
+                    <h3 id="modal-title" hidden></h3>
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body modal-body-center">
+                    <img id="modal-image" src="" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-footer-btn" data-close-modal>Close</button>
+                </div>
             </div>
         </div>
 
         <!-- Terms Modal -->
         <div id="terms-modal" class="terms-modal">
             <div class="terms-modal-content">
-                <button class="modal-close" id="terms-modal-close" aria-label="Close">&times;</button>
-                <h2>Terms of Service</h2>
+                <div class="modal-header">
+                    <h2>Terms of Service</h2>
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
                 <ul class="terms-list">
                     <li class="home-welcome"> Please check the <a href="#faq">F.A.Q</a> before asking me a question</li>
                     <li>I have the right to post personnal art between commissions.</li>
@@ -310,13 +327,20 @@
                         technologies.</li>
                 </ul>
                 <p style="margin-top: 1rem;">If you have any questions, feel free to ask! :D</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-footer-btn" data-close-modal>Close</button>
+                </div>
             </div>
         </div>
         <!-- F.A.Q modal — opened from the sidebar link, the terms modal and #faq links -->
         <div id="faq-modal" class="page-modal">
             <div class="page-modal-content">
-                <button class="modal-close" aria-label="Close">&times;</button>
-                <h2>F.A.Q</h2>
+                <div class="modal-header">
+                    <h2>F.A.Q</h2>
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
             <div class="faq-section">
                 <div class="faq-item">
                     <h3>Do you make reference sheets?</h3>
@@ -338,6 +362,10 @@
                         commission's progress.</p>
                 </div>
             </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-footer-btn" data-close-modal>Close</button>
+                </div>
             </div>
         </div>
 
@@ -702,6 +730,7 @@
             if (honeypot && honeypot.value) {
                 document.getElementById('request-form').hidden = true;
                 document.getElementById('request-success').hidden = false;
+                document.getElementById('request-modal-footer').hidden = true;
                 return;
             }
 
@@ -744,6 +773,7 @@
                 gtag('event', 'request_submit', { service: payload.service, estimate: payload.estimate });
                 document.getElementById('request-form').hidden = true;
                 document.getElementById('request-success').hidden = false;
+                document.getElementById('request-modal-footer').hidden = true;
                 document.getElementById('request-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
             } catch (err) {
                 console.error('Request submit failed:', err);
@@ -797,6 +827,7 @@
             const pingListButtons = document.querySelectorAll('.ping-list-button');
             const closedBox = document.getElementById('request-closed');
             const requestForm = document.getElementById('request-form');
+            const submitButton = document.getElementById('rf-submit');
 
             // Slot usage lives on the admin board now — the public site only
             // knows open/closed + reopen date from commissions.js.
@@ -808,6 +839,9 @@
             }
             if (requestForm) {
                 requestForm.hidden = !isOpen;
+            }
+            if (submitButton) {
+                submitButton.hidden = !isOpen; // footer swaps submit ↔ ping list
             }
             if (!isOpen && closedBox) {
                 const msg = closedBox.querySelector('#request-closed-message');
@@ -894,12 +928,13 @@
                 activeModals().forEach(m => { if (m !== modal) m.classList.remove('active'); });
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
-                const content = modal.querySelector('.page-modal-content, .terms-modal-content');
-                if (content) content.scrollTop = 0;
+                const body = modal.querySelector('.modal-body');
+                if (body) body.scrollTop = 0;
                 gtag('event', 'modal_open', { modal_id: id });
             };
 
             modal.querySelector('.modal-close')?.addEventListener('click', close);
+            modal.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', close));
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) close();
             });
@@ -942,6 +977,7 @@
                 modalImage.src = imageSrc;
                 modalImage.alt = title;
                 modalTitle.textContent = title;
+                modalTitle.hidden = !title; // empty title = header holds just the ×
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 gtag('event', 'image_view', {
@@ -958,16 +994,16 @@
                 openViewer(card.dataset.image, card.dataset.title || '');
             });
 
-            closeButton.addEventListener('click', () => {
+            const closeViewer = () => {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
-            });
+            };
+
+            closeButton.addEventListener('click', closeViewer);
+            modal.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', closeViewer));
 
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
+                if (e.target === modal) closeViewer();
             });
 
             document.addEventListener('keydown', (e) => {
