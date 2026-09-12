@@ -20,225 +20,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Venuxiio - Commission Portfolio</title>
+    <title>Venuxiio - Commissions &amp; Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/request-form.css">
     <script src="commissions.js"></script>
+    <script src="portfolio.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/db-client.js"></script>
+    <script src="js/request-form.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="banner">
-            <nav data-target="home">
-                <span>Home</span>
-            </nav>
-            <nav data-target="examples">
-                <span>Examples</span>
-            </nav>
-            <nav data-target="prices">
-                <span>Prices</span>
-            </nav>
-            <nav data-target="terms">
-                <span>Terms</span>
-            </nav>
-        </div>
+    <div class="layout">
 
-        <section id="home">
-            <div class="home-intro">
-                <div class="home-profile-section">
-                    <img src="assets/images/profile.webp" alt="Profile Picture" class="profile-image">
-                    <p class="profile-description">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of
-                        time gaming and chilling.</p>
-
-                    <svg class="animated-arrow" width="25.484392mm" height="47.411819mm"
-                        viewBox="0 0 25.484392 47.411819" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:svg="http://www.w3.org/2000/svg">
-                        <defs id="defs1" />
-                        <g id="layer1" transform="translate(-159.89931,-108.91639)">
-                            <path class="arrow-path"
-                                style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:bevel;stroke-opacity:1"
-                                d="m 184.88369,155.82822 c -7.84552,-3.40874 -15.69104,-6.81749 -19.85728,-10.60498 -4.16624,-3.78749 -4.6532,-7.95373 -4.62615,-10.90256 0.0271,-2.94883 0.56813,-4.68026 2.38072,-7.16918 1.81258,-2.48893 4.89668,-5.73534 7.68319,-8.00784 2.78651,-2.2725 5.27543,-3.57106 6.70927,-4.27445 1.43383,-0.70339 1.81258,-0.81161 1.9208,-0.81161 0.10821,0 -0.0541,0.10821 -0.13527,0.13527 -0.0812,0.0271 -0.0812,-0.0271 -0.32464,-0.18938 -0.24348,-0.16232 -0.73045,-0.43286 -1.1092,-0.83866 -0.37875,-0.4058 -0.64928,-0.94687 0.21643,-1.62321 0.86571,-0.67633 2.86768,-1.48794 4.30151,-1.86669 1.43384,-0.37875 2.29955,-0.32464 2.54303,0.0541 0.24348,0.37875 -0.13527,1.08214 -0.86572,2.43481 -0.73044,1.35268 -1.81258,3.35464 -2.89472,5.3566"
-                                id="path114" />
-                        </g>
-                    </svg>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-cover">
+                    <img src="assets/images/banner.webp" alt="">
                 </div>
-                <div class="home-info-section">
-                    <h1 class="home-title">Venuxiio</h1>
-                    <script>
-                        // Animate arrow path with exact length
-                        const arrowPath = document.querySelector('.arrow-path');
-                        if (arrowPath) {
-                            const pathLength = arrowPath.getTotalLength();
-                            arrowPath.style.strokeDasharray = pathLength;
-                            arrowPath.style.strokeDashoffset = pathLength;
+                <img src="assets/images/profile.webp" alt="Venuxiio" class="profile-image sidebar-avatar">
+            </div>
 
-                            // Trigger animation
-                            setTimeout(() => {
-                                arrowPath.style.transition = 'stroke-dashoffset 2.5s ease-in-out';
-                                arrowPath.style.strokeDashoffset = '0';
-                            }, 100);
-                        }
-                    </script>
-                    <p class="home-welcome">Welcome to my personal space! Here you'll find info about commissions,
-                        <a href="#terms">T.O.S</a>., the <a href="#faq">F.A.Q</a>, my gallery (examples), and more, feel
-                        free to
-                        take a look :D
-                    </p>
-                    <div class="status-indicators" id="status-indicators"></div>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd0l_1XZdoDDBub2QV90m3Gzqrr70DgaZYghRyU8iI0HNQkJw/viewform?usp=header"
-                        target="_blank" class="commission-form-button">Request a Commission</a>
-                    <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
-                        class="ping-list-button">Join the Ping List</a>
+            <div class="sidebar-content">
+                <h1 class="sidebar-name">Venuxiio</h1>
+
+                <p class="sidebar-bio">Hey, I'm Ven. I study 3D animation, like drawing, and spend a lot of time gaming and
+                    chilling.</p>
+
+                <div class="status-indicators" id="status-indicators"></div>
+
+                <p class="sidebar-links">Check my <a href="#terms" class="tos-link">T.O.S</a> and the <a href="#faq">F.A.Q</a>
+                    before requesting!</p>
+
+                <div class="sidebar-socials">
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/venuxiio/" target="_blank" rel="noopener noreferrer"
+                            class="social-link">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor"
+                                    stroke-width="2" />
+                                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                                <circle cx="18" cy="6" r="1.5" />
+                            </svg>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://www.xiaohongshu.com/user/profile/5ff053e50000000001003054" target="_blank"
+                            rel="noopener noreferrer" class="social-link">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" />
+                            </svg>
+                            <span>Rednote</span>
+                        </a>
+                        <a href="https://www.tiktok.com/@venuxiio7" target="_blank" rel="noopener noreferrer"
+                            class="social-link">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74a2.89 2.89 0 0 1 2.31-4.64a2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                            </svg>
+                            <span>TikTok</span>
+                        </a>
+                        <a href="https://toyhou.se/Venuxiio" target="_blank" rel="noopener noreferrer"
+                            class="social-link">
+                            <svg viewBox="0 0 197.72693 190.30197" fill="currentColor">
+                                <g transform="translate(6.2923729,-54.858845)">
+                                    <path
+                                        d="M -6.2923729,154.22213 92.377447,54.858845 121.69053,84.093271 V 69.076617 h 31.14565 v 46.273543 l 38.59837,38.59837 h -32.36923 v 91.21228 H 25.02776 v -91.10105 z" />
+                                    <path style="fill:#ffffff"
+                                        d="m 54.338047,170.6337 v 8.39821 H 70.80075 v 53.94872 h 11.012215 v -54.00434 h 17.920872 c 0,0 2.72e-4,-0.23357 2.72e-4,2.12606 v 51.91208 h 8.966631 v -29.12162 h 26.03469 v 28.76768 h 9.28125 v -61.66526 h -8.96663 v 25.72008 h -26.42796 l 0.22247,-26.09986 z" />
+                                </g>
+                            </svg>
+                            <span>Toyhouse</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="tab-bar-wrap">
+                <div class="tab-bar" role="tablist">
+                    <nav data-target="services" role="tab" aria-selected="true"><span>Commissions</span></nav>
+                    <nav data-target="examples" role="tab" aria-selected="false"><span>Portfolio</span></nav>
                 </div>
             </div>
 
+        <section id="services">
+            <h2>Commissions</h2>
+            <p style="margin-top: 1rem;" class="home-welcome">Before commissioning please check my <a
+                    href="#terms" class="tos-link">T.O.S</a> first!</p>
 
-
-            <div class="queue-section collapsed">
-                <div class="queue-section-header">
-                    <h2>Commission Queue</h2>
-                    <span class="queue-expand-icon" style="transform: rotate(-90deg);">▼</span>
-                </div>
-
-
-                <div class="queue-board" id="queue-board">
-                    <!-- Dynamically populated from commissions.json -->
-                </div>
+            <div class="services-grid" id="services-grid">
+                <!-- Rendered from commissions.js -->
             </div>
 
-            <!-- <div class="note">
-                Website is still in progress so prices may change!!!
-            </div> -->
-        </section>
-
-        <section id="prices">
-            <h2>Commission Prices</h2>
-            <p style="margin-top: 1rem;" class="home-welcome">Before checking my prices please check my <a
-                    href="#terms">T.O.S</a> first!</p>
-
-            <p style="margin-top: 1rem;" class="home-welcome">Choosing no shading AT ALL applies a 15% discount.</p>
-
-
-            <div class="prices-content">
-                <div class="pricing-table">
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Bust</span>
-                            <span class="pricing-cost">€40</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">
-                            +€35 per extra character
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Halfbody</span>
-                            <span class="pricing-cost">€50</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€40 per extra character
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Knee up</span>
-                            <span class="pricing-cost">€70</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€60 per extra character
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Fullbody</span>
-                            <span class="pricing-cost">€90</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€70 per extra character</div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Chibi</span>
-                            <span class="pricing-cost">€40</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-right">+€35 per extra character</div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Custom</span>
-                            <span class="pricing-cost">€100+</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-left">Fullbody by default. The final price will vary based
-                            on character complexity and will include a moodboard plus an assigned animal
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Reference sheet</span>
-                            <span class="pricing-cost">€200+</span>
-                        </div>
-                        <div class="pricing-row-extra pricing-extra pricing-extra-left">Check image in example
-                        </div>
-                    </div>
-                    <div style="padding-top:2rem;"><h3 style="font-family:'Fredoka',sans-serif;color:var(--color-primary);">Sketch Prices</h3></div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Bust</span>
-                            <span class="pricing-cost">€15</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Halfbody</span>
-                            <span class="pricing-cost">€24</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Knee up</span>
-                            <span class="pricing-cost">€30</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Fullbody</span>
-                            <span class="pricing-cost">€40</span>
-                        </div>
-                    </div>
-                    <div class="pricing-row">
-                        <div class="pricing-row-header">
-                            <span class="pricing-type">Sketch Chibi</span>
-                            <span class="pricing-cost">€15</span>
-                        </div>
-                    </div>
-                    <div style="padding-top:2rem;">Options with additional charges</div>
-                    <div style="padding:0rem; ">
-                        <div class="pricing-row">
-                            <div class="pricing-row-header">
-                                <span class="pricing-type">Simple background</span>
-                                <span class="pricing-cost">+€10</span>
-                            </div>
-                        </div>
-                        <div class="pricing-row">
-                            <div class="pricing-row-header">
-                                <span class="pricing-type">Armor/weapons/robotic parts</span>
-                                <span class="pricing-cost">+€5-10</span>
-                            </div>
-                        </div>
-                        <!-- <div class="pricing-row">
-                            <div class="pricing-row-header">
-                                <span class="pricing-type">Better render/less sketchy</span>
-                                <span class="pricing-cost">+40% from original price</span>
-                            </div>
-                        </div> -->
-                    </div>
-                    <!-- <div style="padding-top: 1.5rem;">
-                        <img src="assets/images/chibiex.webp" alt="Render comparison - 1 is more detailed than 2"
-                            class="chibi-comparison-img">
-                        <p
-                            style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-gray); text-align: center;">
-                            Option 2 costs 40% less than Option 1 since it's less sketchy and better rendered, plus
-                            another 15% off for no shading, meaning Option 1 is €42 and Option 2 is €25,5.</p>
-                    </div> -->
-                </div>
-                <img src="assets/images/refprices.webp" alt="Reference Prices" class="ref-prices-img">
+            <div class="addons-note">
+                <h3 class="service-group-title">Options with additional charges</h3>
+                <div class="addon-row"><span>Simple background</span><span class="addon-price">+€10</span></div>
+                <div class="addon-row"><span>Armor/weapons/robotic parts</span><span class="addon-price">+€5–10 per character</span></div>
             </div>
+
             <div class="two-column">
                 <div class="list-section">
                     <h3>Will Draw</h3>
@@ -262,203 +143,113 @@
             </div>
         </section>
 
-        <section id="examples">
-            <h2>Commission Examples</h2>
-            <p style="margin-top: 1rem;" class="home-welcome">Here are some examples of different commission types I
-                offer! Click on any image to view it in full.</p>
+        <!-- Request modal — opened from the sidebar card, the service cards and #request links -->
+        <div id="request-modal" class="page-modal">
+            <div class="page-modal-content">
+                <div class="modal-header">
+                    <h2>Commission Request</h2>
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="home-welcome">Fill in this form to request a commission. Once you submit, I'll review it and
+                        reply with the exact price and timing before we start. Submitting doesn't guarantee acceptance.</p>
 
-            <div class="examples-gallery">
-                <!-- Bust Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Bust</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/bust/bust.webp" data-title="Bust">
-                            <div class="example-image">
-                                <img src="assets/images/examples/bust/bust.webp" alt="Bust example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/bust/bust2.webp" data-title="Bust">
-                            <div class="example-image">
-                                <img src="assets/images/examples/bust/bust2.webp" alt="Bust example 2">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.webp"
-                            data-title="Bust">
-                            <div class="example-image">
-                                <img src="assets/images/examples/bust/97772967_xLGHDIWFxCSzqWd.webp"
-                                    alt="Bust example 3">
-                            </div>
-                        </div>
+                    <div class="artist-note">
+                        <p>By ordering, you're okay with the finished piece being used as an example. If you don't want it
+                            shown in my gallery, mention it in the details and we can arrange a privacy add-on.</p>
                     </div>
+
+                <div id="request-closed" class="request-closed" hidden>
+                    <p id="request-closed-message">Commissions are currently closed.</p>
                 </div>
 
-                <!-- Halfbody Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Halfbody</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody.webp"
-                            data-title="Halfbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/halfbody/halfbody.webp" alt="Halfbody example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/halfbody/halfbody2.webp"
-                            data-title="Halfbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/halfbody/halfbody2.webp" alt="Halfbody example 2">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/halfbody/239.webp"
-                            data-title="Halfbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/halfbody/239.webp" alt="Halfbody example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- The form itself is rendered by js/request-form.js — the same
+                 shared component the admin board mounts for add/edit -->
+            <div id="request-form-mount"></div>
 
-                <!-- Knee up Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Knee up</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup.webp"
-                            data-title="Knee up">
-                            <div class="example-image">
-                                <img src="assets/images/examples/kneeup/kneeup.webp" alt="Knee up example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup2.webp"
-                            data-title="Knee up">
-                            <div class="example-image">
-                                <img src="assets/images/examples/kneeup/kneeup2.webp" alt="Knee up example 2">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/kneeup/kneeup3.webp"
-                            data-title="Knee up">
-                            <div class="example-image">
-                                <img src="assets/images/examples/kneeup/kneeup3.webp" alt="Knee up example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Fullbody Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Fullbody</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody.webp"
-                            data-title="Fullbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/fullbody/fullbody.webp" alt="Fullbody example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/fullbody/fullbody1.webp"
-                            data-title="Fullbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/fullbody/fullbody1.webp" alt="Fullbody example 2">
-                            </div>
-                        </div>
-                        <div class="example-card"
-                            data-image="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.webp"
-                            data-title="Fullbody">
-                            <div class="example-image">
-                                <img src="assets/images/examples/fullbody/104353733_jKtHePsU0tpOXpb.webp"
-                                    alt="Fullbody example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chibi Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Chibi</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/chibi/chibi.webp"
-                            data-title="Chibi">
-                            <div class="example-image">
-                                <img src="assets/images/examples/chibi/chibi.webp" alt="Chibi example 1">
-                            </div>
-                        </div>
-                        <div class="example-card" data-image="assets/images/examples/chibi/chibi1.webp"
-                            data-title="Chibi">
-                            <div class="example-image">
-                                <img src="assets/images/examples/chibi/chibi1.webp" alt="Chibi example 2">
-                            </div>
-                        </div>
-                        <div class="example-card"
-                            data-image="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.webp" data-title="Chibi">
-                            <div class="example-image">
-                                <img src="assets/images/examples/chibi/109287195_yKIUzhLE4FBBDAW.webp"
-                                    alt="Chibi example 3">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Custom Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Custom</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/custom/custom.webp"
-                            data-title="Custom">
-                            <div class="example-image">
-                                <img src="assets/images/examples/custom/custom.webp" alt="Custom example">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Reference Sheet Examples -->
-                <div class="example-type-group">
-                    <h3 class="example-type-title">Reference Sheet</h3>
-                    <div class="example-variants">
-                        <div class="example-card" data-image="assets/images/examples/refsheet/Illustration15.webp"
-                            data-title="Reference Sheet">
-                            <div class="example-image">
-                                <img src="assets/images/examples/refsheet/Illustration15.webp" alt="Reference sheet example">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-success" id="request-success" hidden>
+                <h3>Request sent! ✨</h3>
+                <p>Thanks! I'll review your request and get back to you with the exact price and timing. Keep an eye on
+                    your contact info (and spam folder just in case).</p>
             </div>
+            </div>
+
+            <div class="modal-footer" id="request-modal-footer">
+                <button type="submit" class="submit-request-button" id="rf-submit"
+                    form="request-form">Submit request</button>
+            </div>
+            </div>
+        </div>
+
+        <section id="examples">
+            <h2>Portfolio</h2>
+            <p style="margin-top: 1rem;" class="home-welcome">Here are some examples of different commission types I
+                offer! Click on any image to view it in full, or use the buttons to filter by type.</p>
+
+            <div class="portfolio-filter" id="portfolio-filter" role="group" aria-label="Filter portfolio by type"></div>
+            <div class="portfolio-grid" id="portfolio-grid"></div>
         </section>
 
         <!-- Image Modal -->
         <div id="image-modal" class="image-modal">
             <div class="modal-content">
-                <button class="modal-close" aria-label="Close">&times;</button>
-                <img id="modal-image" src="" alt="">
-                <h3 id="modal-title"></h3>
+                <div class="modal-header">
+                    <h3 id="modal-title" hidden></h3>
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body modal-body-center">
+                    <img id="modal-image" src="" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-footer-btn" data-close-modal>Close</button>
+                </div>
             </div>
         </div>
 
-        <section id="terms">
-            <h2>Terms of Service</h2>
-            <ul class="terms-list">
-                <li class="home-welcome"> Please check the <a href="#faq">F.A.Q</a> before asking me a question</li>
-                <li>I have the right to post personnal art between commissions.</li>
-                <li><u>Full payment</u> is required before I begin your commission. Payments are accepted via PayPal
-                    only, in EUR. The client is responsible for covering any currency conversion fees.</li>
-                <li>My art style is naturally sketchy, so please don't expect a fully clean or polished finish</li>
-                <li>Product will be delivered digitally.</li>
-                <li>I reserve the right to refuse any commission request for any reason.</li>
-                <li>Work on your commission will begin after I send you the initial sketch and receive confirmation.
-                </li>
-                <li>I do not accept commissions with deadlines. Completion usually takes 1-4 weeks after the sketch is
-                    started.</li>
-                <li>During holidays, progress may be slower, so please be patient.</li>
-                <li>Full payment is required before I begin working on your commission, depending on my current queue.
-                </li>
-                <li>Once your commission is finished, I will ask for your email or Toyhouse account to send the
-                    high-quality version.</li>
-                <li>The customer does not have the right to use the commissioned artwork in any AI-related technology,
-                    including but not limited to training datasets, machine learning models, or any future AI-based
-                    technologies.</li>
-            </ul>
-            <p style="margin-top: 1rem;">If you have any questions, feel free to ask! :D</p>
-        </section>
-        <section id="faq">
-            <h2 style="margin-top: 2rem;">F.A.Q</h2>
+        <!-- Terms Modal -->
+        <div id="terms-modal" class="terms-modal">
+            <div class="terms-modal-content">
+                <div class="modal-header">
+                    <h2>Terms of Service</h2>
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                <ul class="terms-list">
+                    <li class="home-welcome"> Please check the <a href="#faq">F.A.Q</a> before asking me a question</li>
+                    <li>I have the right to post personnal art between commissions.</li>
+                    <li><u>Full payment</u> is required before I begin your commission. Payments are accepted via PayPal
+                        only, in EUR. The client is responsible for covering any currency conversion fees.</li>
+                    <li>My art style is naturally sketchy, so please don't expect a fully clean or polished finish</li>
+                    <li>Product will be delivered digitally.</li>
+                    <li>I reserve the right to refuse any commission request for any reason.</li>
+                    <li>Work on your commission will begin after I send you the initial sketch and receive confirmation.
+                    </li>
+                    <li>I do not accept commissions with deadlines. Completion usually takes 1-4 weeks after the sketch is
+                        started.</li>
+                    <li>During holidays, progress may be slower, so please be patient.</li>
+                    <li>Full payment is required before I begin working on your commission, depending on my current queue.
+                    </li>
+                    <li>Once your commission is finished, I will ask for your email or Toyhouse account to send the
+                        high-quality version.</li>
+                    <li>The customer does not have the right to use the commissioned artwork in any AI-related technology,
+                        including but not limited to training datasets, machine learning models, or any future AI-based
+                        technologies.</li>
+                </ul>
+                <p style="margin-top: 1rem;">If you have any questions, feel free to ask! :D</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-footer-btn" data-close-modal>Close</button>
+                </div>
+            </div>
+        </div>
+        <!-- F.A.Q modal — opened from the sidebar link, the terms modal and #faq links -->
+        <div id="faq-modal" class="page-modal">
+            <div class="page-modal-content">
+                <div class="modal-header">
+                    <h2>F.A.Q</h2>
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
             <div class="faq-section">
                 <div class="faq-item">
                     <h3>Do you make reference sheets?</h3>
@@ -476,402 +267,584 @@
                 </div>
                 <div class="faq-item">
                     <h3>When can I expect my commission to be completed?</h3>
-                    <p>As I work on multiple commissions at once, you can track your commission's progress through the
-                        commission status tab.</p>
+                    <p>As I work on multiple commissions at once, I'll keep you updated personally on your
+                        commission's progress.</p>
                 </div>
             </div>
-        </section>
-
-
-        <footer>
-            <div class="footer-content">
-                <div class="footer-social">
-                    <p class="footer-heading">Other medias</p>
-                    <div class="social-icons">
-                        <a href="https://www.instagram.com/venuxiio/" target="_blank" rel="noopener noreferrer"
-                            class="social-icon" title="Instagram">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor"
-                                    stroke-width="2" />
-                                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
-                                <circle cx="18" cy="6" r="1.5" />
-                            </svg>
-                        </a>
-                        <a href="https://www.xiaohongshu.com/user/profile/5ff053e50000000001003054" target="_blank"
-                            rel="noopener noreferrer" class="social-icon" title="Rednote">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" />
-                            </svg>
-                        </a>
-                        <a href="https://www.tiktok.com/@venuxiio7" target="_blank" rel="noopener noreferrer"
-                            class="social-icon" title="TikTok">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74a2.89 2.89 0 0 1 2.31-4.64a2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                            </svg>
-                        </a>
-                        <a href="https://toyhou.se/Venuxiio" target="_blank" rel="noopener noreferrer"
-                            class="social-icon" title="Toyhouse">
-                            <svg viewBox="0 0 197.72693 190.30197" fill="currentColor">
-                                <g transform="translate(6.2923729,-54.858845)">
-                                    <path
-                                        d="M -6.2923729,154.22213 92.377447,54.858845 121.69053,84.093271 V 69.076617 h 31.14565 v 46.273543 l 38.59837,38.59837 h -32.36923 v 91.21228 H 25.02776 v -91.10105 z" />
-                                    <path style="fill:#ffffff"
-                                        d="m 54.338047,170.6337 v 8.39821 H 70.80075 v 53.94872 h 11.012215 v -54.00434 h 17.920872 c 0,0 2.72e-4,-0.23357 2.72e-4,2.12606 v 51.91208 h 8.966631 v -29.12162 h 26.03469 v 28.76768 h 9.28125 v -61.66526 h -8.96663 v 25.72008 h -26.42796 l 0.22247,-26.09986 z" />
-                                </g>
-                            </svg>
-                        </a>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-footer-btn" data-close-modal>Close</button>
                 </div>
             </div>
+        </div>
 
-            <div class="footer-bottom">
+
+            <footer>
+                <div class="footer-bottom">
                 <p>&copy; 2026 Venuxiio. All rights reserved.</p>
                 
-                <p class="footer-note" style="font-size: 0.75rem; margin-top: 0.5rem;">Last updated: May 15, 2026 at 2:07</p>
-            </div>
-        </footer>
-
+                <p class="footer-note" id="last-updated" style="margin-top: 0.5rem;"></p>
+                </div>
+            </footer>
+        </main>
     </div>
 
     <script>
-        // Render status indicators based on start dates
-        function renderStatusIndicators(data) {
+        // ---- Site data (commissions.js) ----
+        // Services + settings are hand-edited in that file; the database
+        // stores commission requests only (this page never reads them).
+        const siteSettings = siteData.settings;
+        const siteServices = siteData.services;
+
+        // ---- Footer: last-updated stamp straight from the deployed file's mtime ----
+        const lastUpdated = document.getElementById('last-updated');
+        if (lastUpdated) {
+            const d = new Date(document.lastModified);
+            lastUpdated.textContent = 'Last updated: '
+                + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                + ' at ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        }
+
+        // ---- Commissions status banner (the only status shown) ----
+        function renderStatusIndicators() {
             const statusContainer = document.getElementById('status-indicators');
-            if (!statusContainer || !data || !data.statuses) {
-                return;
+            if (!statusContainer) return;
+
+            statusContainer.innerHTML = '';
+
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${siteSettings.commsOpen ? 'open' : 'closed'}`;
+
+            const symbolSpan = document.createElement('span');
+            symbolSpan.className = 'status-symbol';
+            symbolSpan.textContent = siteSettings.commsOpen ? '' : '🔒';
+
+            const msgSpan = document.createElement('span');
+            if (siteSettings.commsOpen) {
+                msgSpan.textContent = 'Commissions are open';
+            } else if (siteSettings.reopenDate) {
+                const formatted = new Date(siteSettings.reopenDate)
+                    .toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                msgSpan.textContent = `Commissions are closed until ${formatted}`;
+            } else {
+                msgSpan.textContent = 'Commissions are currently closed';
             }
 
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            statusDiv.appendChild(symbolSpan);
+            statusDiv.appendChild(msgSpan);
+            statusContainer.appendChild(statusDiv);
+        }
 
-            data.statuses.forEach(status => {
-                const startDate = new Date(status.startDate);
-                startDate.setHours(0, 0, 0, 0);
-                const isOpen = today >= startDate;
+        // ---- Service cards ----
+        function serviceIsPlus(service) {
+            // Custom / Reference sheet are "from €X" services
+            return ['Custom', 'Reference sheet'].includes(service.name);
+        }
 
-                const statusDiv = document.createElement('div');
-                statusDiv.className = `status ${isOpen ? 'open' : 'closed'}`;
+        // Circular ‹ › arrow for the service-card example carousels
+        function carouselArrow(dir, label) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `carousel-arrow ${dir}`;
+            btn.setAttribute('aria-label', label);
+            // static chevron, no user data — safe to inline
+            btn.innerHTML = `<svg viewBox="0 0 8 12" aria-hidden="true"><path d="M1.5 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+            return btn;
+        }
 
-                const symbolSpan = document.createElement('span');
-                symbolSpan.className = 'status-symbol';
-                symbolSpan.textContent = isOpen ? '✓' : '✗';
+        function renderServices() {
+            const grid = document.getElementById('services-grid');
+            if (grid) grid.innerHTML = '';
 
-                const nameSpan = document.createElement('span');
-                nameSpan.textContent = status.name;
+            const relayout = []; // per-card carousel layout fns (see below)
 
-                statusDiv.appendChild(symbolSpan);
-                statusDiv.appendChild(nameSpan);
-                statusContainer.appendChild(statusDiv);
+            siteServices.forEach(service => {
+
+                const card = document.createElement('div');
+                card.className = 'service-card';
+
+                // Examples come straight from the portfolio (category = service
+                // name); fall back to the service's own image if it has none.
+                const examples = sortedPortfolio()
+                    .filter(i => i.category.toLowerCase() === service.name.toLowerCase())
+                    .map(i => ({ src: i.src, focus: i.focus }));
+                if (!examples.length && service.image) examples.push({ src: service.image });
+
+                let layoutCarousel = null; // set below when a carousel is built
+
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'service-card-image';
+                if (examples.length) {
+                    imgWrap.dataset.image = examples[0].src;
+                    imgWrap.dataset.title = service.name;
+
+                    // Blurred cover copy of the current art, behind the slides
+                    const bg = document.createElement('img');
+                    bg.src = examples[0].src;
+                    bg.alt = '';
+                    bg.setAttribute('aria-hidden', 'true');
+                    bg.loading = 'lazy';
+                    bg.className = 'service-card-img-bg';
+
+                    const track = document.createElement('div');
+                    track.className = 'carousel-track';
+                    examples.forEach(({ src, focus }, i) => {
+                        const slide = document.createElement('div');
+                        slide.className = 'carousel-slide' + (i === 0 ? ' current' : '');
+                        const img = document.createElement('img');
+                        img.src = src;
+                        img.alt = `${service.name} example ${i + 1} of ${examples.length}`;
+                        img.loading = 'lazy';
+                        img.decoding = 'async';
+                        if (focus) img.style.objectPosition = focus;
+                        // clicking a blurred peek slide navigates to it — only
+                        // the centered image opens the lightbox
+                        if (examples.length > 1) {
+                            img.addEventListener('click', (e) => {
+                                if (!slide.classList.contains('current')) {
+                                    e.stopPropagation();
+                                    show(i);
+                                }
+                            });
+                        }
+                        slide.appendChild(img);
+                        track.appendChild(slide);
+                    });
+
+                    let index = 0;
+                    // slides are 78% of the viewport wide with an 8px gap;
+                    // center the current one so its neighbours peek at the edges
+                    const layout = () => {
+                        const vp = imgWrap.clientWidth;
+                        if (!vp) return;
+                        const slideSpan = vp * 0.78 + 8;
+                        const offset = slideSpan * index - (vp - vp * 0.78) / 2;
+                        track.style.transform = `translateX(${-offset}px)`;
+                    };
+                    const show = (i) => {
+                        index = (i + examples.length) % examples.length;
+                        track.querySelectorAll('.carousel-slide').forEach((s, j) =>
+                            s.classList.toggle('current', j === index));
+                        imgWrap.dataset.image = examples[index].src;
+                        bg.src = examples[index].src;
+                        layout();
+                    };
+
+                    if (examples.length > 1) {
+                        const prev = carouselArrow('prev', 'Previous example');
+                        const next = carouselArrow('next', 'Next example');
+                        prev.addEventListener('click', (e) => {
+                            e.stopPropagation(); // arrows must not open the lightbox
+                            show(index - 1);
+                            gtag('event', 'service_example_nav', { service: service.name, direction: 'prev' });
+                        });
+                        next.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            show(index + 1);
+                            gtag('event', 'service_example_nav', { service: service.name, direction: 'next' });
+                        });
+                        imgWrap.append(prev, next);
+
+                        // horizontal swipe; suppress the lightbox click that follows it
+                        let downX = 0, downY = 0, swiped = false;
+                        imgWrap.addEventListener('pointerdown', (e) => {
+                            downX = e.clientX;
+                            downY = e.clientY;
+                            swiped = false;
+                        });
+                        imgWrap.addEventListener('pointerup', (e) => {
+                            const dx = e.clientX - downX;
+                            const dy = e.clientY - downY;
+                            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                                show(index + (dx < 0 ? 1 : -1));
+                                swiped = true;
+                            }
+                        });
+                        imgWrap.addEventListener('click', (e) => {
+                            if (swiped) {
+                                e.stopPropagation();
+                                swiped = false;
+                            }
+                        }, true); // capture: beat the document-level lightbox handler
+                    }
+
+                    imgWrap.appendChild(bg);
+                    imgWrap.appendChild(track);
+                    layoutCarousel = layout;
+                }
+
+                const body = document.createElement('div');
+                body.className = 'service-card-body';
+
+                const nameEl = document.createElement('span');
+                nameEl.className = 'service-card-name';
+                nameEl.textContent = service.name;
+
+                const priceEl = document.createElement('span');
+                priceEl.className = 'service-card-price';
+                priceEl.textContent = `€${service.basePrice}${serviceIsPlus(service) ? '+' : ''}`;
+
+                const headerRow = document.createElement('div');
+                headerRow.className = 'service-card-header';
+                headerRow.appendChild(nameEl);
+                headerRow.appendChild(priceEl);
+
+                body.appendChild(headerRow);
+
+                if (service.extraCharPrice > 0) {
+                    const extra = document.createElement('p');
+                    extra.className = 'service-card-extra';
+                    extra.textContent = `+€${service.extraCharPrice} per extra character`;
+                    body.appendChild(extra);
+                }
+                if (service.description) {
+                    const desc = document.createElement('p');
+                    desc.className = 'service-card-desc';
+                    desc.textContent = service.description;
+                    body.appendChild(desc);
+                }
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'service-request-btn';
+                btn.textContent = 'Request this →';
+                btn.addEventListener('click', () => openRequestForm(service.name));
+                body.appendChild(btn);
+
+                card.appendChild(imgWrap);
+                card.appendChild(body);
+                if (grid) grid.appendChild(card);
+                if (layoutCarousel) {
+                    layoutCarousel(); // centre the current slide now that widths are real
+                    relayout.push(layoutCarousel);
+                }
+            });
+
+            window.addEventListener('resize', () => relayout.forEach(fn => fn()));
+        }
+
+        // ---- Portfolio (data in portfolio.js — no database) ----
+        let activePortfolioFilter = 'All';
+
+        function sortedPortfolio() {
+            // sort is stable in modern engines → equal dates keep file order
+            return [...portfolioItems].sort((a, b) => b.date.localeCompare(a.date));
+        }
+
+        function renderPortfolioFilters() {
+            const bar = document.getElementById('portfolio-filter');
+            if (!bar) return;
+            bar.innerHTML = '';
+
+            const present = [...new Set(portfolioItems.map(i => i.category))];
+            const categories = [
+                ...portfolioCategories.filter(c => present.includes(c)),
+                ...present.filter(c => !portfolioCategories.includes(c)) // new types still get a chip
+            ];
+
+            ['All', ...categories].forEach(category => {
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = 'filter-chip';
+                chip.dataset.filter = category;
+                chip.textContent = category;
+                chip.setAttribute('aria-pressed', category === activePortfolioFilter ? 'true' : 'false');
+                if (category === activePortfolioFilter) chip.classList.add('active');
+                chip.addEventListener('click', () => {
+                    if (activePortfolioFilter === category) return;
+                    activePortfolioFilter = category;
+                    bar.querySelectorAll('.filter-chip').forEach(c => {
+                        const on = c.dataset.filter === activePortfolioFilter;
+                        c.classList.toggle('active', on);
+                        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+                    });
+                    renderPortfolio();
+                    gtag('event', 'portfolio_filter', { category });
+                });
+                bar.appendChild(chip);
             });
         }
 
-        // Render the queue board from commission data
-        function renderQueueBoard(data) {
-            const queueBoard = document.getElementById('queue-board');
-            if (!queueBoard || !data || !data.commissions) {
-                console.error('Invalid commission data');
+        function renderPortfolio() {
+            const grid = document.getElementById('portfolio-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const visible = sortedPortfolio().filter(i =>
+                activePortfolioFilter === 'All' || i.category === activePortfolioFilter
+            );
+
+            if (!visible.length) {
+                const empty = document.createElement('p');
+                empty.className = 'portfolio-empty';
+                empty.textContent = 'Nothing here yet!';
+                grid.appendChild(empty);
                 return;
             }
 
-            const allCommissions = data.commissions;
-            const columns = [
-                { key: 'waiting-list', title: 'Waiting List' },
-                { key: 'in-progress', title: 'In Progress' },
-                { key: 'finished', title: 'Finished' }
-            ];
+            visible.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'example-card';
+                card.dataset.image = item.src;
+                card.dataset.title = item.title || item.category;
 
-            // Clear existing content
-            queueBoard.innerHTML = '';
+                const frame = document.createElement('div');
+                frame.className = 'example-image';
 
-            // Create columns
-            columns.forEach(column => {
-                // Filter commissions by status
-                let commissions = allCommissions.filter(c => c.status === column.key);
-                if (column.key === 'waiting-list') {
-                    commissions.sort((a, b) => (a.paid === b.paid ? 0 : a.paid ? -1 : 1));
-                }
-                const columnDiv = document.createElement('div');
-                columnDiv.className = 'queue-column';
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.alt = `${item.category} example ${index + 1}`;
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                if (item.focus) img.style.objectPosition = item.focus;
 
-                // Column header
-                const headerDiv = document.createElement('div');
-                headerDiv.className = 'column-header';
-                const titleH3 = document.createElement('h3');
-                titleH3.textContent = column.title;
-                const countSpan = document.createElement('span');
-                countSpan.className = 'column-count';
-                countSpan.textContent = commissions.length;
-
-                headerDiv.appendChild(titleH3);
-                headerDiv.appendChild(countSpan);
-
-                // Column cards container
-                const cardsDiv = document.createElement('div');
-                cardsDiv.className = 'column-cards';
-
-                // Add commission cards
-                commissions.forEach(commission => {
-                    const cardDiv = document.createElement('div');
-                    cardDiv.className = 'commission-card';
-
-                    const cardHeader = document.createElement('div');
-                    cardHeader.className = 'card-header';
-
-                    const cardNumber = document.createElement('span');
-                    cardNumber.className = 'card-number';
-                    cardNumber.textContent = `#${commission.id}`;
-
-                    const paidDot = document.createElement('span');
-                    paidDot.className = `paid-dot ${commission.paid ? 'paid' : 'unpaid'}`;
-                    paidDot.title = commission.paid ? 'Paid' : 'Unpaid';
-
-                    cardHeader.appendChild(cardNumber);
-                    cardHeader.appendChild(paidDot);
-
-                    const cardContent = document.createElement('div');
-                    cardContent.className = 'card-content';
-
-                    const cardTitle = document.createElement('p');
-                    cardTitle.className = 'card-title';
-                    cardTitle.textContent = commission.title;
-
-                    const cardDescription = document.createElement('p');
-                    cardDescription.className = 'card-detail';
-                    cardDescription.textContent = commission.description;
-
-                    cardContent.appendChild(cardTitle);
-                    cardContent.appendChild(cardDescription);
-
-                    cardDiv.appendChild(cardHeader);
-                    cardDiv.appendChild(cardContent);
-                    cardsDiv.appendChild(cardDiv);
-                });
-
-                columnDiv.appendChild(headerDiv);
-                columnDiv.appendChild(cardsDiv);
-                queueBoard.appendChild(columnDiv);
+                frame.appendChild(img);
+                card.appendChild(frame);
+                grid.appendChild(card);
             });
+        }
+
+        // ---- Request form ----
+        // The form itself is the shared RequestForm component
+        // (js/request-form.js — the admin board's add/edit dialog mounts the
+        // same one). This page only picks the service ("Request this →" on
+        // the service cards) and decides what a submit means.
+        let requestFormHandle = null;
+
+        function findService(name) {
+            return siteServices.find(s => s.name === name) || null;
+        }
+
+        function openRequestForm(serviceName) {
+            if (!siteSettings.commsOpen) return; // closed — buttons are disabled; belt-and-braces
+            if (serviceName) {
+                requestFormHandle.setService(serviceName); // unknown names keep the current one
+            }
+            requestModal.open();
+            requestFormHandle.focus(); // name field, once the modal is visible
+        }
+
+        function showRequestSuccess() {
+            document.getElementById('request-form').hidden = true;
+            document.getElementById('request-success').hidden = false;
+            document.getElementById('request-modal-footer').hidden = true;
+            document.getElementById('request-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function setupRequestForm() {
+            requestFormHandle = RequestForm.mount(document.getElementById('request-form-mount'), {
+                mode: 'public',
+                services: siteServices,
+                formId: 'request-form', // the footer submit button targets this id
+                submitButton: document.getElementById('rf-submit'),
+                onSubmit: async (data) => {
+                    if (data.honeypot) { // bot — silently "succeed"
+                        showRequestSuccess();
+                        return;
+                    }
+                    await SupabaseClient.submitRequest(data);
+                    gtag('event', 'request_submit', { service: data.service, estimate: data.estimate });
+                    showRequestSuccess();
+                },
+                errorMessage: 'Sending failed — the form isn\'t connected yet, or the connection dropped. Try again in a minute, or reach me on Instagram.'
+            });
+        }
+
+        // ---- Request form open/close gating ----
+        // Requesting happens through the service cards ("Request this →") —
+        // while closed the buttons are disabled and the modal stays shut.
+        function updateCommissionGating() {
+            const closedBox = document.getElementById('request-closed');
+            const requestForm = document.getElementById('request-form');
+            const submitButton = document.getElementById('rf-submit');
+
+            // Slot usage lives on the admin board now — the public site only
+            // knows open/closed + reopen date from commissions.js.
+            const isOpen = siteSettings.commsOpen;
+
+            document.querySelectorAll('.service-request-btn').forEach(btn => {
+                btn.disabled = !isOpen;
+                btn.title = isOpen ? '' : 'Commissions are currently closed';
+            });
+
+            // Safety net: if the modal somehow opens while closed it shows
+            // the notice instead of the form
+            if (closedBox) {
+                closedBox.hidden = isOpen;
+            }
+            if (requestForm) {
+                requestForm.hidden = !isOpen;
+            }
+            if (submitButton) {
+                submitButton.hidden = !isOpen;
+            }
+            if (!isOpen && closedBox) {
+                const msg = closedBox.querySelector('#request-closed-message');
+                if (msg) {
+                    msg.textContent = siteSettings.reopenDate
+                        ? `Commissions are currently closed — they open on ${siteSettings.reopenDate}.`
+                        : 'Commissions are currently closed.';
+                }
+            }
+        }
+
+        // ---- Tabs / routing ----
+        // Visible tabs: Commissions + Portfolio. Canonical hashes are
+        // #commissions / #portfolio; the section ids (services / examples)
+        // and old #services / #examples deep links keep working via the map.
+        const TAB_ROUTES = {
+            commissions: 'services',
+            portfolio: 'examples',
+            services: 'services',   // legacy deep links
+            examples: 'examples'    // legacy deep links
+        };
+        const CANONICAL_HASH = { services: 'commissions', examples: 'portfolio' };
+        const DEFAULT_TAB = 'commissions';
+
+        function currentRoute() {
+            const hash = window.location.hash.slice(1);
+            return TAB_ROUTES[hash] || TAB_ROUTES[DEFAULT_TAB];
         }
 
         function updateActiveNav() {
-            // Get current hash, no default
-            const hash = window.location.hash.slice(1);
-            const banner = document.querySelector('.banner');
+            const route = currentRoute();
 
-            // Track navigation in Google Analytics
-            console.log('Tracking navigation:', hash || 'Welcome');
             gtag('event', 'page_view', {
-                page_path: window.location.hash,
-                page_title: hash || 'Welcome',
+                page_path: '#' + route,
+                page_title: route,
                 page_location: window.location.href
             });
 
-            // Scroll to top when changing nav
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            // If there's a hash, collapse the banner
-            if (hash) {
-                banner.classList.add('collapsed');
-            } else {
-                banner.classList.remove('collapsed');
-            }
-
-            // Remove active class from all nav elements
-            document.querySelectorAll('nav').forEach(nav => {
-                nav.classList.remove('active');
+            document.querySelectorAll('.tab-bar nav').forEach(nav => {
+                const active = TAB_ROUTES[nav.dataset.target] === route;
+                nav.classList.toggle('active', active);
+                nav.setAttribute('aria-selected', active ? 'true' : 'false');
             });
 
-            // Add active class to matching nav
-            if (hash) {
-                const activeNav = document.querySelector(`nav[data-target="${hash}"]`);
-                if (activeNav) {
-                    activeNav.classList.add('active');
-                }
-            }
-
-            // Hide all sections
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active-section');
-            });
-
-            // Show only the matching section if hash exists
-            if (hash) {
-                const activeSection = document.querySelector(`section#${hash}`);
-                if (activeSection) {
-                    activeSection.classList.add('active-section');
-                }
-            }
-
-            // Show footer in all sections
-            const footer = document.querySelector('footer');
-            footer.style.display = 'block';
-        }
-
-        // Queue section expand/collapse functionality
-        function setupQueueSection() {
-            const queueSection = document.querySelector('.queue-section');
-            const sectionHeader = document.querySelector('.queue-section-header');
-            const sectionIcon = document.querySelector('.queue-expand-icon');
-
-            sectionHeader.addEventListener('click', () => {
-                queueSection.classList.toggle('collapsed');
-                sectionIcon.style.transform = queueSection.classList.contains('collapsed')
-                    ? 'rotate(-90deg)'
-                    : 'rotate(0deg)';
+            document.querySelectorAll('.content > section').forEach(section => {
+                section.classList.toggle('active-section', section.id === route);
             });
         }
 
-        // Handle nav clicks to allow unselecting and navigation
-        function setupNavToggle() {
-            document.querySelectorAll('nav').forEach(nav => {
-                nav.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetHash = nav.getAttribute('data-target');
-                    const currentHash = window.location.hash.slice(1);
-
-                    // If clicking the same nav, clear the hash
-                    if (currentHash === targetHash) {
-                        history.pushState('', document.title, window.location.pathname);
-                        updateActiveNav();
+        function setupTabs() {
+            document.querySelectorAll('.tab-bar nav').forEach(nav => {
+                nav.addEventListener('click', () => {
+                    const canonical = CANONICAL_HASH[nav.dataset.target];
+                    if (window.location.hash.slice(1) !== canonical) {
+                        window.location.hash = canonical; // hashchange -> updateActiveNav
                     } else {
-                        // Navigate to the target section
-                        window.location.hash = targetHash;
+                        updateActiveNav();
+                    }
+                    // Instant jump: smooth scrolling visibly lags with the sticky bar.
+                    // Desktop only — on mobile the reader stays at their scroll position
+                    if (window.matchMedia('(min-width: 737px)').matches) {
+                        window.scrollTo({ top: 0, behavior: 'auto' });
                     }
                 });
             });
         }
 
-        // Control commission form button availability
-        function updateCommissionFormButton() {
-            const commissionButton = document.querySelector('.commission-form-button');
-            const pingListButton = document.querySelector('.ping-list-button');
-            const slotCounter = document.getElementById('queue-slot-counter');
-            if (!commissionButton || !commissionData.statuses) {
-                return;
-            }
+        // ---- Modals (terms / request / faq share one helper) ----
+        function setupModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return { open: () => { }, close: () => { } };
 
-            // Count active (non-finished) commissions
-            const activeCount = commissionData.commissions.filter(c => c.status === 'waiting-list').length;
-            const maxSlots = commissionData.maxSlots;
-            const isFull = activeCount >= maxSlots;
+            const activeModals = () =>
+                document.querySelectorAll('.page-modal.active, .terms-modal.active, .image-modal.active');
 
-            const slotText = `${activeCount} / ${maxSlots} slots taken`;
+            const close = () => {
+                modal.classList.remove('active');
+                // Only unlock scrolling once no modal is left open
+                // (e.g. the terms modal links straight into the F.A.Q)
+                if (!activeModals().length) document.body.style.overflow = '';
+            };
 
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            const open = () => {
+                // One modal at a time — opening the F.A.Q from inside terms closes terms
+                activeModals().forEach(m => { if (m !== modal) m.classList.remove('active'); });
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                const body = modal.querySelector('.modal-body');
+                if (body) body.scrollTop = 0;
+                gtag('event', 'modal_open', { modal_id: id });
+            };
 
-            // Find the COMMS status
-            const commsStatus = commissionData.statuses.find(status => status.name === 'COMMS');
-            if (!commsStatus) {
-                return;
-            }
+            modal.querySelector('.modal-close')?.addEventListener('click', close);
+            modal.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', close));
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) close();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) close();
+            });
 
-            const startDate = new Date(commsStatus.startDate);
-            startDate.setHours(0, 0, 0, 0);
-            const isOpen = today >= startDate;
-
-            if (isOpen && isFull) {
-                commissionButton.innerHTML = `Queue is full<br><span style="font-size:0.8em;opacity:0.8">${slotText}</span>`;
-                commissionButton.style.opacity = '0.5';
-                commissionButton.style.cursor = 'not-allowed';
-                commissionButton.style.pointerEvents = 'none';
-                commissionButton.onclick = (e) => e.preventDefault();
-                if (pingListButton) pingListButton.classList.add('visible');
-            } else if (isOpen) {
-                commissionButton.innerHTML = `Request a Commission<br><span style="font-size:0.8em;opacity:0.8">${slotText}</span>`;
-                commissionButton.style.opacity = '1';
-                commissionButton.style.cursor = 'pointer';
-                commissionButton.style.pointerEvents = 'auto';
-                commissionButton.onclick = null;
-                if (pingListButton) pingListButton.classList.remove('visible');
-            } else {
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = startDate.toLocaleDateString('en-US', options);
-                commissionButton.innerHTML = `Commissions open on <span style="white-space: nowrap;">${formattedDate}</span>`;
-                commissionButton.style.opacity = '0.5';
-                commissionButton.style.cursor = 'not-allowed';
-                commissionButton.style.pointerEvents = 'none';
-                commissionButton.onclick = (e) => e.preventDefault();
-                if (pingListButton) pingListButton.classList.add('visible');
-            }
+            return { open, close };
         }
 
-        // Update on page load
-        updateActiveNav();
-        setupQueueSection();
-        setupNavToggle();
-        updateCommissionFormButton();
+        const requestModal = setupModal('request-modal');
+        const faqModal = setupModal('faq-modal');
+        const termsModal = setupModal('terms-modal');
 
-        // Fetch and display ping list count
-        function updatePingListCount() {
-            const pingListButton = document.querySelector('.ping-list-button');
-            if (!pingListButton) return;
+        // Delegated so #request / #faq / #terms links work from anywhere,
+        // including content rendered later
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href="#request"], a[href="#faq"], a[href="#terms"]');
+            if (!link) return;
+            e.preventDefault();
+            const name = link.getAttribute('href').slice(1);
+            if (name === 'request' && !siteSettings.commsOpen) return; // closed — no request modal
+            ({ request: requestModal, faq: faqModal, terms: termsModal })[name].open();
+        });
 
-            const csvUrl = 'https://docs.google.com/spreadsheets/d/18iP-LAX37ew6r6WjqLBY9HeW47DoEH6XAy5cqZGxy54/export?format=csv';
+        // Old deep links (#request / #faq / #terms) now open their modal on load
+        (function openLegacyHash() {
+            const hash = window.location.hash.slice(1);
+            if (hash === 'request' && !siteSettings.commsOpen) return; // closed — no request modal
+            const modals = { request: requestModal, faq: faqModal, terms: termsModal };
+            if (modals[hash]) modals[hash].open();
+        })();
 
-            fetch(csvUrl)
-                .then(res => res.text())
-                .then(csv => {
-                    const rows = csv.trim().split('\n');
-                    const count = Math.max(0, rows.length - 1);
-                    const max = 20;
-                    pingListButton.textContent = `Join the Ping List (${count}/${max})`;
-                })
-                .catch(() => {
-                    pingListButton.textContent = 'Join the Ping List';
-                });
-        }
-        updatePingListCount();
-
-        // Render status indicators and commissions from commission data
-        renderStatusIndicators(commissionData);
-        renderQueueBoard(commissionData);
-
-        // Update when hash changes
-        window.addEventListener('hashchange', updateActiveNav);
-
-        // Image Modal functionality
+        // ---- Image modal ----
         function setupImageModal() {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
             const modalTitle = document.getElementById('modal-title');
-            const closeButton = document.querySelector('.modal-close');
-            const exampleCards = document.querySelectorAll('.example-card');
+            // Scoped to the lightbox: other modals (request/faq) also use .modal-close
+            const closeButton = document.querySelector('#image-modal .modal-close');
 
-            // Open modal when clicking on example card
-            exampleCards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    const imageSrc = card.dataset.image;
-                    const title = card.dataset.title;
-                    modalImage.src = imageSrc;
-                    modalTitle.textContent = title;
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    gtag('event', 'image_view', {
-                        image_id: imageSrc,
-                        image_name: title
-                    });
-
+            const openViewer = (imageSrc, title) => {
+                modalImage.src = imageSrc;
+                modalImage.alt = title;
+                modalTitle.textContent = title;
+                modalTitle.hidden = !title; // empty title = header holds just the ×
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                gtag('event', 'image_view', {
+                    image_id: imageSrc,
+                    image_name: title
                 });
+            };
+
+            // Delegated: covers the portfolio cards and the service card
+            // images, which are rendered after this setup runs
+            document.addEventListener('click', (e) => {
+                const card = e.target.closest('.example-card, .service-card-image');
+                if (!card || !card.dataset.image) return;
+                openViewer(card.dataset.image, card.dataset.title || '');
             });
 
-            // Close modal when clicking close button
-            closeButton.addEventListener('click', () => {
+            const closeViewer = () => {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
-            });
+            };
 
-            // Close modal when clicking outside the content
+            closeButton.addEventListener('click', closeViewer);
+            modal.querySelectorAll('[data-close-modal]').forEach(btn => btn.addEventListener('click', closeViewer));
+
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
+                if (e.target === modal) closeViewer();
             });
 
-            // Close modal with Escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && modal.classList.contains('active')) {
                     modal.classList.remove('active');
@@ -880,7 +853,22 @@
             });
         }
 
+        // ---- Boot ----
+        function renderAll() {
+            renderStatusIndicators();
+            renderServices();
+            updateCommissionGating();
+        }
+
+        updateActiveNav();
+        setupTabs();
+        setupRequestForm();
         setupImageModal();
+        renderAll();
+        renderPortfolioFilters();
+        renderPortfolio();
+
+        window.addEventListener('hashchange', updateActiveNav);
     </script>
 
     <!-- Bottom right character - Desktop only -->

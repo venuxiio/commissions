@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Venuxiio — Admin</title>
+    <!-- Page styles stay inline below; css/request-form.css is the shared
+         commission form component (same file the public site loads) -->
+    <link rel="stylesheet" href="css/request-form.css">
+    <style>
+        /* Self-contained page styles: no shared *page* stylesheet on purpose
+           (private tool page) — only the form component ships its own CSS */
+        :root {
+            --purple: #A78BFA;
+            --purple-dark: #8B5CF6;
+            --purple-pale: #E9D5FF;
+            --ink: #2D1B4E;
+            --gray: #666;
+            --bg: #FAFAFF;
+            --green: #34D399;
+            --green-dark: #065F46;
+            --pink: #FED7E2;
+            --pink-dark: #742A2A;
+            --amber: #FCD34D;
+            --amber-dark: #92400E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--ink);
+            min-height: 100vh;
+            color: var(--ink);
+            padding: 1rem;
+        }
+
+        .admin-shell {
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        /* ---------- token gate ---------- */
+        .gate {
+            max-width: 26rem;
+            margin: 10vh auto 0;
+            background: #fff;
+            border-radius: 1rem;
+            border: 2px solid var(--purple);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .gate-lock {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: var(--purple-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.4rem;
+        }
+
+        .gate h1 {
+            font-size: 1.25rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .gate p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 1.25rem;
+            line-height: 1.4;
+        }
+
+        .gate input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 2px solid var(--purple-pale);
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .gate input:focus {
+            outline: none;
+            border-color: var(--purple-dark);
+        }
+
+        .gate-error {
+            color: var(--pink-dark);
+            background: var(--pink);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--purple);
+            color: #fff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.7rem 1.75rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.15s ease;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--purple-dark);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        /* ---------- board ---------- */
+        .board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .board-title {
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .board-title small {
+            display: block;
+            font-weight: 400;
+            font-size: 0.75rem;
+            color: var(--purple-pale);
+            margin-top: 0.15rem;
+        }
+
+        .board-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-soft {
+            background: var(--purple-pale);
+            color: var(--ink);
+            border: none;
+            border-radius: 2rem;
+            padding: 0.5rem 1.1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .btn-soft:hover {
+            background: var(--purple);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: var(--pink);
+            color: var(--pink-dark);
+            border: none;
+            border-radius: 2rem;
+            padding: 0.5rem 1.1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger:hover {
+            background: var(--pink-dark);
+            color: #fff;
+        }
+
+        .save-indicator {
+            color: var(--purple-pale);
+            font-size: 0.8rem;
+            min-width: 4rem;
+            text-align: right;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            align-items: start;
+        }
+
+        .column {
+            background: var(--bg);
+            border: 2px solid var(--purple-pale);
+            border-radius: 1rem;
+            min-height: 16rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column.drag-over {
+            border-color: var(--purple-dark);
+            border-style: dashed;
+            background: var(--purple-pale);
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.65rem 0.85rem;
+            border-bottom: 2px solid var(--purple-pale);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .column-count {
+            background: var(--purple);
+            color: #fff;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.1rem 0.6rem;
+        }
+
+        .column-slots {
+            font-size: 0.72rem;
+            color: var(--gray);
+            padding: 0.35rem 0.85rem 0;
+        }
+
+        .column-cards {
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .card {
+            background: #fff;
+            border: 1.5px solid var(--purple-pale);
+            border-radius: 0.75rem;
+            padding: 0.6rem 0.7rem;
+            font-size: 0.8rem;
+            cursor: grab;
+            position: relative;
+        }
+
+        .card:active {
+            cursor: grabbing;
+        }
+
+        .card.dragging {
+            opacity: 0.45;
+        }
+
+        .card.is-request {
+            background: #fff8e1;
+            border-color: var(--amber);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-id {
+            font-weight: 700;
+            color: var(--purple-dark);
+        }
+
+        .card-paid {
+            width: 0.85rem;
+            height: 0.85rem;
+            border-radius: 50%;
+            border: 1.5px solid;
+            flex-shrink: 0;
+        }
+
+        .card-paid.paid {
+            background: var(--green);
+            border-color: var(--green-dark);
+        }
+
+        .card-paid.unpaid {
+            background: var(--pink);
+            border-color: var(--pink-dark);
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+
+        .card-client {
+            color: var(--gray);
+            margin-bottom: 0.15rem;
+            word-break: break-word;
+        }
+
+        .card-meta {
+            color: var(--gray);
+            font-size: 0.72rem;
+        }
+
+        .card-contact,
+        .card-refs,
+        .card-details {
+            color: var(--gray);
+            font-size: 0.72rem;
+            margin-top: 0.15rem;
+            word-break: break-word;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .card-btn {
+            border: 1.5px solid var(--purple-pale);
+            background: var(--bg);
+            border-radius: 1rem;
+            font-size: 0.72rem;
+            padding: 0.15rem 0.6rem;
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .card-btn:hover {
+            background: var(--purple-pale);
+        }
+
+        .card-btn.accept {
+            background: var(--purple);
+            color: #fff;
+            border-color: var(--purple-dark);
+        }
+
+        .card-btn.accept:hover {
+            background: var(--purple-dark);
+        }
+
+        .empty-hint {
+            color: #b9a7e8;
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 1rem 0.5rem;
+            border: 2px dashed var(--purple-pale);
+            border-radius: 0.75rem;
+            margin: 0.25rem;
+        }
+
+        /* ---------- misc ---------- */
+        .board-footer {
+            color: var(--purple-pale);
+            font-size: 0.78rem;
+            text-align: center;
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+
+        .loading {
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* ---------- add/edit dialog ---------- */
+        .commission-dialog {
+            /* request-form.css styles the form with the public --color-*
+               palette; alias it to this page's tokens so the shared form
+               renders here without duplicating any rules */
+            --color-primary: var(--purple);
+            --color-primary-dark: var(--purple-dark);
+            --color-primary-light: var(--purple-pale);
+            --color-primary-pale: var(--purple-pale);
+            --color-bg-light: #fff;
+            --color-white: #fff;
+            --color-text-dark: var(--ink);
+            --color-text-gray: var(--gray);
+            --color-text-gray-muted: var(--gray);
+            --color-status-closed: var(--pink);
+            --color-status-closed-text: var(--pink-dark);
+            --color-status-open: var(--purple-pale);
+            --color-status-open-text: var(--green-dark);
+
+            border: 2px solid var(--purple);
+            border-radius: 1rem;
+            padding: 0;
+            width: min(34rem, 92vw);
+            max-height: 90vh;
+            color: var(--ink);
+
+            /* the page's `* { margin: 0 }` reset kills the UA's dialog
+               centering (margin: auto) — without this the dialog pins
+               top-left and stretches to its max-height */
+            margin: auto;
+        }
+
+        /* flex layout only while open — `display: flex` on the base rule
+           would override the UA's `dialog { display: none }` and leave an
+           empty ghost shell on screen after closing */
+        .commission-dialog[open] {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .commission-dialog::backdrop {
+            background: rgba(45, 27, 78, 0.55);
+        }
+
+        .dialog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--purple-pale);
+        }
+
+        .dialog-header h2 {
+            font-size: 1.05rem;
+        }
+
+        .dialog-close {
+            border: none;
+            background: none;
+            font-size: 1rem;
+            color: var(--gray);
+            padding: 0.25rem 0.5rem;
+        }
+
+        .dialog-close:hover {
+            color: var(--ink);
+        }
+
+        .dialog-body {
+            flex: 1;
+            min-height: 0; /* lets the body shrink so the dialog never overflows */
+            padding: 0 1.25rem 1rem;
+            overflow-y: auto;
+        }
+
+        .dialog-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            padding: 0.9rem 1.25rem;
+            border-top: 1px solid var(--purple-pale);
+        }
+
+        /* reference image previews on request cards */
+        .card-attachments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin: 0.3rem 0 0 0.75rem;
+        }
+
+        .card-attachment {
+            position: relative;
+        }
+
+        .card-attachment img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 0.4rem;
+            border: 1.5px solid var(--purple-pale);
+            background: var(--purple-pale);
+            cursor: zoom-in;
+            display: block;
+        }
+
+        .card-download {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(45, 27, 78, 0.75);
+            color: #fff;
+            font-size: 0.7rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .card-download:hover {
+            background: var(--purple-dark);
+        }
+
+        @media (max-width: 900px) {
+            .board {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .board {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Token gate -->
+    <div id="gate" class="gate">
+        <div class="gate-lock">🔒</div>
+        <h1>Venuxiio — Admin</h1>
+        <p>Paste your Supabase service_role key (Project Settings → API).<br>
+            It's stored in this browser only — never in the site's files.</p>
+        <div class="gate-error" id="gate-error" hidden></div>
+        <input type="password" id="gate-token" placeholder="service_role key (Project Settings → API)" autocomplete="off">
+        <button class="btn-primary" id="gate-unlock">Unlock board →</button>
+    </div>
+
+    <!-- Board -->
+    <div id="board-view" class="admin-shell" hidden>
+        <div class="board-header">
+            <div class="board-title">
+                🛠 Commissions board
+                <small id="slots-summary"></small>
+            </div>
+            <div class="board-actions">
+                <span class="save-indicator" id="save-indicator"></span>
+                <button class="btn-soft" id="refresh-btn">↻ Refresh</button>
+                <button class="btn-soft" id="add-btn">+ Add commission</button>
+                <button class="btn-danger" id="forget-btn">🔓 Forget token</button>
+            </div>
+        </div>
+
+        <div class="board" id="board"></div>
+
+        <p class="board-footer">
+            Drag cards between columns (desktop) or use the ◀ ▶ buttons on each card (works everywhere).<br>
+            Every change saves to Supabase instantly.
+        </p>
+    </div>
+
+    <div class="loading" id="loading" hidden>Loading board…</div>
+
+    <!-- Add / edit commission — hosts the same RequestForm component as the
+         public request modal -->
+    <dialog id="commission-dialog" class="commission-dialog">
+        <div class="dialog-header">
+            <h2 id="commission-dialog-title">Add commission</h2>
+            <button type="button" class="dialog-close" id="commission-dialog-close" aria-label="Close">✕</button>
+        </div>
+        <div class="dialog-body" id="commission-dialog-body"></div>
+        <div class="dialog-footer">
+            <button type="button" class="btn-soft" id="commission-dialog-cancel">Cancel</button>
+            <button type="submit" class="btn-primary" id="commission-dialog-save">Save</button>
+        </div>
+    </dialog>
+
+    <script src="commissions.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/db-client.js"></script>
+    <script src="js/request-form.js"></script>
+    <script>
+        const TOKEN_KEY = 'venuxiio_admin_token';
+        const STATUSES = ['request', 'waiting-list', 'in-progress', 'finished'];
+        const STATUS_LABELS = { 'request': '📥 Requests', 'waiting-list': '⏳ Waiting List', 'in-progress': '🎨 In Progress', 'finished': '✅ Finished' };
+        const MAX_SLOTS = siteData.settings.maxSlots; // commissions.js
+
+        let adminToken = localStorage.getItem(TOKEN_KEY) || null;
+        let commissions = [];
+        let dialogHandle = null; // open add/edit RequestForm inside the dialog
+
+        // ---------- helpers ----------
+        const $ = (id) => document.getElementById(id);
+
+        function setSaving(state) {
+            $('save-indicator').textContent = state === 'saving' ? 'saving…' : state === 'error' ? '⚠ error' : '✓ saved';
+        }
+
+        function esc(s) {
+            return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        // ---------- gate ----------
+        async function tryUnlock() {
+            const token = $('gate-token').value.trim();
+            const err = $('gate-error');
+            err.hidden = true;
+            if (!token) {
+                err.textContent = 'Paste a token first.';
+                err.hidden = false;
+                return;
+            }
+            $('gate-unlock').disabled = true;
+            $('gate-unlock').textContent = 'Checking…';
+            const ok = await SupabaseClient.validateKey(token);
+            $('gate-unlock').disabled = false;
+            $('gate-unlock').textContent = 'Unlock board →';
+            if (!ok) {
+                err.textContent = 'That key didn\'t work. Use the service_role key (Supabase dashboard → Project Settings → API).';
+                err.hidden = false;
+                return;
+            }
+            adminToken = token;
+            localStorage.setItem(TOKEN_KEY, token);
+            enterBoard();
+        }
+
+        function enterBoard() {
+            $('gate').hidden = true;
+            $('board-view').hidden = false;
+            loadData();
+        }
+
+        // ---------- data ----------
+        async function loadData() {
+            $('loading').hidden = false;
+            try {
+                commissions = await SupabaseClient.adminGetCommissions(adminToken);
+                renderBoard();
+            } catch (err) {
+                console.error(err);
+                alert('Could not load the board: ' + err.message);
+            } finally {
+                $('loading').hidden = true;
+            }
+        }
+
+        // ---------- board rendering ----------
+        function renderBoard() {
+            const board = $('board');
+            board.innerHTML = '';
+
+            const waitingCount = commissions.filter(c => c.status === 'waiting-list').length;
+            $('slots-summary').textContent = `${waitingCount}/${MAX_SLOTS} waiting-list slots used`;
+
+            STATUSES.forEach(status => {
+                const cards = commissions.filter(c => c.status === status)
+                    .sort((a, b) => {
+                        if (status === 'waiting-list') return (a.paid === b.paid) ? 0 : a.paid ? -1 : 1;
+                        return (a.id > b.id ? 1 : -1);
+                    });
+
+                const col = document.createElement('div');
+                col.className = 'column';
+                col.dataset.status = status;
+
+                const header = document.createElement('div');
+                header.className = 'column-header';
+                header.innerHTML = `<span>${STATUS_LABELS[status]}</span><span class="column-count">${cards.length}</span>`;
+                col.appendChild(header);
+
+                if (status === 'waiting-list') {
+                    const slots = document.createElement('div');
+                    slots.className = 'column-slots';
+                    slots.textContent = `${waitingCount}/${MAX_SLOTS} slots`;
+                    col.appendChild(slots);
+                }
+
+                const cardWrap = document.createElement('div');
+                cardWrap.className = 'column-cards';
+
+                if (!cards.length) {
+                    const hint = document.createElement('div');
+                    hint.className = 'empty-hint';
+                    hint.textContent = status === 'request' ? 'no new requests' : 'drop cards here';
+                    cardWrap.appendChild(hint);
+                }
+
+                cards.forEach(c => cardWrap.appendChild(renderCard(c)));
+
+                // DnD targets
+                col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('drag-over'); });
+                col.addEventListener('dragleave', () => col.classList.remove('drag-over'));
+                col.addEventListener('drop', e => {
+                    e.preventDefault();
+                    col.classList.remove('drag-over');
+                    const recordId = e.dataTransfer.getData('text/plain');
+                    if (recordId) moveCommission(recordId, status);
+                });
+
+                col.appendChild(cardWrap);
+                board.appendChild(col);
+            });
+        }
+
+        // Request cards show everything the form captured (contact, refs,
+        // details) — useful data you need before accepting. Commissions in
+        // the pipeline show a compact card instead.
+        function renderCard(c) {
+            const isRequest = c.status === 'request';
+            const card = document.createElement('div');
+            card.className = 'card' + (isRequest ? ' is-request' : '');
+            card.draggable = true;
+            card.dataset.recordId = c.recordId;
+
+            card.addEventListener('dragstart', e => {
+                e.dataTransfer.setData('text/plain', c.recordId);
+                card.classList.add('dragging');
+            });
+            card.addEventListener('dragend', () => card.classList.remove('dragging'));
+
+            const price = c.estimate != null ? `≈ €${c.estimate}` : '';
+
+            const top = document.createElement('div');
+            top.className = 'card-top';
+            top.innerHTML = `
+                <span class="card-id">#${esc(c.id)}</span>
+                <span class="card-paid ${c.paid ? 'paid' : 'unpaid'}" title="click to toggle paid"></span>`;
+            top.querySelector('.card-paid').addEventListener('click', () => togglePaid(c));
+            card.appendChild(top);
+
+            const title = document.createElement('div');
+            title.className = 'card-title';
+            title.textContent = c.title || '(no service)';
+            card.appendChild(title);
+
+            const client = document.createElement('div');
+            client.className = 'card-client';
+            client.textContent = c.description || '(no client)';
+            card.appendChild(client);
+
+            if (c.contact) {
+                const el = document.createElement('div');
+                el.className = 'card-contact';
+                el.textContent = `📫 ${c.contact}`;
+                card.appendChild(el);
+            }
+            if (price) {
+                const el = document.createElement('div');
+                el.className = 'card-meta';
+                el.textContent = price;
+                card.appendChild(el);
+            }
+            if (c.options && Object.keys(c.options).length) {
+                const el = document.createElement('div');
+                el.className = 'card-meta';
+                // option labels live in commissions.js (siteData.addons) —
+                // e.g. simple background · armor (simple) · 2 chars
+                const parts = [];
+                Object.values(siteData.addons || {}).forEach(addon => {
+                    const chosen = c.options[addon.key];
+                    if (!chosen) return;
+                    parts.push(addon.perCharacter
+                        ? `${addon.label.split(' /')[0].toLowerCase()} (${chosen})`
+                        : addon.label.toLowerCase());
+                });
+                if (c.options.chars) parts.push(`${c.options.chars} char${c.options.chars > 1 ? 's' : ''}`);
+                if (parts.length) {
+                    el.textContent = `⚙ ${parts.join(' · ')}`;
+                    card.appendChild(el);
+                }
+            }
+            if (c.attachments && c.attachments.length) {
+                if (isRequest) {
+                    // previews on requests — you need them to decide
+                    const label = document.createElement('div');
+                    label.className = 'card-refs';
+                    label.textContent = '🖼 refs:';
+                    card.appendChild(label);
+                    const row = document.createElement('div');
+                    row.className = 'card-attachments';
+                    c.attachments.forEach((path, index) => {
+                        const wrap = document.createElement('div');
+                        wrap.className = 'card-attachment';
+                        const img = document.createElement('img');
+                        img.alt = 'reference image';
+                        img.loading = 'lazy';
+                        img.title = 'Click to view full size';
+                        SupabaseClient.getAttachmentUrl(adminToken, path)
+                            .then(url => {
+                                img.src = url;
+                                img.addEventListener('click', () => window.open(url, '_blank', 'noopener'));
+                            })
+                            .catch(() => { img.alt = 'preview unavailable'; });
+                        const dl = document.createElement('button');
+                        dl.className = 'card-download';
+                        dl.textContent = '↓';
+                        dl.title = 'Download image';
+                        dl.setAttribute('aria-label', `Download reference ${index + 1}`);
+                        dl.addEventListener('click', async () => {
+                            try {
+                                await downloadAttachment(c.id, index, path);
+                            } catch (err) {
+                                console.error(err);
+                                alert('Download failed: ' + err.message);
+                            }
+                        });
+                        wrap.append(img, dl);
+                        row.appendChild(wrap);
+                    });
+                    card.appendChild(row);
+                } else {
+                    const el = document.createElement('div');
+                    el.className = 'card-refs';
+                    el.textContent = `🖼 ${c.attachments.length} ref image(s)`;
+                    card.appendChild(el);
+                }
+            }
+            if (c.refs) {
+                if (isRequest) {
+                    // full links on requests — you need them to decide
+                    const label = document.createElement('div');
+                    label.className = 'card-refs';
+                    label.textContent = '🖼 refs:';
+                    card.appendChild(label);
+                    c.refs.split('\n').filter(Boolean).forEach(link => {
+                        const a = document.createElement('a');
+                        a.href = link.trim();
+                        a.target = '_blank';
+                        a.rel = 'noopener noreferrer';
+                        a.textContent = link.trim().slice(0, 42);
+                        a.style.cssText = 'display:block;font-size:0.72rem;color:#8B5CF6;word-break:break-all;margin-left:0.75rem;';
+                        card.appendChild(a);
+                    });
+                } else {
+                    const el = document.createElement('div');
+                    el.className = 'card-refs';
+                    el.textContent = `🖼 ${c.refs.split('\n').length} ref link(s)`;
+                    card.appendChild(el);
+                }
+            }
+            if (c.details) {
+                const el = document.createElement('div');
+                el.className = 'card-details';
+                el.textContent = `📝 ${c.details.slice(0, isRequest ? 400 : 120)}${c.details.length > (isRequest ? 400 : 120) ? '…' : ''}`;
+                card.appendChild(el);
+            }
+
+            // actions: move ◀ ▶ (or accept on requests), edit, delete
+            const actions = document.createElement('div');
+            actions.className = 'card-actions';
+
+            const idx = STATUSES.indexOf(c.status);
+            if (idx > 0) {
+                const back = document.createElement('button');
+                back.className = 'card-btn';
+                back.textContent = '◀';
+                back.title = 'Move back';
+                back.addEventListener('click', () => moveCommission(c.recordId, STATUSES[idx - 1]));
+                actions.appendChild(back);
+            }
+            if (isRequest) {
+                const accept = document.createElement('button');
+                accept.className = 'card-btn accept';
+                accept.textContent = 'Accept → Waiting';
+                accept.addEventListener('click', () => moveCommission(c.recordId, 'waiting-list'));
+                actions.appendChild(accept);
+            } else if (idx < STATUSES.length - 1) {
+                const fwd = document.createElement('button');
+                fwd.className = 'card-btn';
+                fwd.textContent = '▶';
+                fwd.title = 'Move forward';
+                fwd.addEventListener('click', () => moveCommission(c.recordId, STATUSES[idx + 1]));
+                actions.appendChild(fwd);
+            }
+
+            const edit = document.createElement('button');
+            edit.className = 'card-btn';
+            edit.textContent = '✏️';
+            edit.title = 'Edit';
+            edit.addEventListener('click', () => openCommissionDialog('admin-edit', c));
+            actions.appendChild(edit);
+
+            const del = document.createElement('button');
+            del.className = 'card-btn';
+            del.textContent = '🗑';
+            del.title = 'Delete';
+            del.addEventListener('click', () => deleteCommission(c));
+            actions.appendChild(del);
+
+            card.appendChild(actions);
+
+            return card;
+        }
+
+        // ---------- mutations (optimistic) ----------
+        async function moveCommission(recordId, newStatus) {
+            const c = commissions.find(x => x.recordId === recordId);
+            if (!c || c.status === newStatus) return;
+
+            const oldStatus = c.status;
+            c.status = newStatus; // optimistic
+            renderBoard();
+            setSaving('saving');
+            try {
+                await SupabaseClient.adminUpdateCommission(adminToken, recordId, { status: newStatus });
+                setSaving('saved');
+            } catch (err) {
+                c.status = oldStatus; // rollback
+                renderBoard();
+                setSaving('error');
+                console.error(err);
+                alert('Move failed: ' + err.message);
+            }
+        }
+
+        async function togglePaid(c) {
+            c.paid = !c.paid; // optimistic
+            renderBoard();
+            setSaving('saving');
+            try {
+                await SupabaseClient.adminUpdateCommission(adminToken, c.recordId, { paid: c.paid });
+                setSaving('saved');
+            } catch (err) {
+                c.paid = !c.paid; // rollback
+                renderBoard();
+                setSaving('error');
+                alert('Paid toggle failed: ' + err.message);
+            }
+        }
+
+        async function deleteCommission(c) {
+            if (!confirm(`Delete commission #${c.id} (${c.description || c.title})? This can't be undone.`)) return;
+            setSaving('saving');
+            try {
+                await SupabaseClient.adminDeleteCommission(adminToken, c.recordId);
+                commissions = commissions.filter(x => x.recordId !== c.recordId);
+                // best-effort: drop the reference images too, never block the
+                // row delete on it
+                (c.attachments || []).forEach(path => {
+                    SupabaseClient.adminDeleteAttachment(adminToken, path).catch(err => console.error(err));
+                });
+                renderBoard();
+                setSaving('saved');
+            } catch (err) {
+                setSaving('error');
+                alert('Delete failed: ' + err.message);
+            }
+        }
+
+        // Force a browser download of one stored reference image. The blob
+        // URL comes from the shared cache (already fetched for the preview,
+        // or fetched on demand); `download` names the file since blob URLs
+        // carry no filename of their own.
+        async function downloadAttachment(cardId, index, path) {
+            const url = await SupabaseClient.getAttachmentUrl(adminToken, path);
+            const ext = path.includes('.') ? path.split('.').pop() : 'jpg';
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `commission-${cardId}-ref-${index + 1}.${ext}`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        // ---------- add / edit dialog (shared RequestForm component) ----------
+
+        // Destroy the mounted form + revoke staged image previews. The
+        // `!open` guard matters: `close` events arrive as a QUEUED task, so a
+        // stale one can land after the dialog was already re-opened — without
+        // the guard it would wipe the freshly mounted form.
+        function releaseDialogHandle() {
+            if (dialogHandle && !$('commission-dialog').open) {
+                dialogHandle.destroy();
+                dialogHandle = null;
+            }
+        }
+
+        function closeCommissionDialog() {
+            $('commission-dialog').close();
+            releaseDialogHandle(); // synchronous — no reliance on the queued close event
+        }
+
+        function openCommissionDialog(mode, c) {
+            closeCommissionDialog(); // clean up any leftover handle / prior open
+            dialogHandle = RequestForm.mount($('commission-dialog-body'), {
+                mode,
+                services: siteData.services, // ALL — edit must see deactivated ones too
+                initial: c ? {
+                    client: c.description,
+                    contact: c.contact,
+                    service: c.title,
+                    details: c.details,
+                    chars: c.options && c.options.chars,
+                    options: c.options,
+                    estimate: c.estimate,
+                    attachments: c.attachments,
+                    status: c.status
+                } : undefined,
+                submitButton: $('commission-dialog-save'),
+                resolveAttachment: (path) => SupabaseClient.getAttachmentUrl(adminToken, path),
+                onSubmit: async (data) => {
+                    // removals first — drop the storage objects (best-effort;
+                    // adminDeleteAttachment also revokes the cached blob URL)
+                    for (const path of data.removedAttachments) {
+                        try {
+                            await SupabaseClient.adminDeleteAttachment(adminToken, path);
+                        } catch (err) {
+                            console.error('Attachment cleanup failed:', err);
+                        }
+                    }
+                    if (mode === 'admin-add') {
+                        await SupabaseClient.adminCreateCommission(adminToken, { ...data, paid: false });
+                    } else {
+                        await SupabaseClient.adminUpdateCommission(adminToken, c.recordId, data);
+                    }
+                    closeCommissionDialog();
+                    setSaving('saved');
+                    await loadData();
+                }
+            });
+            // the footer Save button lives outside the rendered form — aim it
+            // at the form id the component just created
+            $('commission-dialog-save').setAttribute('form', dialogHandle.formId);
+            $('commission-dialog-title').textContent = mode === 'admin-add'
+                ? 'Add commission'
+                : `Edit commission #${c.id}`;
+            const dlg = $('commission-dialog');
+            if (!dlg.open) dlg.showModal(); // a re-click while open must not throw
+        }
+
+        // ---------- boot ----------
+        $('gate-unlock').addEventListener('click', tryUnlock);
+        $('gate-token').addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+        $('refresh-btn').addEventListener('click', loadData);
+        $('add-btn').addEventListener('click', () => openCommissionDialog('admin-add'));
+        // Cancel + ✕ close the dialog — delegated on the <dialog> itself so
+        // the buttons can never lose their handler
+        $('commission-dialog').addEventListener('click', (e) => {
+            if (e.target.closest('#commission-dialog-cancel, #commission-dialog-close')) closeCommissionDialog();
+        });
+        // Esc closes natively — release the mounted form then too
+        // (releaseDialogHandle no-ops if a newer open already happened)
+        $('commission-dialog').addEventListener('close', releaseDialogHandle);
+        $('forget-btn').addEventListener('click', () => {
+            if (!confirm('Forget the token on this device? You\'ll need to paste it again to come back.')) return;
+            localStorage.removeItem(TOKEN_KEY);
+            adminToken = null;
+            location.reload();
+        });
+
+        if (adminToken) {
+            enterBoard();
+        }
+    </script>
+</body>
+
+</html>
