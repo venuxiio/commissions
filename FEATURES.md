@@ -33,7 +33,7 @@ Everything stays **static hosting** (GitHub Pages). No server of your own, no bu
 | C1 | Hash navigation sections (Home / Examples / Prices / Terms) | `index.html` nav | Toggle-style, collapsible banner |
 | C2 | Status indicators (COMMS / ART TRADES / REQUESTS) | Home | Date-string driven — has `Invalid Date` bug |
 | C3 | Smart commission button | Home | Open / full / closed states + slot count |
-| C4 | Ping-list button with live count | Home | Reads public Google Sheet CSV |
+| C4 | Closed-state gating | Home | Comms closed → "Request this" buttons disabled, request modal unreachable |
 | C5 | Queue board (read-only) | Home | 3 columns, built from `commissions.js` |
 | C6 | Price table + sketch prices + add-ons | Prices | Hand-written HTML |
 | C7 | Will draw / Won't draw lists | Prices | |
@@ -81,13 +81,13 @@ Modeled on VGen's request form (the reference the user provided):
 - **Quick math**: live estimate breakdown, base + extras, with "final price confirmed by Ven" note
 - **T.O.S agreement checkbox** (required), hidden honeypot field (anti-spam)
 - On submit → row in `commissions` with status `request` → appears on the admin board's Requests column. The DB's `commissions_public` view excludes request rows and contact columns from the anon key — they never render or download publicly.
-- When commissions are **closed or full**: form hidden, replaced by ping-list CTA
+- When commissions are **closed**: the service-card "Request this →" buttons are disabled and the request modal can't be opened (card clicks and `#request` deep links both blocked); the form stays hidden inside the modal as a safety net
 
 **Acceptance criteria**
 - [ ] Estimate updates live as options change
 - [ ] Submit succeeds with dummy keys gracefully rejected (no crash)
 - [ ] Row lands with `status='request'`; anon-key queries (curl smoke test in SUPABASE_SETUP.md §6) cannot read it or the contact column
-- [ ] Closed/full state blocks the form and shows ping-list CTA
+- [ ] Closed state disables the "Request this" buttons and blocks the request modal (deep links included)
 - [ ] Required-field validation with visible errors
 
 ### F3 — Private drag-and-drop admin board (`admin.html`, unlisted) 🚧

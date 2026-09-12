@@ -12,7 +12,7 @@
 
 const siteData = {
   "settings": {
-    "commsOpen": true,
+    "commsOpen": false,
     "reopenDate": null,
     "maxSlots": 8
   },

@@ -494,30 +494,6 @@ h2 {
     margin-right: 0.5rem;
 }
 
-.ping-list-button {
-    display: none;
-    background: transparent;
-    color: var(--color-primary-dark);
-    padding: 0.75rem 2rem;
-    border-radius: 1rem;
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: 0.75rem;
-    transition: all 0.3s ease;
-    border: 2px solid var(--color-primary);
-    text-align: center;
-}
-
-.ping-list-button:hover {
-    background: var(--color-primary-pale);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-primary);
-}
-
-.ping-list-button.visible {
-    display: inline-block;
-}
-
 footer {
     padding: 1.25rem 2rem 0;
     border-top: 2px dotted var(--color-primary-pale);
@@ -1246,6 +1222,17 @@ footer {
 .service-request-btn:hover {
     background: var(--color-primary-dark);
     transform: translateX(2px);
+}
+
+.service-request-btn:disabled {
+    background: var(--color-primary-pale);
+    color: var(--color-text-gray-muted);
+    cursor: not-allowed;
+}
+
+.service-request-btn:hover:disabled {
+    background: var(--color-primary-pale);
+    transform: none;
 }
 
 .addons-note {

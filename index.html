@@ -175,8 +175,6 @@
             </div>
 
             <div class="modal-footer" id="request-modal-footer">
-                <a href="https://forms.gle/L9j63qFCGv3u6Zkz5" target="_blank"
-                    class="ping-list-button visible">Join the Ping List</a>
                 <button type="submit" class="submit-request-button" id="rf-submit"
                     form="request-form">Submit request</button>
             </div>
@@ -618,6 +616,7 @@
         }
 
         function openRequestForm(serviceName) {
+            if (!siteSettings.commsOpen) return; // closed — buttons are disabled; belt-and-braces
             if (serviceName) {
                 requestFormHandle.setService(serviceName); // unknown names keep the current one
             }
@@ -653,9 +652,8 @@
 
         // ---- Request form open/close gating ----
         // Requesting happens through the service cards ("Request this →") —
-        // the modal itself shows a notice + ping list while closed.
+        // while closed the buttons are disabled and the modal stays shut.
         function updateCommissionGating() {
-            const pingListButtons = document.querySelectorAll('.ping-list-button');
             const closedBox = document.getElementById('request-closed');
             const requestForm = document.getElementById('request-form');
             const submitButton = document.getElementById('rf-submit');
@@ -664,7 +662,13 @@
             // knows open/closed + reopen date from commissions.js.
             const isOpen = siteSettings.commsOpen;
 
-            // Closed modal shows the notice + ping list instead of the form
+            document.querySelectorAll('.service-request-btn').forEach(btn => {
+                btn.disabled = !isOpen;
+                btn.title = isOpen ? '' : 'Commissions are currently closed';
+            });
+
+            // Safety net: if the modal somehow opens while closed it shows
+            // the notice instead of the form
             if (closedBox) {
                 closedBox.hidden = isOpen;
             }
@@ -672,18 +676,16 @@
                 requestForm.hidden = !isOpen;
             }
             if (submitButton) {
-                submitButton.hidden = !isOpen; // footer swaps submit ↔ ping list
+                submitButton.hidden = !isOpen;
             }
             if (!isOpen && closedBox) {
                 const msg = closedBox.querySelector('#request-closed-message');
                 if (msg) {
                     msg.textContent = siteSettings.reopenDate
                         ? `Commissions are currently closed — they open on ${siteSettings.reopenDate}.`
-                        : 'Commissions are currently closed. Join the ping list to be notified when they reopen!';
+                        : 'Commissions are currently closed.';
                 }
             }
-
-            pingListButtons.forEach(btn => btn.classList.toggle('visible', !isOpen));
         }
 
         // ---- Tabs / routing ----
@@ -733,8 +735,11 @@
                     } else {
                         updateActiveNav();
                     }
-                    // Instant jump: smooth scrolling visibly lags with the sticky bar
-                    window.scrollTo({ top: 0, behavior: 'auto' });
+                    // Instant jump: smooth scrolling visibly lags with the sticky bar.
+                    // Desktop only — on mobile the reader stays at their scroll position
+                    if (window.matchMedia('(min-width: 737px)').matches) {
+                        window.scrollTo({ top: 0, behavior: 'auto' });
+                    }
                 });
             });
         }
@@ -786,12 +791,15 @@
             const link = e.target.closest('a[href="#request"], a[href="#faq"], a[href="#terms"]');
             if (!link) return;
             e.preventDefault();
-            ({ request: requestModal, faq: faqModal, terms: termsModal })[link.getAttribute('href').slice(1)].open();
+            const name = link.getAttribute('href').slice(1);
+            if (name === 'request' && !siteSettings.commsOpen) return; // closed — no request modal
+            ({ request: requestModal, faq: faqModal, terms: termsModal })[name].open();
         });
 
         // Old deep links (#request / #faq / #terms) now open their modal on load
         (function openLegacyHash() {
             const hash = window.location.hash.slice(1);
+            if (hash === 'request' && !siteSettings.commsOpen) return; // closed — no request modal
             const modals = { request: requestModal, faq: faqModal, terms: termsModal };
             if (modals[hash]) modals[hash].open();
         })();
