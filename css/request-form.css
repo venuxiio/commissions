@@ -30,6 +30,11 @@
     gap: 0.4rem;
 }
 
+/* display:flex above would beat the hidden attribute without this */
+.form-group[hidden] {
+    display: none;
+}
+
 .form-group label {
     font-weight: 600;
     font-size: 1rem;

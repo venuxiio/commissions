@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>probe</title></head><body>
+<pre id="out">starting</pre>
+<iframe id="pub" src="http://localhost:8123/index.html" style="width:1280px;height:900px;border:0"></iframe>
+<iframe id="adm" src="http://localhost:8123/admin.html" style="width:1280px;height:900px;border:0"></iframe>
+<script>
+const results = [];
+const check = (name, cond, extra) => results.push((cond ? 'PASS ' : 'FAIL ') + name + (extra && !cond ? ' -> ' + extra : ''));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+// the iframe's first load event can fire for the initial about:blank — poll for readiness instead
+const waitFor = async (desc, fn, tries = 60) => {
+  for (let i = 0; i < tries; i++) {
+    let ok = false;
+    try { ok = fn(); } catch { /* not ready */ }
+    if (ok) return true;
+    await sleep(100);
+  }
+  results.push('FAIL timed out waiting for ' + desc);
+  return false;
+};
+
+// the "Number of characters" .form-group, found via its stepper
+const charsGroup = doc => doc.querySelector('.number-stepper')?.closest('.form-group');
+const display = (win, node) => node ? win.getComputedStyle(node).display : 'no-node';
+
+(async () => {
+  // ---------- public form (index.html) ----------
+  // grab the live window/document only AFTER the real navigation replaced about:blank
+  check('public iframe: cards rendered',
+        await waitFor('service cards', () =>
+          document.getElementById('pub').contentDocument.querySelectorAll('.service-card').length > 0));
+  const PW = document.getElementById('pub').contentWindow;
+  const pd = document.getElementById('pub').contentDocument;
+  await sleep(200);
+
+  const openService = async name => {
+    const card = [...pd.querySelectorAll('.service-card')].find(c =>
+      c.querySelector('.service-card-name').textContent === name);
+    if (!card) throw new Error('service card not found: ' + name);
+    card.querySelector('.service-request-btn').click();
+    await sleep(200);
+  };
+  const closeReq = async () => {
+    pd.querySelector('#request-modal .modal-close').click();
+    await sleep(200);
+  };
+
+  // Knee Up SKEB = extraCharPrice 0 -> no stepper
+  await openService('Knee Up SKEB');
+  let g = charsGroup(pd);
+  check('public Knee Up SKEB: stepper hidden', g && g.hidden === true && display(PW, g) === 'none', g && g.hidden + '/' + display(PW, g));
+  const lines = () => [...pd.querySelectorAll('.quick-math-breakdown p')].map(p => p.textContent);
+  check('public Knee Up SKEB: estimate has no extra-char line', lines().some(l => l.includes('Knee Up SKEB')) && !lines().some(l => l.toLowerCase().includes('extra character')), lines().join(' | '));
+
+  // stale count: go to Bust, bump to 3, then back to the 0-extra service
+  await closeReq();
+  await openService('Bust');
+  g = charsGroup(pd);
+  check('public Bust: stepper visible', g && g.hidden === false && display(PW, g) === 'flex', g && g.hidden + '/' + display(PW, g));
+  pd.querySelector('[id$="-chars-plus"]').click();
+  pd.querySelector('[id$="-chars-plus"]').click();
+  await sleep(100);
+  check('public Bust: bumped to 3', pd.querySelector('[id$="-chars-value"]').textContent === '3');
+
+  PW.eval('requestFormHandle.setService("Knee Up SKEB")');
+  await sleep(100);
+  g = charsGroup(pd);
+  check('public SKEB after stale 3: stepper hidden + clamped to 1',
+        g && g.hidden === true && pd.querySelector('[id$="-chars-value"]').textContent === '1',
+        g && g.hidden + '/' + pd.querySelector('[id$="-chars-value"]').textContent);
+  check('public SKEB after stale 3: payload chars === 1', PW.eval('requestFormHandle.getData()').options.chars === 1);
+
+  // per-character addon can't ride a stale count either
+  pd.querySelector('[id$="-armor"]').click();
+  await sleep(100);
+  check('public SKEB + armor: addon priced × 1', lines().some(l => l.includes('robotic parts × 1')), lines().join(' | '));
+  await closeReq();
+
+  // ---------- admin add dialog (admin.html, service <select>) ----------
+  check('admin iframe: script ready',
+        await waitFor('openCommissionDialog', () =>
+          typeof document.getElementById('adm').contentWindow.openCommissionDialog === 'function'));
+  const AW = document.getElementById('adm').contentWindow;
+  const ad = document.getElementById('adm').contentDocument;
+  await sleep(200);
+
+  AW.openCommissionDialog('admin-add');
+  await sleep(200);
+  const sel = ad.querySelector('select[id$="-service"]');
+  g = charsGroup(ad);
+  // default service is services[0] = Knee Up SKEB (extra 0) -> hidden on mount
+  check('admin add on mount (SKEB): stepper hidden', g && g.hidden === true, g && String(g.hidden));
+
+  sel.value = 'Bust';
+  sel.dispatchEvent(new AW.Event('change', { bubbles: true }));
+  await sleep(100);
+  g = charsGroup(ad);
+  check('admin select Bust: stepper visible', g && g.hidden === false && display(AW, g) === 'flex', g && g.hidden + '/' + display(AW, g));
+  ad.querySelector('[id$="-chars-plus"]').click();
+  await sleep(100);
+  check('admin Bust: bumped to 2', ad.querySelector('[id$="-chars-value"]').textContent === '2');
+
+  sel.value = 'Custom';
+  sel.dispatchEvent(new AW.Event('change', { bubbles: true }));
+  await sleep(100);
+  g = charsGroup(ad);
+  check('admin select Custom: stepper hidden + clamped to 1',
+        g && g.hidden === true && ad.querySelector('[id$="-chars-value"]').textContent === '1',
+        g && g.hidden + '/' + ad.querySelector('[id$="-chars-value"]').textContent);
+  check('admin Custom: payload chars === 1', AW.eval('dialogHandle.getData()').options.chars === 1);
+
+  AW.closeCommissionDialog();
+
+  document.getElementById('out').textContent = results.join('\n');
+  document.title = 'DONE';
+})().catch(e => {
+  document.getElementById('out').textContent = results.join('\n') + '\nFATAL ' + (e.stack || e.message);
+  document.title = 'DONE';
+});
+</script></body></html>

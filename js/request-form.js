@@ -210,6 +210,7 @@ const RequestForm = (() => {
 
             const { group, hint } = formGroup('Number of characters', stepper, { hintId: `${uid}-extra-hint`, star: true });
             form.appendChild(group);
+            els.charsGroup = group;
             els.charsValue = value;
             els.extraHint = hint;
 
@@ -505,6 +506,15 @@ const RequestForm = (() => {
 
         function updateEstimateUI() {
             const service = findService(state.service);
+
+            // services that don't price extra characters don't get the stepper;
+            // clamp the count so a stale one can't reach the payload
+            const allowExtras = !service || service.extraCharPrice > 0;
+            if (els.charsGroup) els.charsGroup.hidden = !allowExtras;
+            if (!allowExtras && state.chars !== 1) {
+                state.chars = 1;
+                if (els.charsValue) els.charsValue.textContent = '1';
+            }
 
             if (els.breakdown) {
                 const { total, lines } = computeEstimate();

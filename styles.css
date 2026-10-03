@@ -1245,8 +1245,10 @@ footer {
 
 .addon-row {
     display: flex;
+    flex-wrap: wrap; /* phone widths: let the price drop to its own line */
     justify-content: space-between;
     align-items: center;
+    gap: 0.1rem 1rem;
     padding: 0.5rem 0;
     border-bottom: 1px dotted var(--color-primary-pale);
     font-size: 1rem;
@@ -1261,6 +1263,7 @@ footer {
     font-weight: 600;
     color: var(--color-primary-dark);
     white-space: nowrap;
+    margin-left: auto; /* keeps it right-aligned when it wraps to its own line */
 }
 
 /* ==========================================================================

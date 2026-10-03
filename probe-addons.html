@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>probe</title></head><body>
+<pre id="out">starting</pre>
+<iframe id="w390" src="http://localhost:8123/index.html" style="width:390px;height:1400px;border:1px solid #ccc"></iframe>
+<iframe id="w320" src="http://localhost:8123/index.html" style="width:320px;height:1400px;border:1px solid #ccc"></iframe>
+<iframe id="w1280" src="http://localhost:8123/index.html" style="width:1280px;height:1400px;border:1px solid #ccc"></iframe>
+<script>
+const results = [];
+const check = (name, cond, extra) => results.push((cond ? 'PASS ' : 'FAIL ') + name + (extra && !cond ? ' -> ' + extra : ''));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const waitFor = async (fn, tries = 60) => {
+  for (let i = 0; i < tries; i++) {
+    let ok = false;
+    try { ok = fn(); } catch { /* not ready */ }
+    if (ok) return true;
+    await sleep(100);
+  }
+  return false;
+};
+
+(async () => {
+  const frames = [['390px', 'w390'], ['320px', 'w320'], ['1280px', 'w1280']];
+  for (const [label, id] of frames) {
+    const f = document.getElementById(id);
+    if (!await waitFor(() => f.contentDocument.querySelectorAll('.addon-row').length === 2)) {
+      results.push('FAIL ' + label + ': page never rendered');
+      continue;
+    }
+    await sleep(150);
+    const W = f.contentWindow, d = f.contentDocument;
+    const note = d.querySelector('.addons-note');
+    const noteBox = note.getBoundingClientRect();
+
+    // no horizontal overflow anywhere in the box
+    check(label + ': note not scrollable sideways', note.scrollWidth <= note.clientWidth + 1,
+          note.scrollWidth + '/' + note.clientWidth);
+    check(label + ': body has no horizontal overflow', W.document.documentElement.scrollWidth <= W.innerWidth + 1,
+          W.document.documentElement.scrollWidth + '/' + W.innerWidth);
+
+    [...note.querySelectorAll('.addon-row')].forEach((row, i) => {
+      const price = row.querySelector('.addon-price');
+      const rowBox = row.getBoundingClientRect();
+      const priceBox = price.getBoundingClientRect();
+      const name = price.textContent.trim();
+      // price stays inside the card (2px border + 20px padding each side)
+      check(label + ' row' + i + ' (' + name + '): price inside card',
+            priceBox.right <= noteBox.right - 22 + 0.5 && priceBox.right <= rowBox.right + 0.5,
+            'price.right=' + priceBox.right.toFixed(1) + ' note.right=' + noteBox.right.toFixed(1));
+      if (i === 1) { // the long row: same-line layout only when there's room
+        const sameLine = Math.abs(priceBox.top - row.querySelector('span').getBoundingClientRect().top) < 2;
+        if (label === '1280px') {
+          check(label + ' row1: price still beside label on desktop', sameLine, 'top diff');
+          const gapRight = rowBox.right - priceBox.right;
+          check(label + ' row1: price flush right', Math.abs(gapRight) < 0.5, 'gap=' + gapRight.toFixed(1));
+        } else {
+          check(label + ' row1: price wrapped to own line', !sameLine, 'still beside label');
+          const gapRight = rowBox.right - priceBox.right;
+          check(label + ' row1: wrapped price right-aligned', Math.abs(gapRight) < 0.5, 'gap=' + gapRight.toFixed(1));
+        }
+      }
+    });
+  }
+
+  document.getElementById('out').textContent = results.join('\n');
+  document.title = 'DONE';
+})().catch(e => {
+  document.getElementById('out').textContent = results.join('\n') + '\nFATAL ' + (e.stack || e.message);
+  document.title = 'DONE';
+});
+</script></body></html>
