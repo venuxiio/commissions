@@ -6,6 +6,8 @@
 //                    'focus' (object-position for off-center crops, e.g. wide reference sheets).
 
 const portfolioItems = [
+    { src: 'assets/images/examples/kneeup/ezgif-41ec968c01edcc76.webp',      category: 'Knee up',         date: '2026-10-03' },
+    { src: 'assets/images/examples/kneeup/ezgif-4784442101232717.webp',      category: 'Knee up',         date: '2026-10-03' },
     { src: 'assets/images/examples/custom/Illustration113.webp',             category: 'Custom',          date: '2026-09-08' },
     { src: 'assets/images/examples/halfbody/Shark.webp',                     category: 'Halfbody',        date: '2026-09-07' },
     { src: 'assets/images/examples/kneeup/ge.webp',                          category: 'Knee up',         date: '2026-09-07' },
